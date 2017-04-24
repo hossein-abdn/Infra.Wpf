@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTemplate TargetType="Button" x:Key="HyperlinkTemplate">
+        <TextBlock x:Name="TextLink" Foreground="Blue" Text="{Binding Text}" Cursor="Hand"/>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="TextLink" Property="Foreground" Value="Red"/>
+                <Setter TargetName="TextLink" Property="TextDecorations" Value="Underline"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="TextLink" Property="Foreground" Value="Gray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+</ResourceDictionary>

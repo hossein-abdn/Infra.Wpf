@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DBEE0F13-A22C-43BA-A0A7-9962531770A9}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infra.Wpf</RootNamespace>
+    <AssemblyName>Infra.Wpf</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="C1.WPF.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
+    <Reference Include="C1.WPF.DataGrid.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
+    <Reference Include="C1.WPF.DataGrid.Filters.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
+    <Reference Include="C1.WPF.DateTimeEditors.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\Billboard\Billboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CustomGrid\CustomCheckBoxFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CustomGrid\CustomDateTimeFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CustomGrid\CustomMaskedTextFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CustomGrid\CustomMultiValueFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CustomGrid\CustomTextFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CustomGrid\ExportExcel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Lookup\Lookup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Lookup\LookupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\NumericBox\NumericBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PersianCalendar\PersianCalendar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PersianDatePicker\PersianDatePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Resources\ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Resources\HyperlinkStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Resources\MaskTextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Resources\RowStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SearchPanel\BoolSearchField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SearchPanel\DateSearchField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SearchPanel\NumericSearchField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SearchPanel\SearchPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SearchPanel\TextSearchField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TimeEditor\TimeEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Class\RectItem.cs" />
+    <Compile Include="Common\Helpers\CustomConverter.cs" />
+    <Compile Include="Common\Helpers\DynamicLinq.cs" />
+    <Compile Include="Common\Helpers\Extensions.cs" />
+    <Compile Include="Controls\CustomCheckBox\CustomCheckBox.cs" />
+    <Compile Include="Controls\CustomComboBox\ComboItem.cs" />
+    <Compile Include="Controls\CustomComboBox\CustomComboBox.cs" />
+    <Compile Include="Controls\CustomComboBox\EnumDisplayAttribute.cs" />
+    <Compile Include="Controls\CustomGrid\ButtonColumnViewModel.cs" />
+    <Compile Include="Controls\CustomGrid\CheckBoxViewModel.cs" />
+    <Compile Include="Controls\CustomGrid\CustomBottomRow.cs" />
+    <Compile Include="Controls\CustomGrid\CustomButtonColumn.cs" />
+    <Compile Include="Controls\CustomGrid\CustomCheckBoxColumn.cs" />
+    <Compile Include="Controls\CustomGrid\CustomCheckBoxFilter.xaml.cs">
+      <DependentUpon>CustomCheckBoxFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomGrid\CustomDateTimeColumn.cs" />
+    <Compile Include="Controls\CustomGrid\CustomDateTimeFilter.xaml.cs">
+      <DependentUpon>CustomDateTimeFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomGrid\CustomGrid.cs" />
+    <Compile Include="Controls\CustomGrid\CustomHyperlinkColumn.cs" />
+    <Compile Include="Controls\CustomGrid\CustomMaskedTextColumn.cs" />
+    <Compile Include="Controls\CustomGrid\CustomMaskedTextFilter.xaml.cs">
+      <DependentUpon>CustomMaskedTextFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomGrid\CustomMultiValueFilter.xaml.cs">
+      <DependentUpon>CustomMultiValueFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomGrid\CustomNumericColumn.cs" />
+    <Compile Include="Controls\CustomGrid\CustomTextColumn.cs" />
+    <Compile Include="Controls\CustomGrid\CustomTextFilter.xaml.cs">
+      <DependentUpon>CustomTextFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomGrid\ExportExcel.xaml.cs">
+      <DependentUpon>ExportExcel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomGrid\FilterItem.cs" />
+    <Compile Include="Controls\CustomGrid\ItemsSourceToFilterItemConverter.cs" />
+    <Compile Include="Controls\CustomGrid\TextOperationConverter.cs" />
+    <Compile Include="Controls\CustomTextBox\CustomTextBox.cs" />
+    <Compile Include="Controls\CustomTextBox\CustomTextBoxFormatEnum.cs" />
+    <Compile Include="Controls\CustomTextBox\LanguageEnum.cs" />
+    <Compile Include="Controls\GridWrapPanel\GridWrapColumn.cs" />
+    <Compile Include="Controls\GridWrapPanel\GridWrapRow.cs" />
+    <Compile Include="Controls\GridWrapPanel\GridWrapPanel.cs" />
+    <Compile Include="Controls\ImageButton\ImageButton.cs" />
+    <Compile Include="Controls\Lookup\Lookup.xaml.cs">
+      <DependentUpon>Lookup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Lookup\LookupSelectionModeEnum.cs" />
+    <Compile Include="Controls\Lookup\LookupWindow.xaml.cs">
+      <DependentUpon>LookupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Lookup\PreviewSelectEventArgs.cs" />
+    <Compile Include="Controls\Lookup\SelectionChangedEventArgs.cs" />
+    <Compile Include="Controls\NumericBox\NumericBox.xaml.cs">
+      <DependentUpon>NumericBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NumericBox\NumericBoxValueChangedEventArgs.cs" />
+    <Compile Include="Controls\PersianCalendar\CalendarType.cs" />
+    <Compile Include="Common\PersianDate\DateTimeToPersianDateConverter.cs" />
+    <Compile Include="Common\PersianDate\PersianDate.cs" />
+    <Compile Include="Common\PersianDate\PersianDateConverter.cs" />
+    <Compile Include="Common\PersianDate\PersianDayOfWeekEnum.cs" />
+    <Compile Include="Common\PersianDate\PersianMonthEnum.cs" />
+    <Compile Include="Common\PersianDate\PersianToDateConverter.cs" />
+    <Compile Include="Controls\SearchPanel\BoolSearchField.xaml.cs">
+      <DependentUpon>BoolSearchField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchPanel\ComboSearchField.cs" />
+    <Compile Include="Controls\SearchPanel\DateFormatEnum.cs" />
+    <Compile Include="Controls\SearchPanel\DateSearchField.xaml.cs">
+      <DependentUpon>DateSearchField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchPanel\ISearchField.cs" />
+    <Compile Include="Controls\SearchPanel\LookupSearchField.cs" />
+    <Compile Include="Controls\SearchPanel\NumericOperatorEnum.cs" />
+    <Compile Include="Controls\SearchPanel\NumericSearchField.xaml.cs">
+      <DependentUpon>NumericSearchField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchPanel\SearchFieldCollection.cs" />
+    <Compile Include="Controls\SearchPanel\SearchGridWrapColumn.cs" />
+    <Compile Include="Controls\SearchPanel\SearchGridWrapPanel.cs" />
+    <Compile Include="Controls\SearchPanel\SearchGridWrapRow.cs" />
+    <Compile Include="Controls\SearchPanel\SearchPanel.xaml.cs">
+      <DependentUpon>SearchPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchPanel\StringOperatorEnum.cs" />
+    <Compile Include="Controls\SearchPanel\TextSearchField.xaml.cs">
+      <DependentUpon>TextSearchField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimeEditor\TimeEditorFormatEnum.cs" />
+    <Compile Include="Controls\Billboard\Billboard.xaml.cs">
+      <DependentUpon>Billboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Billboard\BillboardViewModel.cs" />
+    <Compile Include="Controls\Billboard\MessageTypeEnum.cs" />
+    <Compile Include="Controls\Billboard\ShowMessageEventArgs.cs" />
+    <Compile Include="Controls\PersianCalendar\PersianCalendar.xaml.cs">
+      <DependentUpon>PersianCalendar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PersianDatePicker\PersianDatePicker.xaml.cs">
+      <DependentUpon>PersianDatePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimeEditor\TimeEditor.xaml.cs">
+      <DependentUpon>TimeEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimeEditor\TimeEditorValueChangedEventArgs.cs" />
+    <Compile Include="Common\Converters\VisibilityToBoolConverter.cs" />
+    <Compile Include="Controls\WPFMessageBox\MsgButtonEnum.cs" />
+    <Compile Include="Controls\WPFMessageBox\MsgIconEnum.cs" />
+    <Compile Include="Controls\WPFMessageBox\MsgPack.cs" />
+    <Compile Include="Controls\WPFMessageBox\MsgResultEnum.cs" />
+    <Compile Include="Controls\WPFMessageBox\WPFMessageBox.cs" />
+    <Compile Include="Controls\WPFMessageBox\WPFMessageBoxControl.cs" />
+    <Compile Include="Controls\WPFMessageBox\WPFMessageBoxViewModel.cs" />
+    <Compile Include="Mvvm\EventToCommand\ArgsParameter.cs" />
+    <Compile Include="Mvvm\EventToCommand\EventToCommand.cs" />
+    <Compile Include="Mvvm\Messenger\IReferenceInvoker.cs" />
+    <Compile Include="Mvvm\Messenger\MessageItem.cs" />
+    <Compile Include="Mvvm\Messenger\Messenger.cs" />
+    <Compile Include="Mvvm\Messenger\ReferenceType.cs" />
+    <Compile Include="Mvvm\Messenger\StrongReferenceInvoker.cs" />
+    <Compile Include="Mvvm\Messenger\WeakReferenceInvoker.cs" />
+    <Compile Include="Mvvm\NavigationService\NavigationService.cs" />
+    <Compile Include="Mvvm\NavigationService\ViewTypeAttribute.cs" />
+    <Compile Include="Mvvm\RelayCommand\RelayCommand.cs" />
+    <Compile Include="Mvvm\ViewModelBase\IViewModelBase.cs" />
+    <Compile Include="Mvvm\ViewModelBase\ViewModelBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Resources\Calendar-32.png" />
+    <Resource Include="Controls\Resources\CalendarOver-32.png" />
+    <Resource Include="Controls\Resources\Cancel-32.png" />
+    <Resource Include="Controls\Resources\Delete-24.png" />
+    <Resource Include="Controls\Resources\DeleteOver-24.png" />
+    <Resource Include="Controls\Resources\Edit-24.png" />
+    <Resource Include="Controls\Resources\EditOver-24.png" />
+    <Resource Include="Controls\Resources\Error-32.png" />
+    <Resource Include="Controls\Resources\Error-45.png" />
+    <Resource Include="Controls\Resources\Excel-32.png" />
+    <Resource Include="Controls\Resources\ExcelOver-32.png" />
+    <Resource Include="Controls\Resources\Information-32.png" />
+    <Resource Include="Controls\Resources\Information-45.png" />
+    <Resource Include="Controls\Resources\Ok-24.png" />
+    <Resource Include="Controls\Resources\Question-45.png" />
+    <Resource Include="Controls\Resources\Refresh-32.png" />
+    <Resource Include="Controls\Resources\RefreshOver-32.png" />
+    <Resource Include="Controls\Resources\View-24.png" />
+    <Resource Include="Controls\Resources\ViewOver-24.png" />
+    <Resource Include="Controls\Resources\Warning-32.png" />
+    <Resource Include="Controls\Resources\Warning-45.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mvvm\ntprop.snippet" />
+    <None Include="Mvvm\vmprop.snippet" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\Resources\C1.WPF.DataGrid.fa.resx" />
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Resources\DeleteCombo-24.png" />
+    <Resource Include="Controls\Resources\DeleteComboOver-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Resources\Search-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Resources\Add-24.png" />
+    <Resource Include="Controls\Resources\AddOver-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Controls\Resources\Select-24.png" />
+    <Resource Include="Controls\Resources\SelectOver-24.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

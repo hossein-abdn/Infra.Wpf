@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{943438F9-7679-4B11-B751-B7C79B26310B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataAccess</RootNamespace>
+    <AssemblyName>DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enums.cs" />
+    <Compile Include="Mappings\AccountDetailMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\AccountMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\AwardConfigMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\AwardMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\AwardScoreMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\CampMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ClassMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ClassPointMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ClassScaduleMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ClassScoreMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ClassSessionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\DocumentMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\DocumentTagMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ExamMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\FBSDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\FestivalMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\GeneralBaseCategoryMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\GeneralBaseTypeMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\GroupMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\GroupStudentMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ParentMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\PermissionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\PhoneNumberMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\PlaceMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\QuestionItemMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\QuestionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\RankConfigMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\RegisterMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\RegisterQuestionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ReligiousMissionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\RoleMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\RolePermissionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\RollCallMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ScoreItemMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\ScoreMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\StudentAwardMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\StudentClassMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\StudentExamMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\StudentMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\StudentPersonalityMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\TagMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\TeacherMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\TermMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\TermQuestionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\UserMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\UserPermissionMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\WorkBookMap.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountDetail.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Award.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AwardConfig.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AwardScore.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Camp.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Class.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassPoint.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassScadule.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassScore.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassSession.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Document.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocumentTag.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Exam.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FBSDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FBSDBContext.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Festival.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GeneralBaseCategory.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GeneralBaseType.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupStudent.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IFBSDBContext.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Parent.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Permission.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhoneNumber.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Place.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Question.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionItem.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RankConfig.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Register.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RegisterQuestion.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReligiousMission.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RolePermission.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RollCall.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Score.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ScoreItem.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Student.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentAward.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentClass.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentExam.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentPersonality.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Teacher.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Term.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TermQuestion.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserPermission.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkBook.cs">
+      <DependentUpon>FBSDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EF.Reverse.POCO.Core.ttinclude" />
+    <None Include="EF.Reverse.POCO.ttinclude" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mappings\FBSDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FBSDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\FBSDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FBSDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infra.Wpf\Infra.Wpf.csproj">
+      <Project>{DBEE0F13-A22C-43BA-A0A7-9962531770A9}</Project>
+      <Name>Infra.Wpf</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

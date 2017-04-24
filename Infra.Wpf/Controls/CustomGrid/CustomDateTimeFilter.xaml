@@ -1,0 +1,44 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:ctl="clr-namespace:Infra.Wpf.Controls"
+    xmlns:converter="clr-namespace:Infra.Wpf.Converters"
+    x:Class="Infra.Wpf.Controls.CustomDateTimeFilter" 
+    mc:Ignorable="d" 
+    d:DesignHeight="100" d:DesignWidth="300"
+    Margin="0,5"
+    HorizontalAlignment="Center"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    
+    <UserControl.Resources>
+        <converter:VisibilityToBoolConverter x:Key="visibilityConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Content="از" VerticalAlignment="Center" Margin="0,5"/>
+        <ctl:PersianDatePicker Grid.Column="1" VerticalAlignment="Center" Margin="5" PersianSelectedDate="{Binding FromDate}"
+                               SelectedDateChanged="PersianDatePicker_SelectedDateChanged"/>
+        <ctl:TimeEditor Grid.Column="2" VerticalAlignment="Center" Margin="0,5,5,5" Value="{Binding FromTime}" 
+                        Visibility="{Binding IsTimeVisible, Converter={StaticResource visibilityConverter}}"
+                        OnValueChanged="TimeEditor_ValueChanged"/>
+
+        <Label Grid.Row="1" Content="تا" VerticalAlignment="Center" Margin="0,0,0,5"/>
+        <ctl:PersianDatePicker Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,5,5" PersianSelectedDate="{Binding ToDate}"
+                               SelectedDateChanged="PersianDatePicker_SelectedDateChanged"/>
+        <ctl:TimeEditor Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,5" Value="{Binding ToTime}"
+                        Visibility="{Binding IsTimeVisible, Converter={StaticResource visibilityConverter}}"
+                        OnValueChanged="TimeEditor_ValueChanged"/>
+    </Grid>
+</UserControl>

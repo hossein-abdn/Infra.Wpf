@@ -1,0 +1,88 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:TestControls"
+    xmlns:data="clr-namespace:DataAccess;assembly=DataAccess"
+    xmlns:ctl="clr-namespace:Infra.Wpf.Controls;assembly=Infra.Wpf"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" x:Class="TestControls.MainWindow"
+    mc:Ignorable="d"
+    Title="MainWindow" Height="300" Width="500"
+    FontFamily="IRANSans"
+    Name="wnd">
+    <Window.Resources>
+        <local:ParentViewModel x:Key="parentVM"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:ViewModel/>
+        <!--<StaticResource ResourceKey="parentVM"/>-->
+    </Window.DataContext>
+
+    <!--DataContext="{x:Static local:MainWindow.GetDataModel}">-->
+    <Grid>
+        <Button Content="ok" VerticalAlignment="Center"/>
+
+        <Popup IsOpen="True">
+            <Popup.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="15"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="1"/>
+                </Style>
+
+                <Style TargetType="TextBlock">
+                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                </Style>
+            </Popup.Resources>
+            <StackPanel>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <Grid>
+                            <Button Content="+" HorizontalAlignment="Left"/>
+                            <TextBlock Text="امروز"/>
+                            <Button Content="-" HorizontalAlignment="Right"/>
+
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+
+                <MenuItem>
+                    <MenuItem.Header>
+                        <Grid>
+                            <Button Content="+" HorizontalAlignment="Left"/>
+                            <TextBlock Text="هفته جاری"/>
+                            <Button Content="-" HorizontalAlignment="Right"/>
+
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+
+                
+
+                
+
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock Text="ماه"/>
+                    </MenuItem.Header>
+                    <MenuItem Header="فروردین"/>
+                    <MenuItem Header="اردیبهشت"/>
+                    <MenuItem Header="خرداد"/>
+                    <MenuItem Header="تیر"/>
+                    <MenuItem Header="مرداد"/>
+                    <MenuItem Header="شهریور"/>
+                    <MenuItem Header="مهر"/>
+                    <MenuItem Header="آبان"/>
+                    <MenuItem Header="آذر"/>
+                    <MenuItem Header="دی"/>
+                    <MenuItem Header="ب"/>
+                    <MenuItem Header="فروردین"/>
+                </MenuItem>
+
+            </StackPanel>
+        </Popup>
+
+    </Grid>
+</Window>

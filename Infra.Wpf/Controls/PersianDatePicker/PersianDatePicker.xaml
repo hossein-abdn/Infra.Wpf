@@ -1,0 +1,82 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Infra.Wpf.Controls" 
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" 
+    x:Class="Infra.Wpf.Controls.PersianDatePicker" 
+    MinWidth="115"
+    Height="auto" 
+    Background="White"
+    FlowDirection="RightToLeft" 
+    Focusable="True" 
+    KeyboardNavigation.TabNavigation="Local"
+    KeyDown="UserControl_KeyDown"
+    Loaded="datePicker_Loaded"
+    x:Name="datePicker">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Infra.Wpf;component/Controls/Resources/MaskTextBoxStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="openCalendarButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="SnapsToDevicePixels" Value="true"/>
+                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="Border" CornerRadius="0" BorderThickness="2" Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                                <Image x:Name="openCalendarButtonImage" 
+                                       Source="/Infra.Wpf;component/Controls/Resources/Calendar-32.png" Stretch="Uniform"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="openCalendarButtonImage" Property="Source" 
+                                            Value="/Infra.Wpf;component/Controls/Resources/CalendarOver-32.png"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="Lavender" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="openCalendarButtonImage" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3">
+        <DockPanel>
+            <Button Style="{StaticResource openCalendarButtonStyle}" x:Name="openCalendarButton" IsTabStop="False"
+                    HorizontalAlignment="Right" Click="Button_Click" DockPanel.Dock="Right" Width="20"/>
+
+            <Border Width="1" BorderBrush="Gray" BorderThickness="1" Margin="0,2,2,2" DockPanel.Dock="Right"/>
+
+            <Popup x:Name="persianCalnedarPopup" HorizontalAlignment="Right" 
+                   PlacementTarget="{Binding ElementName=openCalendarButton}"
+                   StaysOpen="False" Opened="persianCalnedarPopup_Opened"
+                   PopupAnimation="Slide" AllowsTransparency="True" VerticalOffset="5">
+                <Grid Background="White">
+                    <local:PersianCalendar x:Name="persianCalendar" Height="200" Width="200" FontSize="12"
+                                           PersianSelectedDate="{Binding PersianSelectedDate,ElementName=datePicker, Mode=TwoWay}"
+                                           DisplayDate="{Binding DisplayDate,ElementName=datePicker, Mode=TwoWay}"
+                                           DisplayDateStart="{Binding DisplayDateStart,ElementName=datePicker,Mode=TwoWay}"
+                                           DisplayDateEnd="{Binding DisplayDateEnd,ElementName=datePicker,Mode=TwoWay}"/>
+                </Grid>
+            </Popup>
+
+            <c1:C1MaskedTextBox x:Name="dateTextBox" Margin="2" Background="Transparent" BorderBrush="Transparent"  
+                                FlowDirection="LeftToRight" Mask="0000/00/00" DockPanel.Dock="Right"
+                                VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                                HorizontalContentAlignment="Center" Padding="0" Text="{Binding Text,ElementName=datePicker,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                KeyDown="dateTextBox_KeyDown" 
+                                PreviewKeyDown="dateTextBox_PreviewKeyDown"
+                                GotKeyboardFocus="dateTextBox_GotKeyboardFocus"
+                                PreviewMouseLeftButtonDown="dateTextBox_PreviewMouseLeftButtonDown"
+                                LostFocus="dateTextBox_LostFocus" Style="{DynamicResource MaskedTextBoxStyle}"/>
+        </DockPanel>
+    </Border>
+</UserControl>
