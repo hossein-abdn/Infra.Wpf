@@ -132,7 +132,7 @@ namespace Infra.Wpf.Controls
                 displayText.VerticalAlignment = VerticalAlignment.Center;
                 displayText.Margin = new Thickness(0, 0, 5, 0);
 
-                if (item is DateSearchField && (item as DateSearchField).DateFormat == DateFormat.Range)
+                if (item is DateSearchField && (item as DateSearchField).DateFormat == DateFormat.RangeFrom)
                 {
                     string appendText1 = " از";
                     string appendText2 = " تا";
@@ -157,7 +157,7 @@ namespace Infra.Wpf.Controls
                     (item as DateSearchField).Operator = NumericOperator.GreaterThanEqual;
 
                     DateSearchField item2 = new DateSearchField();
-                    item2.DateFormat = DateFormat.DateTime;
+                    item2.DateFormat = DateFormat.RangeTo;
                     item2.OpertatorVisible = false;
                     item2.FilterField = (item as DateSearchField).FilterField;
                     if (!string.IsNullOrWhiteSpace(item.DisplayName))
@@ -165,6 +165,8 @@ namespace Infra.Wpf.Controls
                     else
                         item2.DisplayName = item2.FilterField;
                     item2.Operator = NumericOperator.LessThanEqual;
+                    (item as DateSearchField).Partner = item2;
+                    item2.Partner = item as DateSearchField;
                     SearchFields.Insert(i + 1, item2);
                 }
 
@@ -207,7 +209,6 @@ namespace Infra.Wpf.Controls
             if (e.Key == Key.Enter)
                 Submit_Click(this, new RoutedEventArgs());
         }
-
         #endregion
     }
 }

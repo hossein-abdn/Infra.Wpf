@@ -29,7 +29,7 @@ namespace TestControls
         public MainWindow()
         {
             InitializeComponent();
-
+            
             CultureInfo calture = new CultureInfo("fa-IR");
             calture.NumberFormat.DigitSubstitution = DigitShapes.NativeNational;
             Thread.CurrentThread.CurrentCulture = calture;

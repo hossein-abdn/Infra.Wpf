@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infra.Wpf.Common;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -43,7 +44,20 @@ namespace Infra.Wpf.Controls
             }
         }
 
+        private bool _IsDropDown;
+        public bool IsDropDown
+        {
+            get { return _IsDropDown; }
+            set
+            {
+                _IsDropDown = value;
+                OnPropertyChanged();
+            }
+        }
+
         public DateFormat DateFormat { get; set; }
+
+        public DateSearchField Partner { get; set; }
 
         private NumericOperator defaultOperator;
 
@@ -99,8 +113,13 @@ namespace Infra.Wpf.Controls
         {
             defaultOperator = Operator;
 
-            if (DateFormat == DateFormat.Range)
+            if (DateFormat == DateFormat.RangeFrom)
                 OpertatorVisible = false;
+
+            if (FlowDirection == FlowDirection.LeftToRight)
+                suggestbtn.HorizontalAlignment = HorizontalAlignment.Right;
+            else
+                suggestbtn.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
         public DateSearchField()
@@ -118,6 +137,331 @@ namespace Infra.Wpf.Controls
         {
             pd.PersianSelectedDate = null;
             Operator = defaultOperator;
+        }
+
+        private void suggestbtn_Checked(object sender, RoutedEventArgs e)
+        {
+            suggestbtn.ContextMenu.IsOpen = true;
+            suggestbtn.IsChecked = false;
+        }
+
+        private void ItemClick(object sender, RoutedEventArgs e)
+        {
+            var currentItem = (Button) sender;
+
+            switch (currentItem.Name)
+            {
+                case "today":
+                    pd.PersianSelectedDate = PersianDate.Today;
+                    if (DateFormat != DateFormat.DateTime && Partner != null)
+                        Partner.pd.PersianSelectedDate = PersianDate.Today;
+                    break;
+                case "thisweek":
+                    var from = (int) PersianDate.Today.PersianDayOfWeek;
+                    var to = from;
+
+                    if (from != 6)
+                        from++;
+                    else
+                        from = 0;
+
+                    if (to != 6)
+                        to = 5 - to;
+
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = PersianDate.Today.AddDays(from * (-1));
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = PersianDate.Today.AddDays(to);
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = PersianDate.Today.AddDays(to);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = PersianDate.Today.AddDays(from * (-1));
+                    }
+                    break;
+                case "thismonth":
+                    var lastday = 30;
+                    if (PersianDate.Today.Month < 7)
+                        lastday = 31;
+                    else if (PersianDate.Today.Month == 12 && PersianDate.Today.IsLeapYear() == false)
+                        lastday = 29;
+
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, PersianDate.Today.Month, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, PersianDate.Today.Month, lastday);
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, PersianDate.Today.Month, lastday);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, PersianDate.Today.Month, 1);
+                    }
+                    break;
+                case "thisyear":
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 1, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 12, PersianDate.DaysInMonth(PersianDate.Today.Year, 12));
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 12, PersianDate.DaysInMonth(PersianDate.Today.Year, 12));
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 1, 1);
+                    }
+
+                    break;
+            }
+            suggestbtn.ContextMenu.IsOpen = false;
+        }
+
+        private void SetSeasonClick(object sender, RoutedEventArgs e)
+        {
+            var currentItem = (MenuItem) sender;
+
+            switch (currentItem.Name)
+            {
+                case "s1":
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 1, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 3, 31);
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 3, 31);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 1, 1);
+                    }
+                    break;
+                case "s2":
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 4, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 6, 31);
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 6, 31);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 4, 1);
+                    }
+                    break;
+                case "s3":
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 7, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 9, 30);
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 9, 30);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 7, 1);
+                    }
+                    break;
+                case "s4":
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 10, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 12, PersianDate.DaysInMonth(PersianDate.Today.Year, 12));
+                    }
+                    else
+                    {
+                        new PersianDate(PersianDate.Today.Year, 12, PersianDate.DaysInMonth(PersianDate.Today.Year, 12));
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 10, 1);
+                    }
+                    break;
+            }
+        }
+
+        private void SetMonthClick(object sender, RoutedEventArgs e)
+        {
+            int index = Int32.Parse(((MenuItem) sender).Name.Substring(1));
+
+            if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+            {
+                pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, index, 1);
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, index, PersianDate.DaysInMonth(PersianDate.Today.Year, index));
+            }
+            else
+            {
+                pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, index, PersianDate.DaysInMonth(PersianDate.Today.Year, index));
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, index, 1);
+            }
+        }
+
+        private void SetHalfYearClick(object sender, RoutedEventArgs e)
+        {
+            var currentItem = (MenuItem) sender;
+
+            switch (currentItem.Name)
+            {
+                case "hy1":
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 1, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 6, 31);
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 6, 31);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 1, 1);
+                    }
+                    break;
+
+                case "hy2":
+                    if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 7, 1);
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 12, PersianDate.DaysInMonth(PersianDate.Today.Year, 12));
+                    }
+                    else
+                    {
+                        pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 12, PersianDate.DaysInMonth(PersianDate.Today.Year, 12));
+                        if (Partner != null)
+                            Partner.pd.PersianSelectedDate = new PersianDate(PersianDate.Today.Year, 7, 1);
+                    }
+                    break;
+            }
+        }
+
+        private void ChangeDayClick(object sender, RoutedEventArgs e)
+        {
+            var currentItem = (Button) sender;
+            var factor = 1;
+            if (currentItem == decreaseday)
+                factor = (-1);
+
+            if (pd.PersianSelectedDate == null)
+                pd.PersianSelectedDate = PersianDate.Today.AddDays(1 * factor);
+            else
+                pd.PersianSelectedDate = pd.PersianSelectedDate.AddDays(1 * factor);
+
+            if (Partner != null)
+                Partner.pd.PersianSelectedDate = pd.PersianSelectedDate;
+        }
+
+        private void ChangeWeekClick(object sender, RoutedEventArgs e)
+        {
+            var currentItem = (Button) sender;
+            var factor = 1;
+            if (currentItem == decreaseweek)
+                factor = (-1);
+
+            if (pd.PersianSelectedDate == null)
+                pd.PersianSelectedDate = PersianDate.Today.AddDays(7 * factor);
+            else
+                pd.PersianSelectedDate = pd.PersianSelectedDate.AddDays(7 * factor);
+
+            if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+            {
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = pd.PersianSelectedDate.AddDays(6);
+            }
+            else
+            {
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = pd.PersianSelectedDate.AddDays(-6);
+            }
+        }
+
+        private void ChangeMonthClick(object sender, RoutedEventArgs e)
+        {
+            var currentItem = (Button) sender;
+            var factor = 1;
+            if (currentItem == decreasemonth)
+                factor = (-1);
+
+            if (pd.PersianSelectedDate == null)
+                pd.PersianSelectedDate = AddMonth(PersianDate.Today.Year, PersianDate.Today.Month, PersianDate.Today.Day, factor);
+            else
+                pd.PersianSelectedDate = AddMonth(pd.PersianSelectedDate.Year, pd.PersianSelectedDate.Month, pd.PersianSelectedDate.Day, factor);
+
+            if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+            {
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = AddMonth(pd.PersianSelectedDate.Year, pd.PersianSelectedDate.Month, pd.PersianSelectedDate.Day, 1);
+            }
+            else
+            {
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = AddMonth(pd.PersianSelectedDate.Year, pd.PersianSelectedDate.Month, pd.PersianSelectedDate.Day, -1);
+            }
+        }
+
+        private PersianDate AddMonth(int year, int month, int day, int factor)
+        {
+            month += factor;
+            if (!PersianDate.IsValid(year, month, day))
+            {
+                if (month > 12)
+                {
+                    year++;
+                    month = 1;
+                }
+                else if (month < 1)
+                {
+                    year--;
+                    month = 12;
+                }
+
+                if (PersianDate.DaysInMonth(year, month) < day)
+                    day = PersianDate.DaysInMonth(year, month);
+            }
+
+            return new PersianDate(year, month, day);
+        }
+
+        private void ChangeYearClick(object sender, RoutedEventArgs e)
+        {
+            var currentItem = (Button) sender;
+            var factor = 1;
+            if (currentItem == decreaseyear)
+                factor = (-1);
+
+            if (pd.PersianSelectedDate == null)
+                pd.PersianSelectedDate = AddYear(PersianDate.Today.Year, PersianDate.Today.Month, PersianDate.Today.Day, factor);
+            else
+                pd.PersianSelectedDate = AddYear(pd.PersianSelectedDate.Year, pd.PersianSelectedDate.Month, pd.PersianSelectedDate.Day, factor);
+
+            if (DateFormat == DateFormat.RangeFrom || DateFormat == DateFormat.DateTime)
+            {
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = AddYear(pd.PersianSelectedDate.Year, pd.PersianSelectedDate.Month, pd.PersianSelectedDate.Day, 1);
+            }
+            else
+            {
+                if (Partner != null)
+                    Partner.pd.PersianSelectedDate = AddYear(pd.PersianSelectedDate.Year, pd.PersianSelectedDate.Month, pd.PersianSelectedDate.Day, -1);
+            }
+        }
+
+        private PersianDate AddYear(int year, int month, int day, int factor)
+        {
+            year += factor;
+            if (!PersianDate.IsValid(year, month, day))
+            {
+                if (PersianDate.DaysInMonth(year, month) < day)
+                    day = PersianDate.DaysInMonth(year, month);
+            }
+
+            return new PersianDate(year, month, day);
         }
 
         #endregion

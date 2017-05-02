@@ -3,6 +3,7 @@
     public enum DateFormat
     {
         DateTime,
-        Range
+        RangeFrom,
+        RangeTo
     }
 }

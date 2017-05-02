@@ -10,6 +10,24 @@
              Loaded="searchfield_Loaded"
              Name="searchfield">
     <UserControl.Resources>
+        <Style x:Key="menuitem" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="LightGray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <converter:VisibilityToBoolConverter x:Key="converter"/>
     </UserControl.Resources>
 
@@ -23,38 +41,193 @@
                               Visibility="{Binding OpertatorVisible, ElementName=searchfield,Converter={StaticResource converter}}"
                               SelectedItem="{Binding Operator,ElementName=searchfield}"/>
         <local:PersianDatePicker x:Name="pd" Grid.Column="1" SelectedDate="{Binding SelectedDate,ElementName=searchfield , Mode=OneWayToSource}"/>
-        <Button x:Name="suggest" Grid.Column="1" HorizontalAlignment="Right" Margin="5,0">
-            <Button.Resources>
+        <ToggleButton x:Name="suggestbtn" Grid.Column="1" Margin="5,0" Checked="suggestbtn_Checked">
+            <ToggleButton.Resources>
                 <SolidColorBrush x:Key="suggestColor" Color="Gray"/>
                 <SolidColorBrush x:Key="suggestColorOver" Color="Black"/>
-            </Button.Resources>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Image x:Name="image" Height="8" >
-                        <Image.Source>
-                            <DrawingImage>
-                                <DrawingImage.Drawing>
-                                    <GeometryDrawing Brush="{StaticResource suggestColor}" Geometry="M 0,0 L 100,200 L200,0 L 150,0 L 100,50 L 50,0 Z"/>
-                                </DrawingImage.Drawing>
-                            </DrawingImage>
-                        </Image.Source>
-                    </Image>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="image" Property="Source">
+            </ToggleButton.Resources>
+            <ToggleButton.Style>
+                <Style TargetType="ToggleButton">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOpen,ElementName=mainpopup}" Value="true">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Image x:Name="image" Height="8" >
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <GeometryDrawing Brush="{StaticResource suggestColor}" Geometry="M 0,0 L 100,200 L200,0 L 150,0 L 100,50 L 50,0 Z"/>
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="image" Property="Source">
+                                            <Setter.Value>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <GeometryDrawing Brush="{StaticResource suggestColorOver}" Geometry="M 0,0 L 100,200 L200,0 L 150,0 L 100,50 L 50,0 Z"/>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ToggleButton.Style>
+            <ToggleButton.ContextMenu>
+                <ContextMenu IsOpen="{Binding IsChecked,ElementName=suggestbtn}">
+                    <ContextMenu.Resources>
+                        <ControlTemplate x:Key="MenuItem" TargetType="{x:Type MenuItem}">
+                            <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Margin="0,2">
+                                <ContentPresenter x:Name="menuHeaderContainer" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentSource="Header" 
+                                  HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsHighlighted" Value="True">
+                                    <Setter Property="Background" TargetName="templateRoot" Value="#3D26A0DA"/>
+                                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                        <ControlTemplate x:Key="MenuSubItem" TargetType="{x:Type MenuItem}">
+                            <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Margin="0,2">
+                                <Grid>
+                                    <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentSource="Header" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                                    <Path x:Name="RightArrow" Data="M0,0L4,3.5 0,7z" Fill="#FF212121" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" HorizontalOffset="-2" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Left" VerticalOffset="-3">
+                                        <Border x:Name="SubMenuBorder" BorderBrush="Black" BorderThickness="1" CornerRadius="3" Background="White" Padding="3">
+                                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" Grid.IsSharedSizeScope="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle"/>
+                                        </Border>
+                                    </Popup>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                                    <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+                                </Trigger>
+                                <Trigger Property="IsHighlighted" Value="True">
+                                    <Setter Property="Background" TargetName="templateRoot" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="15"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="2,0"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                        <Style x:Key="menuitem" TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Width" Value="100"/>
+                            <Setter Property="Template">
                                 <Setter.Value>
-                                    <DrawingImage>
-                                        <DrawingImage.Drawing>
-                                            <GeometryDrawing Brush="{StaticResource suggestColorOver}" Geometry="M 0,0 L 100,200 L200,0 L 150,0 L 100,50 L 50,0 Z"/>
-                                        </DrawingImage.Drawing>
-                                    </DrawingImage>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
                                 </Setter.Value>
-                            </Setter> 
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+                            </Setter>
+                        </Style>
+                        <Style x:Key="SeparatorStyle" TargetType="{x:Type Separator}">
+                            <Setter Property="Focusable" Value="false"/>
+                            <Setter Property="Margin" Value="0,2"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Separator}">
+                                        <Border BorderBrush="Black" BorderThickness="1" Height="1" SnapsToDevicePixels="true"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ContextMenu.Resources>
+                    <ContextMenu.Template>
+                        <ControlTemplate TargetType="ContextMenu">
+                            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Background="White">
+                                <ItemsPresenter/>
+                            </Border>
+                        </ControlTemplate>
+                    </ContextMenu.Template>
+                    <MenuItem Template="{StaticResource MenuItem}">
+                        <MenuItem.Header>
+                            <Grid>
+                                <Button Name="today" Content="امروز" Style="{StaticResource menuitem}" Click="ItemClick"/>
+                                <Button Name="increaseday" Content="+" HorizontalAlignment="Left" Click="ChangeDayClick"/>
+                                <Button Name="decreaseday" Content="-" HorizontalAlignment="Right" Click="ChangeDayClick"/>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator Style="{StaticResource SeparatorStyle}"/>
+                    <MenuItem Template="{StaticResource MenuItem}">
+                        <MenuItem.Header>
+                            <Grid>
+                                <Button Name="thisweek" Content="هفته جاری" Style="{StaticResource menuitem}" Click="ItemClick"/>
+                                <Button Name="increaseweek" Content="+" HorizontalAlignment="Left" Click="ChangeWeekClick"/>
+                                <Button Name="decreaseweek" Content="-" HorizontalAlignment="Right" Click="ChangeWeekClick"/>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator Style="{StaticResource SeparatorStyle}"/>
+                    <MenuItem Template="{StaticResource MenuItem}">
+                        <MenuItem.Header>
+                            <Grid>
+                                <Button Name="thismonth" Content="ماه جاری" Style="{StaticResource menuitem}" Click="ItemClick"/>
+                                <Button Name="increasemonth" Content="+" HorizontalAlignment="Left" Click="ChangeMonthClick"/>
+                                <Button Name="decreasemonth" Content="-" HorizontalAlignment="Right" Click="ChangeMonthClick"/>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator Style="{StaticResource SeparatorStyle}"/>
+                    <MenuItem Template="{StaticResource MenuItem}">
+                        <MenuItem.Header>
+                            <Grid>
+                                <Button Name="thisyear" Content="سال جاری" Style="{StaticResource menuitem}" Click="ItemClick"/>
+                                <Button Name="increaseyear" Content="+" HorizontalAlignment="Left" Click="ChangeYearClick"/>
+                                <Button Name="decreaseyear" Content="-" HorizontalAlignment="Right" Click="ChangeYearClick"/>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator Style="{StaticResource SeparatorStyle}"/>
+                    <MenuItem Template="{StaticResource MenuSubItem}" Header="ماه ها">
+                        <MenuItem Name="m1" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="فروردین"/>
+                        <MenuItem Name="m2" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="اردیبهشت"/>
+                        <MenuItem Name="m3" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="خرداد"/>
+                        <MenuItem Name="m4" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="تیر"/>
+                        <MenuItem Name="m5" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="مرداد"/>
+                        <MenuItem Name="m6" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="شهریور"/>
+                        <MenuItem Name="m7" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="مهر"/>
+                        <MenuItem Name="m8" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="آبان"/>
+                        <MenuItem Name="m9" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="آذر"/>
+                        <MenuItem Name="m10" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="دی"/>
+                        <MenuItem Name="m11" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="بهمن"/>
+                        <MenuItem Name="m12" Click="SetMonthClick" Template="{StaticResource MenuItem}" Header="اسفند"/>
+                    </MenuItem>
+                    <Separator Style="{StaticResource SeparatorStyle}"/>
+                    <MenuItem Template="{StaticResource MenuSubItem}" Header="فصل ها">
+                        <MenuItem Name="s1" Click="SetSeasonClick" Template="{StaticResource MenuItem}" Header="بهار"/>
+                        <MenuItem Name="s2" Click="SetSeasonClick" Template="{StaticResource MenuItem}" Header="تابستان"/>
+                        <MenuItem Name="s3" Click="SetSeasonClick" Template="{StaticResource MenuItem}" Header="پاییز"/>
+                        <MenuItem Name="s4" Click="SetSeasonClick" Template="{StaticResource MenuItem}" Header="زمستان"/>
+                    </MenuItem>
+                    <Separator Style="{StaticResource SeparatorStyle}"/>
+                    <MenuItem Template="{StaticResource MenuSubItem}" Header="نیم سال ها">
+                        <MenuItem Name="hy1" Click="SetHalfYearClick" Template="{StaticResource MenuItem}" Header="نیم سال اول"/>
+                        <MenuItem Name="hy2" Click="SetHalfYearClick" Template="{StaticResource MenuItem}" Header="نیم سال دوم"/>
+                    </MenuItem>
+                </ContextMenu>
+            </ToggleButton.ContextMenu>
+        </ToggleButton>
     </Grid>
 
 </UserControl>
