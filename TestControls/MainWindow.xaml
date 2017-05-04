@@ -11,12 +11,11 @@
     Title="MainWindow" Height="300" Width="500"
     FontFamily="IRANSans"
     Name="wnd">
+    
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
-    <Grid>
-        <ctl:SearchPanel>
-            <ctl:DateSearchField DateFormat="RangeFrom" DisplayName="تاریخ"/>
-        </ctl:SearchPanel>
+    <Grid FlowDirection="RightToLeft">
+        <ctl:CustomComboBox EnumType="{x:Type local:MyEnum}" VerticalAlignment="Center" SelectedItem="{Binding MyEnum}" IsNullable="True" SearchVisible="Visible"/>
     </Grid>
 </Window>

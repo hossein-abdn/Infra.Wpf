@@ -75,7 +75,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ParentViewModel.cs" />
-    <Compile Include="SimpleStackPanel.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

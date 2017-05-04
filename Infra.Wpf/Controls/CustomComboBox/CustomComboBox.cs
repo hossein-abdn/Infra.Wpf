@@ -7,7 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Infra.Wpf.Controls
 {
@@ -30,6 +32,24 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty EnumTypeProperty = DependencyProperty.Register("EnumType", typeof(Type),
             typeof(CustomComboBox), new PropertyMetadata(null, EnumTypeChanged));
 
+        public Visibility SearchVisible
+        {
+            get { return (Visibility) GetValue(SearchVisibleProperty); }
+            set { SetValue(SearchVisibleProperty, value); }
+        }
+
+        public static readonly DependencyProperty SearchVisibleProperty =
+            DependencyProperty.Register("SearchVisible", typeof(Visibility), typeof(CustomComboBox), new PropertyMetadata(Visibility.Collapsed));
+
+        public string SearchText
+        {
+            get { return (string) GetValue(SearchTextProperty); }
+            set { SetValue(SearchTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty SearchTextProperty =
+            DependencyProperty.Register("SearchText", typeof(string), typeof(CustomComboBox), new PropertyMetadata(null));
+
         public RelayCommand ClearCommand { get; set; }
 
         public bool IsNullable { get; set; }
@@ -38,6 +58,10 @@ namespace Infra.Wpf.Controls
 
         IDictionary enumValues;
 
+        TextBox SearchElement;
+
+        CollectionView itemsViewOriginal;
+
         #endregion
 
         #region Methods
@@ -45,6 +69,58 @@ namespace Infra.Wpf.Controls
         static CustomComboBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomComboBox), new FrameworkPropertyMetadata(typeof(CustomComboBox)));
+        }
+
+        protected override void OnDropDownClosed(EventArgs e)
+        {
+            base.OnDropDownClosed(e);
+
+            SearchText = string.Empty;
+
+            itemsViewOriginal.Filter = x => true;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            SearchElement = (TextBox) Template.FindName("Search_PART", this);
+            SearchElement.TextChanged += SearchTextBox_TextChanged;
+            SearchElement.PreviewKeyDown += SearchElement_KeyDown;
+
+            PreviewKeyDown += CustomComboBox_PreviewKeyDown;
+        }
+
+        private void SearchElement_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Down || e.Key == Key.Up)
+                ((ComboBoxItem) this.ItemContainerGenerator.ContainerFromIndex(0))?.Focus();
+            else if (e.Key == Key.Enter && itemsViewOriginal.Count > 0)
+                SelectedItem = itemsViewOriginal.GetItemAt(0);
+        }
+
+        private void CustomComboBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key != Key.Down && e.Key != Key.Up)
+                SearchElement.Focus();
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            itemsViewOriginal.Filter = x =>
+            {
+                if (String.IsNullOrEmpty(SearchText))
+                    return true;
+                else
+                {
+                    if (((ComboItem) x).DisplayName.Contains(SearchText))
+                        return true;
+                    else
+                        return false;
+                }
+            };
+
+            itemsViewOriginal.Refresh();
         }
 
         private void ClearExecute()
@@ -59,7 +135,6 @@ namespace Infra.Wpf.Controls
 
             if (!((Type) e.NewValue).IsEnum)
                 throw new ArgumentException("Parameter is not an Enumermated type", "EnumType");
-
 
             var customComboBox = (CustomComboBox) d;
             customComboBox.ItemsSource = customComboBox.CreateEnumDispalyItems();
@@ -104,6 +179,8 @@ namespace Infra.Wpf.Controls
         private void CustomComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             EnumTypeChanged(this, new DependencyPropertyChangedEventArgs(EnumTypeProperty, null, EnumType));
+
+            itemsViewOriginal = (CollectionView) CollectionViewSource.GetDefaultView(ItemsSource);
         }
 
         private IEnumerable CreateEnumDispalyItems()
