@@ -20,7 +20,7 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty PersianSelectedDateProperty =
             DependencyProperty.Register("PersianSelectedDate", typeof(PersianDate), typeof(PersianDatePicker),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                    OnSelectedDateChanged, CoercePersianSelectedDate));
+                    OnPersianSelectedDateChanged, CoercePersianSelectedDate));
 
         [Category("Date Picker")]
         public PersianDate PersianSelectedDate
@@ -37,7 +37,7 @@ namespace Infra.Wpf.Controls
 
         public static readonly DependencyProperty SelectedDateProperty =
             DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(PersianDatePicker),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnSelectedDateChanged));
 
         public DateTime? SelectedDate
         {
@@ -224,7 +224,7 @@ namespace Infra.Wpf.Controls
             return o;
         }
 
-        static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnPersianSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PersianDatePicker pdp = d as PersianDatePicker;
 
@@ -240,6 +240,26 @@ namespace Infra.Wpf.Controls
             }
 
             pdp.RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent, pdp));
+        }
+
+        static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            PersianDatePicker pdp = d as PersianDatePicker;
+            var date = e.NewValue as DateTime?;
+
+            if (date != null)
+            {
+                if (pdp.PersianSelectedDate == null || pdp.PersianSelectedDate.ToDateTime() != date.Value)
+                {
+                    PersianDate newDate;
+                    if (PersianDate.TryParse(date.Value, out newDate))
+                        d.SetValue(PersianSelectedDateProperty, newDate);
+                    else
+                        d.SetValue(PersianSelectedDateProperty, null);
+                }
+            }
+            else
+                d.SetValue(PersianSelectedDateProperty, null);
         }
 
         private void ValidateText()

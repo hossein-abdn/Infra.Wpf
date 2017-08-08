@@ -206,6 +206,20 @@ namespace Infra.Wpf.Common
                 return false;
             }
         }
+
+        public static bool TryParse(DateTime date, out PersianDate result)
+        {
+            try
+            {
+                result = new PersianDate(date);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
         
         public static bool IsValid(int year, int month, int day)
         {

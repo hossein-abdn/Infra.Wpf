@@ -60,7 +60,7 @@
                    StaysOpen="False" Opened="persianCalnedarPopup_Opened"
                    PopupAnimation="Slide" AllowsTransparency="True" VerticalOffset="5">
                 <Grid Background="White">
-                    <local:PersianCalendar x:Name="persianCalendar" Height="200" Width="200" FontSize="12"
+                    <local:PersianCalendar x:Name="persianCalendar" Height="200" Width="200"
                                            PersianSelectedDate="{Binding PersianSelectedDate,ElementName=datePicker, Mode=TwoWay}"
                                            DisplayDate="{Binding DisplayDate,ElementName=datePicker, Mode=TwoWay}"
                                            DisplayDateStart="{Binding DisplayDateStart,ElementName=datePicker,Mode=TwoWay}"

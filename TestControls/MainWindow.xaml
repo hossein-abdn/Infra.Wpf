@@ -10,12 +10,13 @@
     mc:Ignorable="d"
     Title="MainWindow" Height="300" Width="500"
     FontFamily="IRANSans"
-    Name="wnd">
-    
-    <Window.DataContext>
+    Name="wnd"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <!--<Window.DataContext>
         <local:ViewModel/>
-    </Window.DataContext>
-    <Grid FlowDirection="RightToLeft">
-        <ctl:CustomComboBox EnumType="{x:Type local:MyEnum}" VerticalAlignment="Center" SelectedItem="{Binding MyEnum}" IsNullable="True" SearchVisible="Visible"/>
-    </Grid>
+    </Window.DataContext>-->
+    <!--<ctl:MultiSelect VerticalAlignment="Center" ItemsSource="{x:Static local:MainWindow.GetDataModel}"/>-->
+
+    <ctl:PersianDatePicker VerticalAlignment="Center" SelectedDate="0001/1/1" AllowNull="False"/>
 </Window>
