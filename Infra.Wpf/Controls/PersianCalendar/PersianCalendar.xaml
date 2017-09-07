@@ -22,7 +22,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Border">
-                            <ContentPresenter Margin="2" VerticalAlignment="Center"/>
+                            <ContentPresenter Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
@@ -51,9 +51,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Border" CornerRadius="2" Background="{TemplateBinding Background}" BorderThickness="1">
-                            <Viewbox>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Viewbox>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
@@ -95,19 +93,21 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Border DockPanel.Dock="Top" BorderBrush="Lavender" Background="LightGray" Margin="3">
-                <Grid>
-                    <Grid.ColumnDefinitions>
+                <DockPanel  LastChildFill="True">
+                    <!--<Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>-->
                     <Button Name="nextButton" Style="{StaticResource ButtonStyle}" FontFamily="Arial"
-                            Click="nextButton_Click" Content="◄" HorizontalAlignment="Right"/>
-                    <Button Name="titleButton" Grid.Column="1" Style="{StaticResource ButtonStyle}" FlowDirection="RightToLeft" 
-                            Focusable="True" Click="titleButton_Click" FontWeight="Bold" Content="1376 خرداد" HorizontalAlignment="Center"/>
+                            Click="nextButton_Click" Content="◄" DockPanel.Dock="Left"/>
                     <Button Name="previousButton" Grid.Column="2" Style="{StaticResource ButtonStyle}" FontFamily="Arial" 
-                            Click="previousButton_Click" Content="►"/>
-                </Grid>
+                            Click="previousButton_Click" Content="►" DockPanel.Dock="Right"/>
+                    <Button Name="titleButton" Grid.Column="1" Style="{StaticResource ButtonStyle}" FlowDirection="RightToLeft" 
+                            Focusable="True" Click="titleButton_Click" FontWeight="Bold" Content="1376 خرداد"/>
+                    
+                    
+                </DockPanel>
             </Border>
             <Grid Grid.Row="1" FlowDirection="RightToLeft">
                 <Grid.ColumnDefinitions>

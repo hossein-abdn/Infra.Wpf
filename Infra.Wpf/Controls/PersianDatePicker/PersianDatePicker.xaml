@@ -7,7 +7,6 @@
     MinWidth="115"
     Height="auto" 
     Background="White"
-    FlowDirection="RightToLeft" 
     Focusable="True" 
     KeyboardNavigation.TabNavigation="Local"
     KeyDown="UserControl_KeyDown"
@@ -55,12 +54,12 @@
 
             <Border Width="1" BorderBrush="Gray" BorderThickness="1" Margin="0,2,2,2" DockPanel.Dock="Right"/>
 
-            <Popup x:Name="persianCalnedarPopup" HorizontalAlignment="Right" 
+            <Popup x:Name="persianCalnedarPopup" 
                    PlacementTarget="{Binding ElementName=openCalendarButton}"
                    StaysOpen="False" Opened="persianCalnedarPopup_Opened"
                    PopupAnimation="Slide" AllowsTransparency="True" VerticalOffset="5">
                 <Grid Background="White">
-                    <local:PersianCalendar x:Name="persianCalendar" Height="200" Width="200"
+                    <local:PersianCalendar x:Name="persianCalendar" FontSize="{Binding CalendarFontSize,ElementName=datePicker}"
                                            PersianSelectedDate="{Binding PersianSelectedDate,ElementName=datePicker, Mode=TwoWay}"
                                            DisplayDate="{Binding DisplayDate,ElementName=datePicker, Mode=TwoWay}"
                                            DisplayDateStart="{Binding DisplayDateStart,ElementName=datePicker,Mode=TwoWay}"

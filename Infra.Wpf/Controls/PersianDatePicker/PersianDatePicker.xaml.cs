@@ -99,6 +99,7 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(PersianDatePicker));
 
+        [Category("Date Picker")]
         public string Text
         {
             get
@@ -114,6 +115,7 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty AllowNullProperty =
             DependencyProperty.Register("AllowNull", typeof(bool), typeof(PersianDatePicker), new PropertyMetadata(true));
 
+        [Category("Date Picker")]
         public bool AllowNull
         {
             get
@@ -124,6 +126,16 @@ namespace Infra.Wpf.Controls
             {
                 SetValue(AllowNullProperty, value);
             }
+        }
+
+        public static readonly DependencyProperty CalendarFontSizeProperty =
+           DependencyProperty.Register("CalendarFontSize", typeof(double), typeof(PersianDatePicker), new PropertyMetadata(12d));
+
+        [Category("Date Picker")]
+        public double CalendarFontSize
+        {
+            get { return (double) GetValue(CalendarFontSizeProperty); }
+            set { SetValue(CalendarFontSizeProperty, value); }
         }
 
         public PersianCalendar PersianCalendar
@@ -423,6 +435,14 @@ namespace Infra.Wpf.Controls
         private void persianCalnedarPopup_Opened(object sender, EventArgs e)
         {
             this.persianCalendar.Focus();
+
+            var size = persianCalnedarPopup.Child.RenderSize;
+            if(size.Width != size.Height)
+            {
+                var max = Math.Max(size.Width, size.Height);
+                persianCalnedarPopup.Height = max;
+                persianCalnedarPopup.Width = max;
+            }
         }
 
         private void UserControl_KeyDown(object sender, KeyEventArgs e)

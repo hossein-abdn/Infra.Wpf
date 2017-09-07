@@ -8,15 +8,15 @@
     xmlns:ctl="clr-namespace:Infra.Wpf.Controls;assembly=Infra.Wpf"
     xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" x:Class="TestControls.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" Height="300" Width="500"
+    Title="MainWindow" Height="500" Width="500"
     FontFamily="IRANSans"
     Name="wnd"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
-
-    <!--<Window.DataContext>
-        <local:ViewModel/>
+    
+    <Grid>
+        <!--<Window.DataContext>
+    <local:ViewModel/>
     </Window.DataContext>-->
-    <!--<ctl:MultiSelect VerticalAlignment="Center" ItemsSource="{x:Static local:MainWindow.GetDataModel}"/>-->
-
-    <ctl:PersianDatePicker VerticalAlignment="Center" SelectedDate="0001/1/1" AllowNull="False"/>
+    <ctl:MultiSelect VerticalAlignment="Center" ItemsSource="{x:Static local:MainWindow.GetDataModel}"/>
+    </Grid>
 </Window>
