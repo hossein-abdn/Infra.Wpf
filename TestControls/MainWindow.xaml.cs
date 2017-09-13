@@ -18,6 +18,7 @@ using System.Threading;
 using Infra.Wpf;
 using C1.WPF;
 using System.Windows.Forms;
+using System.Collections.ObjectModel;
 
 namespace TestControls
 {
@@ -29,11 +30,18 @@ namespace TestControls
         public MainWindow()
         {
             InitializeComponent();
-            
+
             CultureInfo calture = new CultureInfo("fa-IR");
             calture.NumberFormat.DigitSubstitution = DigitShapes.NativeNational;
             Thread.CurrentThread.CurrentCulture = calture;
             Thread.CurrentThread.CurrentUICulture = calture;
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.ListBox l;
+            l.ItemsSource
         }
 
         public static List<Product> GetDataModel
@@ -41,13 +49,14 @@ namespace TestControls
             get
             {
                 List<Product> _products = new List<Product>();
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     _products.Add(new Product());
                 }
                 return _products;
-                C1NumericBox b;
             }
         }
+
+        
     }
 }

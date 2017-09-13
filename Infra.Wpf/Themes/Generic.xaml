@@ -365,6 +365,33 @@
         </Setter>
     </Style>
 
+    <Style x:Key="SearchPartStyle" TargetType="TextBox">
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <DockPanel>
+                            <Image Source="/Infra.Wpf;component/Controls/Resources/Search-24.png" Width="12" DockPanel.Dock="Left" Margin="3,0"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border1}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border1}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type local:CustomComboBox}">
         <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
             <Grid.ColumnDefinitions>
@@ -375,48 +402,23 @@
             <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="3" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
                 <Themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=templateRoot}">
                     <Border x:Name="dropDownBorder" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1" Background="#f3f3f3">
-                        <ScrollViewer x:Name="DropDownScrollViewer">
-                            <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <TextBox x:Name="Search_PART" Visibility="{TemplateBinding SearchVisible}" Text="{Binding SearchText,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBox.Style>
-                                        <Style TargetType="TextBox">
-                                            <Setter Property="Margin" Value="2"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="TextBox">
-                                                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                                            <DockPanel>
-                                                                <Image Source="/Infra.Wpf;component/Controls/Resources/Search-24.png" Width="12" DockPanel.Dock="Left" Margin="3,0"/>
-                                                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                                                            </DockPanel>
-                                                        </Border>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsEnabled" Value="false">
-                                                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                                                            </Trigger>
-                                                            <Trigger Property="IsMouseOver" Value="true">
-                                                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border1}"/>
-                                                            </Trigger>
-                                                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border1}"/>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </TextBox.Style>
-                                </TextBox>
-                                <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0" Grid.Row="1">
-                                    <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
-                                </Canvas>
-                                <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Row="1"/>
-                            </Grid>
-                        </ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBox x:Name="Search_PART" Style="{StaticResource SearchPartStyle}" Visibility="{TemplateBinding SearchVisible}" 
+                                     Text="{Binding SearchText,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}"/>
+                            <ScrollViewer x:Name="DropDownScrollViewer" Grid.Row="1">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" 
+                                                   Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
                     </Border>
                 </Themes:SystemDropShadowChrome>
             </Popup>
@@ -661,10 +663,17 @@
 
     <!--_________________________________________MultiSelect_________________________________________-->
 
-    <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
-    <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
+    <LinearGradientBrush x:Key="MultiSelect.Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#FFF0F0F0" Offset="0.0"/>
+        <GradientStop Color="#FFE5E5E5" Offset="1.0"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="MultiSelect.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#FFECF4FC" Offset="0.0"/>
+        <GradientStop Color="#FFDCECFC" Offset="1.0"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="MultiSelect.Border" Color="#FFABADB3"/>
+    <SolidColorBrush x:Key="MultiSelect.MouseOver.Border" Color="#FF7EB4EA"/>
+
     <ControlTemplate x:Key="MultiSelectContent" TargetType="ContentControl">
         <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Padding="2,0" Margin="1">
             <Border.Style>
@@ -700,98 +709,90 @@
             </StackPanel>
         </Border>
     </ControlTemplate>
-    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="AllowDrop" Value="true"/>
-        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+
+    <Style x:Key="MultiSelectToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Background" Value="{StaticResource MultiSelect.Background}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="border" BorderBrush="Black" BorderThickness="1" CornerRadius="3" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <WrapPanel Name="wrappanel" Orientation="Horizontal">
-                            <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                            <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Center"/>
-                        </WrapPanel>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <Path x:Name="arrow" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="#FF606060"
+                              HorizontalAlignment="Right" Margin="0,0,3,0" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            <Setter Property="Background" Value="{StaticResource MultiSelect.MouseOver.Background}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
-                    <Condition Property="IsSelectionActive" Value="false"/>
-                </MultiTrigger.Conditions>
-                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
-            </MultiTrigger>
-        </Style.Triggers>
     </Style>
+
     <Style TargetType="{x:Type local:MultiSelect}">
-        <Setter Property="Background" Value="{StaticResource ListBox.Static.Background}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ListBox.Static.Border}"/>
+        <Setter Property="Background" Value="{StaticResource MultiSelect.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MultiSelect.Border}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MultiSelect}">
                     <Grid>
-                        <TextBox x:Name="textbox" Style="{StaticResource TextBoxStyle}"/>
-                        <Popup x:Name="popup" AllowsTransparency="true" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom"
-                               Width="{TemplateBinding ActualWidth}" Height="100">
-                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
-                                <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
-                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                </ScrollViewer>
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Style="{StaticResource MultiSelectToggleButton}" IsChecked="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent}}" 
+                                              Grid.ColumnSpan="2" HorizontalContentAlignment="Right" BorderThickness="0"/>
+                                <WrapPanel Orientation="Horizontal" Margin="{TemplateBinding Padding}">
+                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test444" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
+                                    <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+                        <Popup AllowsTransparency="true" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom" StaysOpen="False"
+                               Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding MaxDropDownHeight}" IsOpen="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" Background="White" Padding="1" SnapsToDevicePixels="true">
+                                <Grid Background="#f3f3f3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBox Style="{StaticResource SearchPartStyle}" Visibility="{TemplateBinding SearchVisible}" Text="{TemplateBinding SearchText}"/>
+                                    <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Grid.Row="1">
+                                        <StackPanel x:Name="presenter"/>
+                                    </ScrollViewer>
+                                </Grid>
                             </Border>
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Background}"/>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Border}"/>
+                            <Setter Property="Opacity" TargetName="border" Value="0.6"/>
                         </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsGrouping" Value="true"/>
-                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-                        </MultiTrigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" Value="{StaticResource MultiSelect.MouseOver.Border}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

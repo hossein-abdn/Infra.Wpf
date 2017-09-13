@@ -14,39 +14,18 @@ using System.Threading.Tasks;
 
 namespace TestControls
 {
-    public class ViewModel:ViewModelBase<Student>
+    public class ViewModel:ViewModelBase<Product>
     {
-        public RelayCommand<string> GetStudentsCommand { get; set; }
-
         public ViewModel()
         {
-            GetStudentsCommand = new RelayCommand<string>(GetStudents);
+            List<Product> _products = new List<Product>();
+            for (int i = 0; i < 5; i++)
+            {
+                _products.Add(new Product());
+            }
+
+            ItemsSource = new ObservableCollection<Product>(_products);
         }
 
-        private void GetStudents(string whereClause)
-        {
-            FBSDBContext context = new FBSDBContext();
-
-            var predicate = DynamicLinq.ConvertToExpression<Student>(whereClause);
-            List<Student> list = context.Students.Where(predicate).ToList();
-            
-
-            ItemsSource = new ObservableCollection<Student>(list);
-        }
-
-        public MyEnum? MyEnum
-        {
-            get { return Get<MyEnum?>(); }
-            set { Set(value); }
-        }
-
-    }
-
-    public enum MyEnum
-    {
-        [EnumDisplay("عدد 1")]
-        num1,
-        [EnumDisplay("عدد 2")]
-        num2
     }
 }

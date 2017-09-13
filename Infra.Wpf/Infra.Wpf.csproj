@@ -231,8 +231,8 @@
     </Compile>
     <Compile Include="Controls\Lookup\PreviewSelectEventArgs.cs" />
     <Compile Include="Controls\Lookup\SelectionChangedEventArgs.cs" />
-    <Compile Include="Controls\MultiSelect\MultiItem.cs" />
     <Compile Include="Controls\MultiSelect\MultiSelect.cs" />
+    <Compile Include="Controls\MultiSelect\MultiSelectItem.cs" />
     <Compile Include="Controls\NumericBox\NumericBox.xaml.cs">
       <DependentUpon>NumericBox.xaml</DependentUpon>
     </Compile>
@@ -359,6 +359,7 @@
     <Resource Include="Controls\Resources\Select-24.png" />
     <Resource Include="Controls\Resources\SelectOver-24.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

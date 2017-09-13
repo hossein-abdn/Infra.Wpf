@@ -76,7 +76,8 @@ namespace Infra.Wpf.Controls
 
             SearchText = string.Empty;
 
-            itemsViewOriginal.Filter = x => true;
+            if (itemsViewOriginal != null)
+                itemsViewOriginal.Filter = x => true;
         }
 
         public override void OnApplyTemplate()
@@ -94,7 +95,7 @@ namespace Infra.Wpf.Controls
         {
             if (e.Key == Key.Down || e.Key == Key.Up)
                 ((ComboBoxItem) this.ItemContainerGenerator.ContainerFromIndex(0))?.Focus();
-            else if (e.Key == Key.Enter && itemsViewOriginal.Count > 0)
+            else if (e.Key == Key.Enter && itemsViewOriginal != null && itemsViewOriginal.Count > 0)
                 SelectedItem = itemsViewOriginal.GetItemAt(0);
         }
 
@@ -106,20 +107,45 @@ namespace Infra.Wpf.Controls
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            itemsViewOriginal.Filter = x =>
+            if (itemsViewOriginal != null)
             {
-                if (String.IsNullOrEmpty(SearchText))
-                    return true;
-                else
+                itemsViewOriginal.Filter = x =>
                 {
-                    if (((ComboItem) x).DisplayName.Contains(SearchText))
+                    if (String.IsNullOrEmpty(SearchText))
                         return true;
-                    else
-                        return false;
-                }
-            };
+                    else if (EnumType != null)
+                    {
+                        if (((ComboItem) x).DisplayName.ToLower().Contains(SearchText))
+                            return true;
+                    }
+                    else if (ItemsSource != null)
+                    {
+                        if (DisplayMemberPath == string.Empty)
+                        {
+                            if (x.ToString().ToLower().Contains(SearchText))
+                                return true;
+                        }
+                        else
+                        {
+                            var property = x.GetType().GetProperty(DisplayMemberPath);
+                            if (property == null)
+                            {
+                                if (x.ToString().ToLower().Contains(SearchText))
+                                    return true;
+                            }
+                            else
+                            {
+                                if (property.GetValue(x).ToString().ToLower().Contains(SearchText))
+                                    return true;
+                            }
+                        }
+                    }
 
-            itemsViewOriginal.Refresh();
+                    return false;
+                };
+
+                itemsViewOriginal.Refresh();
+            }
         }
 
         private void ClearExecute()
@@ -178,8 +204,12 @@ namespace Infra.Wpf.Controls
         private void CustomComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             EnumTypeChanged(this, new DependencyPropertyChangedEventArgs(EnumTypeProperty, null, EnumType));
+        }
 
+        protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
+        {
             itemsViewOriginal = (CollectionView) CollectionViewSource.GetDefaultView(ItemsSource);
+            base.OnItemsSourceChanged(oldValue, newValue);
         }
 
         private IEnumerable CreateEnumDispalyItems()
