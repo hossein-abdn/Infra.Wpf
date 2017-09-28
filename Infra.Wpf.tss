@@ -2,17 +2,14 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Themes\Generic.xaml</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\multiselect\multiselect.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
       <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml</string>
       <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\MultiSelect\MultiSelectItem.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\themes\generic.xaml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\MultiSelect\MultiSelect.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

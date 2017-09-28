@@ -7,21 +7,21 @@
     xmlns:data="clr-namespace:DataAccess;assembly=DataAccess"
     xmlns:ctl="clr-namespace:Infra.Wpf.Controls;assembly=Infra.Wpf"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="TestControls.MainWindow"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" 
+    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
+    x:Class="TestControls.MainWindow"
     mc:Ignorable="d"
     Title="MainWindow" Height="500" Width="500"
     FontFamily="IRANSans"
     x:Name="wnd"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
-
-    <!--<Window.DataContext>
-        <local:ViewModel/>
-    </Window.DataContext>-->
+    
     <Grid>
-        <ListBox Name="lst"/>
-        <ctl:MultiSelect Name="multi" VerticalAlignment="Center" Margin="5" Items="{x:Static local:MainWindow.GetDataModel}">
-            <!--<TextBlock Text="1"/>
-            <TextBlock Text="2"/>-->
-        </ctl:MultiSelect>
+        <ctl:MultiSelect Name="multi" VerticalAlignment="Center" Margin="5" 
+                         DisplayMemberPath="Name" ItemsSource="{Binding productList,ElementName=wnd}"/>
+
+        <ComboBox Name="cmb" VerticalAlignment="Bottom"/>
+
+        <Button VerticalAlignment="Top" Content="click" Click="Button_Click"/>
     </Grid>
 </Window>

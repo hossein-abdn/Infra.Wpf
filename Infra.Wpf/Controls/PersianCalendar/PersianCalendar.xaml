@@ -94,19 +94,12 @@
             </Grid.RowDefinitions>
             <Border DockPanel.Dock="Top" BorderBrush="Lavender" Background="LightGray" Margin="3">
                 <DockPanel  LastChildFill="True">
-                    <!--<Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>-->
                     <Button Name="nextButton" Style="{StaticResource ButtonStyle}" FontFamily="Arial"
                             Click="nextButton_Click" Content="◄" DockPanel.Dock="Left"/>
-                    <Button Name="previousButton" Grid.Column="2" Style="{StaticResource ButtonStyle}" FontFamily="Arial" 
+                    <Button Name="previousButton" Style="{StaticResource ButtonStyle}" FontFamily="Arial" 
                             Click="previousButton_Click" Content="►" DockPanel.Dock="Right"/>
-                    <Button Name="titleButton" Grid.Column="1" Style="{StaticResource ButtonStyle}" FlowDirection="RightToLeft" 
+                    <Button Name="titleButton" Style="{StaticResource ButtonStyle}" FlowDirection="RightToLeft" 
                             Focusable="True" Click="titleButton_Click" FontWeight="Bold" Content="1376 خرداد"/>
-                    
-                    
                 </DockPanel>
             </Border>
             <Grid Grid.Row="1" FlowDirection="RightToLeft">

@@ -673,8 +673,59 @@
     </LinearGradientBrush>
     <SolidColorBrush x:Key="MultiSelect.Border" Color="#FFABADB3"/>
     <SolidColorBrush x:Key="MultiSelect.MouseOver.Border" Color="#FF7EB4EA"/>
+    <SolidColorBrush x:Key="Item.Selected.Background" Color="#1F26A0DA"/>
+    <SolidColorBrush x:Key="Item.Selected.Border" Color="#a826A0Da"/>
+    <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#3D26A0DA"/>
+    <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#FF26A0DA"/>
 
-    <ControlTemplate x:Key="MultiSelectContent" TargetType="ContentControl">
+    <Style x:Key="MultiSelectFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:MultiSelectItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Padding" Value="4,1"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type local:MultiSelect}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type local:MultiSelect}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MultiSelectItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.Selected.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.Selected.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="{ComponentResourceKey local:MultiSelect ,SelectedItemTemplate}" TargetType="ContentControl">
         <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Padding="2,0" Margin="1">
             <Border.Style>
                 <Style TargetType="Border">
@@ -688,7 +739,7 @@
             </Border.Style>
             <StackPanel Orientation="Horizontal">
                 <ContentPresenter/>
-                <Button x:Name="btnImage" Margin="2">
+                <Button x:Name="btnImage" Margin="2" Command="{Binding CloseCommand,RelativeSource={RelativeSource AncestorType={x:Type local:MultiSelect}}}" CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
@@ -733,6 +784,7 @@
     </Style>
 
     <Style TargetType="{x:Type local:MultiSelect}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MultiSelectFocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource MultiSelect.Background}"/>
         <Setter Property="BorderBrush" Value="{StaticResource MultiSelect.Border}"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -746,45 +798,34 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MultiSelect}">
                     <Grid>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="True">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
-                                </Grid.ColumnDefinitions>
-                                <ToggleButton Style="{StaticResource MultiSelectToggleButton}" IsChecked="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent}}" 
-                                              Grid.ColumnSpan="2" HorizontalContentAlignment="Right" BorderThickness="0"/>
-                                <WrapPanel Orientation="Horizontal" Margin="{TemplateBinding Padding}">
-                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test444" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test2" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test3" Template="{StaticResource MultiSelectContent}"/>
-                                    <ContentControl Content="test4" Template="{StaticResource MultiSelectContent}"/>
-                                </WrapPanel>
-                            </Grid>
-                        </Border>
-                        <Popup AllowsTransparency="true" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom" StaysOpen="False"
-                               Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding MaxDropDownHeight}" IsOpen="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}">
+                        <Popup x:Name="popup" AllowsTransparency="true" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom" 
+                               StaysOpen="False" IsOpen="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Width="{TemplateBinding ActualWidth}" 
+                               Height="{TemplateBinding MaxDropDownHeight}">
                             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" Background="White" Padding="1" SnapsToDevicePixels="true">
                                 <Grid Background="#f3f3f3">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBox Style="{StaticResource SearchPartStyle}" Visibility="{TemplateBinding SearchVisible}" Text="{TemplateBinding SearchText}"/>
+                                    <TextBox x:Name="searchBox" Style="{StaticResource SearchPartStyle}" Visibility="{TemplateBinding SearchVisible}"
+                                             Text="{Binding SearchText,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Grid.Row="1">
-                                        <StackPanel x:Name="presenter"/>
+                                        <StackPanel x:Name="itemPresenter"/>
                                     </ScrollViewer>
                                 </Grid>
                             </Border>
                         </Popup>
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton x:Name="toggleButton" Style="{StaticResource MultiSelectToggleButton}" IsChecked="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent}}" 
+                                              Grid.ColumnSpan="2" HorizontalContentAlignment="Right" BorderThickness="0"/>
+                                <WrapPanel x:Name="contentPresenter" Orientation="Horizontal" Margin="{TemplateBinding Padding}" MinHeight="22"/>
+                            </Grid>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
