@@ -2,7 +2,7 @@
 {
     public interface ISearchField
     {
-        string DisplayName { get; set; }
+        string Title { get; set; }
 
         string SearchPhrase { get; }
 

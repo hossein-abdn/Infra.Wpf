@@ -101,6 +101,25 @@ namespace Infra.Wpf.Controls
             DependencyProperty.Register("SelectedIndices", typeof(ObservableCollection<int>), typeof(MultiSelect),
                 new PropertyMetadata(null, OnSelectedIndicesChanged, OnSelectedIndicesCoerce));
 
+        public static readonly RoutedEvent SelectionChangedEvent =
+            EventManager.RegisterRoutedEvent("SelectionChanged", RoutingStrategy.Bubble, typeof(SelectionChangedEventHandler), typeof(MultiSelect));
+
+        public event SelectionChangedEventHandler SelectionChanged
+        {
+            add
+            {
+                AddHandler(SelectionChangedEvent, value);
+            }
+            remove
+            {
+                RemoveHandler(SelectionChangedEvent, value);
+            }
+        }
+
+        public event EventHandler DropDownOpened;
+
+        public event EventHandler DropDownClosed;
+
         private readonly ObservableCollection<object> items;
         public ObservableCollection<object> Items
         {
@@ -114,6 +133,8 @@ namespace Infra.Wpf.Controls
         private TextBox searchBox { get; set; }
 
         private Popup popup { get; set; }
+
+        private ScrollViewer scroll { get; set; }
 
         private UIElementCollection itemContainers { get; set; }
 
@@ -131,6 +152,8 @@ namespace Infra.Wpf.Controls
         }
 
         private ChangeSourceEnum ChangeSource { get; set; }
+
+        bool scrollFlag { get; set; }
 
         #endregion
 
@@ -165,6 +188,8 @@ namespace Infra.Wpf.Controls
                     popup.IsOpen = true;
             };
 
+            scroll = (ScrollViewer) Template.FindName("scroll", this);
+
             base.OnApplyTemplate();
         }
 
@@ -173,11 +198,25 @@ namespace Infra.Wpf.Controls
             Items.CollectionChanged += OnItemsChanged;
             searchBox.PreviewKeyDown += SearchBox_PreviewKeyDown;
             popup.KeyDown += Popup_KeyDown;
+            popup.Opened += Popup_Opened;
+            popup.Closed += Popup_Closed;
             SelectedItems = new ObservableCollection<object>();
             SelectedIndices = new ObservableCollection<int>();
             CloseCommand = new RelayCommand<MultiSelectItem>(CloseCommandExecute);
             foreach (var item in Items)
                 OnItemsChanged(Items, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, itemContainers.Count));
+        }
+
+        private void Popup_Closed(object sender, EventArgs e)
+        {
+            DropDownClosed?.Invoke(sender, new EventArgs());
+        }
+
+        private void Popup_Opened(object sender, EventArgs e)
+        {
+            SearchText = string.Empty;
+            scrollFlag = false;
+            DropDownOpened?.Invoke(sender, new EventArgs());
         }
 
         private void Popup_KeyDown(object sender, KeyEventArgs e)
@@ -359,6 +398,7 @@ namespace Infra.Wpf.Controls
                 contentPresenter.Children.Add(GeneratePanelItem(e.NewItems[0]));
                 ChangeSource = ChangeSourceEnum.FromSelectedItems;
                 SelectedIndices.Add(index);
+                RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], e.NewItems));
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove && ChangeSource != ChangeSourceEnum.FromSelectedIndices)
             {
@@ -370,6 +410,7 @@ namespace Infra.Wpf.Controls
                 contentPresenter.Children.RemoveAt(e.OldStartingIndex);
                 ChangeSource = ChangeSourceEnum.FromSelectedItems;
                 SelectedIndices.Remove(index);
+                RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, e.OldItems, new object[0]));
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset && ChangeSource != ChangeSourceEnum.FromSelectedIndices)
             {
@@ -378,6 +419,7 @@ namespace Infra.Wpf.Controls
                 contentPresenter.Children.Clear();
                 ChangeSource = ChangeSourceEnum.FromSelectedItems;
                 SelectedIndices.Clear();
+                RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], new object[0]));
             }
 
             ChangeSource = ChangeSourceEnum.None;
@@ -439,6 +481,7 @@ namespace Infra.Wpf.Controls
                 contentPresenter.Children.Add(GeneratePanelItem(Items[index]));
                 ChangeSource = ChangeSourceEnum.FromSelectedIndices;
                 SelectedItems.Add(Items[index]);
+                RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], new object[1] { Items[index] }));
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove && ChangeSource != ChangeSourceEnum.FromSelectedItems)
             {
@@ -450,6 +493,7 @@ namespace Infra.Wpf.Controls
                 contentPresenter.Children.RemoveAt(e.OldStartingIndex);
                 ChangeSource = ChangeSourceEnum.FromSelectedIndices;
                 SelectedItems.RemoveAt(index);
+                RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[1] { Items[index] }, new object[0]));
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset && ChangeSource != ChangeSourceEnum.FromSelectedItems)
             {
@@ -458,6 +502,7 @@ namespace Infra.Wpf.Controls
                 contentPresenter.Children.Clear();
                 ChangeSource = ChangeSourceEnum.FromSelectedIndices;
                 SelectedItems.Clear();
+                RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], new object[0]));
             }
 
             ChangeSource = ChangeSourceEnum.None;
@@ -490,7 +535,23 @@ namespace Infra.Wpf.Controls
                     SelectedItems.Add(item);
             };
 
-            newElement.MouseEnter += (sender, e) => newElement.Focus();
+            newElement.MouseEnter += (sender, e) =>
+            {
+                var index = itemContainers.IndexOf(newElement);
+                if (index < scroll.VerticalOffset + scroll.ViewportHeight)
+                    newElement.Focus();
+                else
+                {
+                    if (scrollFlag == false)
+                    {
+                        scroll.ScrollToVerticalOffset(scroll.VerticalOffset + 1);
+                        newElement.Focus();
+                        scrollFlag = true;
+                    }
+                    else
+                        scrollFlag = false;
+                }
+            };
 
             newElement.KeyDown += (sender, e) =>
             {

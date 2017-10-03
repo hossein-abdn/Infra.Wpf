@@ -254,6 +254,7 @@
     </Compile>
     <Compile Include="Controls\SearchPanel\ISearchField.cs" />
     <Compile Include="Controls\SearchPanel\LookupSearchField.cs" />
+    <Compile Include="Controls\SearchPanel\MultiSelectSearchField.cs" />
     <Compile Include="Controls\SearchPanel\NumericOperatorEnum.cs" />
     <Compile Include="Controls\SearchPanel\NumericSearchField.xaml.cs">
       <DependentUpon>NumericSearchField.xaml</DependentUpon>

@@ -4,24 +4,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:TestControls"
-    xmlns:data="clr-namespace:DataAccess;assembly=DataAccess"
     xmlns:ctl="clr-namespace:Infra.Wpf.Controls;assembly=Infra.Wpf"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" 
-    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
     x:Class="TestControls.MainWindow"
     mc:Ignorable="d"
     Title="MainWindow" Height="500" Width="500"
     FontFamily="IRANSans"
-    x:Name="wnd"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    
-    <Grid>
-        <ctl:MultiSelect Name="multi" VerticalAlignment="Center" Margin="5" 
-                         DisplayMemberPath="Name" ItemsSource="{Binding productList,ElementName=wnd}"/>
+    x:Name="wnd">
+    <Window.DataContext>
+        <local:ParentViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <local:ViewModel x:Key="vm"/>
+    </Window.Resources>
 
-        <ComboBox Name="cmb" VerticalAlignment="Bottom"/>
-
-        <Button VerticalAlignment="Top" Content="click" Click="Button_Click"/>
-    </Grid>
+    <DockPanel FlowDirection="RightToLeft">
+        <ctl:SearchPanel DockPanel.Dock="Top" IsExpanded="True" SearchCommand="{Binding GetParentsCommand}" ColumnMargin="5" RowMargin="3" Stretch="False">
+            <ctl:ComboSearchField Title="وضعیت" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
+            <ctl:MultiSelectSearchField Title="دانش آموز" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
+        </ctl:SearchPanel>
+        <ctl:GridWrapPanel>
+            <TextBlock Text="وضعیت"/>
+            <ctl:CustomComboBox/>
+            <TextBlock Text="دانش آموز"/>
+            <ctl:MultiSelect ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName"/>
+        </ctl:GridWrapPanel>
+    </DockPanel>
 </Window>

@@ -55,7 +55,7 @@ namespace Infra.Wpf.Controls
 
         private NumericOperator defaultOperator;
 
-        public string DisplayName { get; set; }
+        public string Title { get; set; }
 
         public string FilterField { get; set; }
 

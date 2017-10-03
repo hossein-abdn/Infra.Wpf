@@ -770,8 +770,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                        <Path x:Name="arrow" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="#FF606060"
-                              HorizontalAlignment="Right" Margin="0,0,3,0" VerticalAlignment="Center"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                            </Grid.ColumnDefinitions>
+                            <Path x:Name="arrow" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="#FF606060"
+                                  HorizontalAlignment="Right" Margin="0,0,3,0" VerticalAlignment="Center" Grid.Column="1"/>
+                            <ContentPresenter/>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -799,7 +806,7 @@
                 <ControlTemplate TargetType="{x:Type local:MultiSelect}">
                     <Grid>
                         <Popup x:Name="popup" AllowsTransparency="true" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom" 
-                               StaysOpen="False" IsOpen="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Width="{TemplateBinding ActualWidth}" 
+                               StaysOpen="False" IsOpen="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Width="{TemplateBinding ActualWidth}" MinWidth="100"
                                Height="{TemplateBinding MaxDropDownHeight}">
                             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" Background="White" Padding="1" SnapsToDevicePixels="true">
                                 <Grid Background="#f3f3f3">
@@ -809,22 +816,22 @@
                                     </Grid.RowDefinitions>
                                     <TextBox x:Name="searchBox" Style="{StaticResource SearchPartStyle}" Visibility="{TemplateBinding SearchVisible}"
                                              Text="{Binding SearchText,RelativeSource={RelativeSource TemplatedParent},UpdateSourceTrigger=PropertyChanged}"/>
-                                    <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Grid.Row="1">
+                                    <ScrollViewer x:Name="scroll" Focusable="false" Padding="{TemplateBinding Padding}" Grid.Row="1">
                                         <StackPanel x:Name="itemPresenter"/>
                                     </ScrollViewer>
                                 </Grid>
                             </Border>
                         </Popup>
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
-                                </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="toggleButton" Style="{StaticResource MultiSelectToggleButton}" IsChecked="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent}}" 
-                                              Grid.ColumnSpan="2" HorizontalContentAlignment="Right" BorderThickness="0"/>
-                                <WrapPanel x:Name="contentPresenter" Orientation="Horizontal" Margin="{TemplateBinding Padding}" MinHeight="22"/>
-                            </Grid>
+                            <ToggleButton x:Name="toggleButton" Style="{StaticResource MultiSelectToggleButton}" IsChecked="{Binding IsOpen,RelativeSource={RelativeSource TemplatedParent}}" 
+                                          BorderThickness="0">
+                                <Grid>
+                                    <ScrollViewer Focusable="false" HorizontalScrollBarVisibility="Disabled">
+                                        <WrapPanel x:Name="contentPresenter" Orientation="Horizontal" Margin="{TemplateBinding Padding}"/>
+                                    </ScrollViewer>
+                                    <TextBlock IsHitTestVisible="False" Padding="2"/>
+                                </Grid>
+                            </ToggleButton>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>

@@ -121,8 +121,8 @@ namespace Infra.Wpf.Controls
                 TextBlock displayText = new TextBlock();
 
                 string displayAttribText = GetDisplayName(SearchFields[i].FilterField);
-                if (!string.IsNullOrWhiteSpace(item.DisplayName))
-                    displayText.Text = item.DisplayName;
+                if (!string.IsNullOrWhiteSpace(item.Title))
+                    displayText.Text = item.Title;
                 else if (!string.IsNullOrEmpty(displayAttribText))
                     displayText.Text = displayAttribText;
                 else
@@ -137,22 +137,22 @@ namespace Infra.Wpf.Controls
                     string appendText1 = " از";
                     string appendText2 = " تا";
 
-                    if (!string.IsNullOrWhiteSpace(item.DisplayName))
+                    if (!string.IsNullOrWhiteSpace(item.Title))
                     {
-                        if (item.DisplayName.EndsWith(" :"))
+                        if (item.Title.EndsWith(" :"))
                         {
                             appendText1 = " از :";
                             appendText2 = " تا :";
-                            item.DisplayName = item.DisplayName.Remove(item.DisplayName.Length - 2, 2);
+                            item.Title = item.Title.Remove(item.Title.Length - 2, 2);
                         }
-                        else if (item.DisplayName.EndsWith(":"))
+                        else if (item.Title.EndsWith(":"))
                         {
                             appendText1 = " از:";
                             appendText2 = " تا:";
-                            item.DisplayName = item.DisplayName.Remove(item.DisplayName.Length - 1, 1);
+                            item.Title = item.Title.Remove(item.Title.Length - 1, 1);
                         }
 
-                        displayText.Text = item.DisplayName + appendText1;
+                        displayText.Text = item.Title + appendText1;
                     }
                     (item as DateSearchField).Operator = NumericOperator.GreaterThanEqual;
 
@@ -160,10 +160,10 @@ namespace Infra.Wpf.Controls
                     item2.DateFormat = DateFormat.RangeTo;
                     item2.OpertatorVisible = false;
                     item2.FilterField = (item as DateSearchField).FilterField;
-                    if (!string.IsNullOrWhiteSpace(item.DisplayName))
-                        item2.DisplayName = item.DisplayName + appendText2;
+                    if (!string.IsNullOrWhiteSpace(item.Title))
+                        item2.Title = item.Title + appendText2;
                     else
-                        item2.DisplayName = item2.FilterField;
+                        item2.Title = item2.FilterField;
                     item2.Operator = NumericOperator.LessThanEqual;
                     (item as DateSearchField).Partner = item2;
                     item2.Partner = item as DateSearchField;

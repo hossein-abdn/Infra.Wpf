@@ -44,7 +44,7 @@ namespace Infra.Wpf.Controls
 
         private StringOperator defaultOperator;
 
-        public string DisplayName { get; set; }
+        public string Title { get; set; }
 
         public string FilterField { get; set; }
 

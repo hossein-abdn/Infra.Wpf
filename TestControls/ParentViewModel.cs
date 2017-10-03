@@ -10,39 +10,56 @@ using System.Threading.Tasks;
 
 namespace TestControls
 {
-    public class ParentViewModel:ViewModelBase
+    public class ParentViewModel : ViewModelBase
     {
         public RelayCommand<string> GetParentsCommand { get; set; }
 
-        public ObservableCollection<GeneralBaseType> ItemsSource
+        public ObservableCollection<Parent> ItemsSource
         {
-            get { return Get<ObservableCollection<GeneralBaseType>>(); }
+            get { return Get<ObservableCollection<Parent>>(); }
             set { Set(value); }
         }
+
+        public ObservableCollection<Student> StudentList
+        {
+            get { return Get<ObservableCollection<Student>>(); }
+            set { Set(value); }
+        }
+
 
         public ParentViewModel()
         {
             GetParentsCommand = new RelayCommand<string>(GetParents);
-        }
 
-        private void GetParents(string whereClause)
-        {
-            FBSDBContext context = new FBSDBContext();
-
-            var predicate = DynamicLinq.ConvertToExpression<GeneralBaseType>(whereClause);
-            List<GeneralBaseType> list = context.GeneralBaseTypes.Where(predicate).ToList();
-
-            ItemsSource = new ObservableCollection<GeneralBaseType>(list);
+            StudentVm studentVm = new StudentVm();
+            studentVm.GetStudentsCommand.Execute(null);
+            StudentList = studentVm.ItemsSource;
         }
 
         //private void GetParents(string whereClause)
         //{
         //    FBSDBContext context = new FBSDBContext();
 
-        //    var predicate = DynamicLinq.ConvertToExpression<Parent>(whereClause);
-        //    List<Parent> list = context.Parents.Where(predicate).ToList();
+        //    var predicate = DynamicLinq.ConvertToExpression<GeneralBaseType>(whereClause);
+        //    List<GeneralBaseType> list = context.GeneralBaseTypes.Where(predicate).ToList();
 
-        //    ItemsSource = new ObservableCollection<Parent>(list);
+        //    ItemsSource = new ObservableCollection<GeneralBaseType>(list);
         //}
+
+        private void GetParents(string whereClause)
+        {
+            FBSDBContext context = new FBSDBContext();
+
+            var predicate = DynamicLinq.ConvertToExpression<Parent>(whereClause);
+            List<Parent> list = context.Parents.Where(predicate).ToList();
+
+            ItemsSource = new ObservableCollection<Parent>(list);
+        }
+    }
+
+    public enum RecordStatus
+    {
+        علی = 3,
+        محسن = 4
     }
 }

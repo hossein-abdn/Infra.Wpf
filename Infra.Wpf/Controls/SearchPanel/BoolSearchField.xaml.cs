@@ -8,7 +8,7 @@ namespace Infra.Wpf.Controls
     {
         #region Properties
 
-        public string DisplayName { get; set; }
+        public string Title { get; set; }
 
         public string FilterField { get; set; }
 

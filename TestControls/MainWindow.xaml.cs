@@ -28,7 +28,7 @@ namespace TestControls
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window,INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
@@ -37,67 +37,7 @@ namespace TestControls
             CultureInfo calture = new CultureInfo("fa-IR");
             calture.NumberFormat.DigitSubstitution = DigitShapes.NativeNational;
             Thread.CurrentThread.CurrentCulture = calture;
-            Thread.CurrentThread.CurrentUICulture = calture;
-            Loaded += MainWindow_Loaded;
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            var list = new List<Product>();
-
-            for (int i = 0; i < 15; i++)
-                list.Add(new Product());
-
-            productList = new ObservableCollection<Product>(list);
-        }
-
-        public static List<Product> GetDataModel
-        {
-            get
-            {
-                List<Product> _products = new List<Product>();
-                for (int i = 0; i < 15; i++)
-                {
-                    _products.Add(new Product());
-                }
-                return _products;
-            }
-        }
-
-        private ObservableCollection<Product> _productList;
-        public ObservableCollection<Product> productList
-        {
-            get { return _productList; }
-            set
-            {
-                _productList = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var item = multi.Items[4];
-            var item2 = new Product();
-            ObservableCollection<object> newlist = new ObservableCollection<object>();
-            newlist.Add(item);
-            newlist.Add(item2);
-
-
-
-            multi.SelectedItems = newlist;
-            
-
-            
-            
-
+            Thread.CurrentThread.CurrentUICulture = calture;            
         }
     }
 }
