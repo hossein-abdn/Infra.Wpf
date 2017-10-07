@@ -2,35 +2,17 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\MainWindow.xaml</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml</string>
       <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\MultiSelectSearchField.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\SearchGridWrapColumn.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\ComboSearchField.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\SearchGridWrapRow.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\ParentViewModel.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\LookupSearchField.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\ViewModel.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\TextSearchField.xaml.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\StudentVm.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Common\Helpers\Extensions.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\SearchPanel.xaml.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\SearchGridWrapPanel.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

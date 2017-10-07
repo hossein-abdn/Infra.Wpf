@@ -7,7 +7,7 @@
     xmlns:ctl="clr-namespace:Infra.Wpf.Controls;assembly=Infra.Wpf"
     x:Class="TestControls.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" Height="500" Width="500"
+    Title="MainWindow" Height="500" Width="150"
     FontFamily="IRANSans"
     x:Name="wnd">
     <Window.DataContext>
@@ -18,9 +18,10 @@
     </Window.Resources>
 
     <DockPanel FlowDirection="RightToLeft">
-        <ctl:SearchPanel DockPanel.Dock="Top" IsExpanded="True" SearchCommand="{Binding GetParentsCommand}" ColumnMargin="5" RowMargin="3" Stretch="False">
+        <ctl:SearchPanel DockPanel.Dock="Top" IsExpanded="True" SearchCommand="{Binding GetParentsCommand}" ColumnMargin="5" RowMargin="3" Stretch="True">
             <ctl:ComboSearchField Title="وضعیت" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
             <ctl:MultiSelectSearchField Title="دانش آموز" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
+            <ctl:TextSearchField Title="تست"/>
         </ctl:SearchPanel>
         <ctl:GridWrapPanel>
             <TextBlock Text="وضعیت"/>

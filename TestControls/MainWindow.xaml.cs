@@ -37,7 +37,7 @@ namespace TestControls
             CultureInfo calture = new CultureInfo("fa-IR");
             calture.NumberFormat.DigitSubstitution = DigitShapes.NativeNational;
             Thread.CurrentThread.CurrentCulture = calture;
-            Thread.CurrentThread.CurrentUICulture = calture;            
+            Thread.CurrentThread.CurrentUICulture = calture;
         }
     }
 }

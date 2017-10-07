@@ -7,6 +7,14 @@ namespace Infra.Wpf.Controls
     {
         private List<RectItem> rectList { get; set; }
 
+        public IEnumerable<RectItem> RectList
+        {
+            get
+            {
+                return rectList;
+            }
+        }
+
         public double MaxWidth { get; private set; }
 
         public double TotalHeight

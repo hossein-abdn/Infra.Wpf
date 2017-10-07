@@ -33,7 +33,7 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty RowMarginProperty = DependencyProperty.Register("RowMargin", typeof(double), typeof(SearchGridWrapPanel),
-                new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+                new FrameworkPropertyMetadata(3d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public double ColumnMargin
         {
@@ -42,7 +42,7 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty ColumnMarginProperty = DependencyProperty.Register("ColumnMargin", typeof(double), typeof(SearchGridWrapPanel),
-            new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+            new FrameworkPropertyMetadata(5d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         #endregion
 
@@ -100,24 +100,14 @@ namespace Infra.Wpf.Controls
             int columnCount = CalculateColumnCount(finalSize.Width);
             ArrangeItems(columnCount, finalSize);
 
-            double restWidth = 0;
+            List<double> restWidth = null;
             if (rowList.Count > 0 && Stretch == true)
-                restWidth = (finalSize.Width - rowList.First().TotalWidth) / (columnList.Count / 2);
+                restWidth = CalculateRestWidth(finalSize.Width);
 
-            int counter = 1;
-            foreach (var item in columnList)
-            {
-                if (counter == 2)
-                    item.Arrange(restWidth);
-                else
-                    item.Arrange(0);
+            for (int i = 0; i < columnList.Count; i++)
+                columnList[i].Arrange(restWidth?[i] ?? 0);
 
-                counter++;
-                if (counter == 3)
-                    counter = 1;
-            }
-
-            counter = 0;
+            int counter = 0;
             foreach (var item in rowList)
             {
                 double margin = 0;
@@ -182,7 +172,7 @@ namespace Infra.Wpf.Controls
                     columnList.Add(new SearchGridWrapColumn());
 
                 double margin = 0;
-                if (column > 1 && column % 2 == 0)
+                if (column > 1 && column % 2 == 0 && Stretch == true)
                     margin = ColumnMargin;
 
                 RectItem rect = new RectItem(0, 0, desiredList[desiredIndex].Height, desiredList[desiredIndex].Width + margin);
@@ -208,6 +198,73 @@ namespace Infra.Wpf.Controls
                     row++;
                 }
             }
+        }
+
+        private List<double> CalculateRestWidth(double finalWidth)
+        {
+            if (rowList.Count == 0)
+                return null;
+
+            double totalWidth = rowList.First().TotalWidth;
+            if (totalWidth > finalWidth)
+            {
+                return new List<double> { 0d, 0d };
+            }
+
+            var widthList = new List<double>();
+            int columnCount = rowList.First().RectList.Count();
+
+            for (int i = 0; i < columnCount; i++)
+            {
+                if ((i + 1) % 2 == 0)
+                    widthList.Add(desiredList[i].Width);
+            }
+            widthList = widthList.OrderBy(x => x).ToList();
+
+            int counter = widthList.Count() - 1;
+            double maxWidth = widthList[counter];
+            var widthDiffrenceList = new List<double>();
+
+            for (int i = 0; i < columnCount; i++)
+            {
+                if ((i + 1) % 2 != 0)
+                {
+                    widthDiffrenceList.Add(0d);
+                    continue;
+                }
+
+                if (desiredList[i].Width < maxWidth)
+                    widthDiffrenceList.Add(maxWidth - desiredList[i].Width);
+                else
+                    widthDiffrenceList.Add(0d);
+
+                if (finalWidth - totalWidth - widthDiffrenceList.Sum() < 0)
+                {
+                    counter--;
+                    if (counter >= 0)
+                    {
+                        maxWidth = widthList[counter];
+                        i = -1;
+                        widthDiffrenceList.Clear();
+                    }
+                }
+            }
+
+            var result = new List<double>();
+            for (int i = 0; i < columnCount; i++)
+            {
+                if ((i + 1) % 2 != 0)
+                {
+                    result.Add(0d);
+                    continue;
+                }
+                double restWidth = (finalWidth - totalWidth - widthDiffrenceList.Sum()) / (counter + 1);
+                if (restWidth > 0 && desiredList[i].Width <= maxWidth)
+                    result.Add(widthDiffrenceList[i] + restWidth);
+                else
+                    result.Add(0d);
+            }
+            return result;
         }
 
         #endregion
