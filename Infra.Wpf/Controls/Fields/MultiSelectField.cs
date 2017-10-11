@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace Infra.Wpf.Controls
 {
-    public class MultiSelectSearchField : MultiSelect, ISearchField
+    public class MultiSelectField : MultiSelect, IField
     {
+        #region Properties
+
         public string Title { get; set; }
 
         public string FilterField { get; set; }
 
         public string TargetColumn { get; set; }
+
+        #endregion
+
+        #region Methods
 
         public string SearchPhrase
         {
@@ -71,5 +77,7 @@ namespace Infra.Wpf.Controls
         {
             SelectedItems.Clear();
         }
+
+        #endregion
     }
 }

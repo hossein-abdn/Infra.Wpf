@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Infra.Wpf.Controls
 {
-    public class SearchGridWrapRow
+    public class FieldGridWrapRow
     {
         private List<RectItem> rectList { get; set; }
 
@@ -29,7 +29,7 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        public SearchGridWrapRow()
+        public FieldGridWrapRow()
         {
             rectList = new List<RectItem>();
             MaxHeight = 0;

@@ -5,12 +5,12 @@ using System.Windows.Controls;
 
 namespace Infra.Wpf.Controls
 {
-    public partial class TextSearchField : UserControl, INotifyPropertyChanged, ISearchField
+    public partial class NumericField : UserControl, INotifyPropertyChanged, IField
     {
         #region Properties
 
-        private StringOperator _Operator;
-        public StringOperator Operator
+        private NumericOperator _Operator;
+        public NumericOperator Operator
         {
             get { return _Operator; }
             set
@@ -42,7 +42,18 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        private StringOperator defaultOperator;
+        private bool _ShowButtons;
+        public bool ShowButtons
+        {
+            get { return _ShowButtons; }
+            set
+            {
+                _ShowButtons = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private NumericOperator defaultOperator;
 
         public string Title { get; set; }
 
@@ -55,21 +66,29 @@ namespace Infra.Wpf.Controls
                 if (string.IsNullOrWhiteSpace(FilterText) || string.IsNullOrWhiteSpace(FilterField))
                     return "";
 
+                double field;
+                if (double.TryParse(FilterText, out field) == false)
+                    return "";
+
                 switch (Operator)
                 {
-                    case StringOperator.Equals:
-                        return $@"{FilterField}.Equals(""{FilterText.Trim()}"")";
-                    case StringOperator.NotEquals:
-                        return $@"!{FilterField}.Equals(""{FilterText.Trim()}"")";
+                    case NumericOperator.Equals:
+                        return $@"{FilterField}=={FilterText.Trim()}";
                         break;
-                    case StringOperator.Contains:
-                        return $@"{FilterField}.Contains(""{FilterText.Trim()}"")";
+                    case NumericOperator.NotEquals:
+                        return $@"{FilterField}!={FilterText.Trim()}";
                         break;
-                    case StringOperator.StartsWith:
-                        return $@"{FilterField}.StartsWith(""{FilterText.Trim()}"")";
+                    case NumericOperator.GreaterThan:
+                        return $@"{FilterField}>{FilterText.Trim()}";
                         break;
-                    case StringOperator.EndsWith:
-                        return $@"{FilterField}.EndsWith(""{FilterText.Trim()}"")";
+                    case NumericOperator.GreaterThanEqual:
+                        return $@"{FilterField}>={FilterText.Trim()}";
+                        break;
+                    case NumericOperator.LessThan:
+                        return $@"{FilterField}<{FilterText.Trim()}";
+                        break;
+                    case NumericOperator.LessThanEqual:
+                        return $@"{FilterField}<={FilterText.Trim()}";
                         break;
                     default:
                         return "";
@@ -77,15 +96,6 @@ namespace Infra.Wpf.Controls
                 }
             }
         }
-
-        public CustomTextBoxFormat SearchFieldFormat
-        {
-            get { return (CustomTextBoxFormat) GetValue(SearchFieldFormatProperty); }
-            set { SetValue(SearchFieldFormatProperty, value); }
-        }
-
-        public static readonly DependencyProperty SearchFieldFormatProperty = CustomTextBox.TextBoxFormatProperty.AddOwner(typeof(TextSearchField),
-            new FrameworkPropertyMetadata(CustomTextBoxFormat.String, FrameworkPropertyMetadataOptions.Inherits));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -98,11 +108,12 @@ namespace Infra.Wpf.Controls
             defaultOperator = Operator;
         }
 
-        public TextSearchField()
+        public NumericField()
         {
             InitializeComponent();
 
             OpertatorVisible = true;
+            ShowButtons = false;
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)

@@ -1,6 +1,6 @@
 ﻿namespace Infra.Wpf.Controls
 {
-    public class LookupSearchField : Lookup, ISearchField
+    public class LookupField : Lookup, IField
     {
         public string Title { get; set; }
 

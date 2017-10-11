@@ -1,6 +1,6 @@
 ﻿namespace Infra.Wpf.Controls
 {
-    public interface ISearchField
+    public interface IField
     {
         string Title { get; set; }
 

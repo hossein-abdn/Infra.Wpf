@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace Infra.Wpf.Controls
 {
-    public class ComboSearchField : CustomComboBox, INotifyPropertyChanged, ISearchField
+    public class ComboField : CustomComboBox, INotifyPropertyChanged, IField
     {
         #region Properties
 
@@ -84,7 +84,7 @@ namespace Infra.Wpf.Controls
 
         #region Methods
 
-        public ComboSearchField()
+        public ComboField()
         {
             VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
             IsNullable = true;

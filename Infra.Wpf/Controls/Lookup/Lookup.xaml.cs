@@ -113,7 +113,7 @@ namespace Infra.Wpf.Controls
 
         public string Columns { get; set; }
 
-        public List<ISearchField> SearchFields { get; set; }
+        public List<IField> SearchFields { get; set; }
 
         public RelayCommand<object> SelectCommand { get; set; }
 
@@ -161,7 +161,7 @@ namespace Infra.Wpf.Controls
             SelectCommand = new RelayCommand<object>(SelectExecute);
 
             SelectedIndices = new List<int>();
-            SearchFields = new List<ISearchField>();
+            SearchFields = new List<IField>();
 
             InitializeComponent();
         }

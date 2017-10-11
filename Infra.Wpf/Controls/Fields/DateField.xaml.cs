@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace Infra.Wpf.Controls
 {
-    public partial class DateSearchField : UserControl, INotifyPropertyChanged, ISearchField
+    public partial class DateField : UserControl, INotifyPropertyChanged, IField
     {
         #region Properties
 
@@ -29,6 +29,17 @@ namespace Infra.Wpf.Controls
             set
             {
                 _OpertatorVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _SuggestionVisible;
+        public bool SuggestionVisible
+        {
+            get { return _SuggestionVisible; }
+            set
+            {
+                _SuggestionVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -57,7 +68,7 @@ namespace Infra.Wpf.Controls
 
         public DateFormat DateFormat { get; set; }
 
-        public DateSearchField Partner { get; set; }
+        public DateField Partner { get; set; }
 
         private NumericOperator defaultOperator;
 
@@ -122,10 +133,11 @@ namespace Infra.Wpf.Controls
                 suggestbtn.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
-        public DateSearchField()
+        public DateField()
         {
             InitializeComponent();
             OpertatorVisible = true;
+            SuggestionVisible = true;
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)

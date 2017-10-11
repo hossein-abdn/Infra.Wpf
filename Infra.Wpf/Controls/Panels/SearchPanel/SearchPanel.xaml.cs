@@ -15,7 +15,7 @@ namespace Infra.Wpf.Controls
     {
         #region Property
 
-        public SearchFieldCollection SearchFields { get; set; }
+        public FieldCollection SearchFields { get; set; }
 
         public string SearchPhrase
         {
@@ -54,7 +54,7 @@ namespace Infra.Wpf.Controls
             set { SetValue(StretchProperty, value); }
         }
 
-        public static readonly DependencyProperty StretchProperty = SearchGridWrapPanel.StretchProperty.AddOwner(typeof(SearchPanel));
+        public static readonly DependencyProperty StretchProperty = FieldGridWrapPanel.StretchProperty.AddOwner(typeof(SearchPanel));
 
         public double ColumnMargin
         {
@@ -62,7 +62,7 @@ namespace Infra.Wpf.Controls
             set { SetValue(ColumnMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty ColumnMarginProperty = SearchGridWrapPanel.ColumnMarginProperty.AddOwner(typeof(SearchPanel));
+        public static readonly DependencyProperty ColumnMarginProperty = FieldGridWrapPanel.ColumnMarginProperty.AddOwner(typeof(SearchPanel));
 
         public double RowMargin
         {
@@ -70,7 +70,7 @@ namespace Infra.Wpf.Controls
             set { SetValue(RowMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty RowMarginProperty = SearchGridWrapPanel.RowMarginProperty.AddOwner(typeof(SearchPanel));
+        public static readonly DependencyProperty RowMarginProperty = FieldGridWrapPanel.RowMarginProperty.AddOwner(typeof(SearchPanel));
 
         public bool IsExpanded
         {
@@ -86,7 +86,7 @@ namespace Infra.Wpf.Controls
 
         public SearchPanel()
         {
-            SearchFields = new SearchFieldCollection();
+            SearchFields = new FieldCollection();
             ClearCommand = new RelayCommand(ClearExecute);
 
             InitializeComponent();
@@ -132,7 +132,7 @@ namespace Infra.Wpf.Controls
                 displayText.VerticalAlignment = VerticalAlignment.Center;
                 displayText.Margin = new Thickness(0, 0, 5, 0);
 
-                if (item is DateSearchField && (item as DateSearchField).DateFormat == DateFormat.RangeFrom)
+                if (item is DateField && (item as DateField).DateFormat == DateFormat.RangeFrom)
                 {
                     string appendText1 = " از";
                     string appendText2 = " تا";
@@ -154,19 +154,19 @@ namespace Infra.Wpf.Controls
 
                         displayText.Text = item.Title + appendText1;
                     }
-                    (item as DateSearchField).Operator = NumericOperator.GreaterThanEqual;
+                    (item as DateField).Operator = NumericOperator.GreaterThanEqual;
 
-                    DateSearchField item2 = new DateSearchField();
+                    DateField item2 = new DateField();
                     item2.DateFormat = DateFormat.RangeTo;
                     item2.OpertatorVisible = false;
-                    item2.FilterField = (item as DateSearchField).FilterField;
+                    item2.FilterField = (item as DateField).FilterField;
                     if (!string.IsNullOrWhiteSpace(item.Title))
                         item2.Title = item.Title + appendText2;
                     else
                         item2.Title = item2.FilterField;
                     item2.Operator = NumericOperator.LessThanEqual;
-                    (item as DateSearchField).Partner = item2;
-                    item2.Partner = item as DateSearchField;
+                    (item as DateField).Partner = item2;
+                    item2.Partner = item as DateField;
                     SearchFields.Insert(i + 1, item2);
                 }
 

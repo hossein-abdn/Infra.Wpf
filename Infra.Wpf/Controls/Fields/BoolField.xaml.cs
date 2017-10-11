@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Infra.Wpf.Controls
 {
-    public partial class BoolSearchField : UserControl, INotifyPropertyChanged, ISearchField
+    public partial class BoolField : UserControl, INotifyPropertyChanged, IField
     {
         #region Properties
 
@@ -43,7 +43,7 @@ namespace Infra.Wpf.Controls
 
         #region Methods
 
-        public BoolSearchField()
+        public BoolField()
         {
             InitializeComponent();
         }

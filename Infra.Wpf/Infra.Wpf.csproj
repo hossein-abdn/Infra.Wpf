@@ -145,23 +145,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SearchPanel\BoolSearchField.xaml">
+    <Page Include="Controls\Fields\BoolField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\SearchPanel\DateSearchField.xaml">
+    <Page Include="Controls\Fields\DateField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\SearchPanel\NumericSearchField.xaml">
+    <Page Include="Controls\Fields\NumericField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\SearchPanel\SearchPanel.xaml">
+    <Page Include="Controls\Panels\SearchPanel\SearchPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\SearchPanel\TextSearchField.xaml">
+    <Page Include="Controls\Fields\TextField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -218,9 +218,9 @@
     <Compile Include="Controls\CustomTextBox\CustomTextBox.cs" />
     <Compile Include="Controls\CustomTextBox\CustomTextBoxFormatEnum.cs" />
     <Compile Include="Controls\CustomTextBox\LanguageEnum.cs" />
-    <Compile Include="Controls\GridWrapPanel\GridWrapColumn.cs" />
-    <Compile Include="Controls\GridWrapPanel\GridWrapRow.cs" />
-    <Compile Include="Controls\GridWrapPanel\GridWrapPanel.cs" />
+    <Compile Include="Controls\Panels\GridWrapPanel\GridWrapColumn.cs" />
+    <Compile Include="Controls\Panels\GridWrapPanel\GridWrapRow.cs" />
+    <Compile Include="Controls\Panels\GridWrapPanel\GridWrapPanel.cs" />
     <Compile Include="Controls\ImageButton\ImageButton.cs" />
     <Compile Include="Controls\Lookup\Lookup.xaml.cs">
       <DependentUpon>Lookup.xaml</DependentUpon>
@@ -244,31 +244,31 @@
     <Compile Include="Common\PersianDate\PersianDayOfWeekEnum.cs" />
     <Compile Include="Common\PersianDate\PersianMonthEnum.cs" />
     <Compile Include="Common\PersianDate\PersianToDateConverter.cs" />
-    <Compile Include="Controls\SearchPanel\BoolSearchField.xaml.cs">
-      <DependentUpon>BoolSearchField.xaml</DependentUpon>
+    <Compile Include="Controls\Fields\BoolField.xaml.cs">
+      <DependentUpon>BoolField.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SearchPanel\ComboSearchField.cs" />
-    <Compile Include="Controls\SearchPanel\DateFormatEnum.cs" />
-    <Compile Include="Controls\SearchPanel\DateSearchField.xaml.cs">
-      <DependentUpon>DateSearchField.xaml</DependentUpon>
+    <Compile Include="Controls\Fields\ComboField.cs" />
+    <Compile Include="Controls\Fields\DateFormatEnum.cs" />
+    <Compile Include="Controls\Fields\DateField.xaml.cs">
+      <DependentUpon>DateField.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SearchPanel\ISearchField.cs" />
-    <Compile Include="Controls\SearchPanel\LookupSearchField.cs" />
-    <Compile Include="Controls\SearchPanel\MultiSelectSearchField.cs" />
-    <Compile Include="Controls\SearchPanel\NumericOperatorEnum.cs" />
-    <Compile Include="Controls\SearchPanel\NumericSearchField.xaml.cs">
-      <DependentUpon>NumericSearchField.xaml</DependentUpon>
+    <Compile Include="Controls\Fields\IField.cs" />
+    <Compile Include="Controls\Fields\LookupField.cs" />
+    <Compile Include="Controls\Fields\MultiSelectField.cs" />
+    <Compile Include="Controls\Fields\NumericOperatorEnum.cs" />
+    <Compile Include="Controls\Fields\NumericField.xaml.cs">
+      <DependentUpon>NumericField.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SearchPanel\SearchFieldCollection.cs" />
-    <Compile Include="Controls\SearchPanel\SearchGridWrapColumn.cs" />
-    <Compile Include="Controls\SearchPanel\SearchGridWrapPanel.cs" />
-    <Compile Include="Controls\SearchPanel\SearchGridWrapRow.cs" />
-    <Compile Include="Controls\SearchPanel\SearchPanel.xaml.cs">
+    <Compile Include="Controls\Panels\SearchPanel\FieldCollection.cs" />
+    <Compile Include="Controls\Panels\FieldGridWrapPanel\FieldGridWrapColumn.cs" />
+    <Compile Include="Controls\Panels\FieldGridWrapPanel\FieldGridWrapPanel.cs" />
+    <Compile Include="Controls\Panels\FieldGridWrapPanel\FieldGridWrapRow.cs" />
+    <Compile Include="Controls\Panels\SearchPanel\SearchPanel.xaml.cs">
       <DependentUpon>SearchPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SearchPanel\StringOperatorEnum.cs" />
-    <Compile Include="Controls\SearchPanel\TextSearchField.xaml.cs">
-      <DependentUpon>TextSearchField.xaml</DependentUpon>
+    <Compile Include="Controls\Fields\StringOperatorEnum.cs" />
+    <Compile Include="Controls\Fields\TextField.xaml.cs">
+      <DependentUpon>TextField.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TimeEditor\TimeEditorFormatEnum.cs" />
     <Compile Include="Controls\Billboard\Billboard.xaml.cs">
@@ -360,7 +360,9 @@
     <Resource Include="Controls\Resources\Select-24.png" />
     <Resource Include="Controls\Resources\SelectOver-24.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controls\Panels\EditViewPanel\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

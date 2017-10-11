@@ -7,7 +7,7 @@
     xmlns:ctl="clr-namespace:Infra.Wpf.Controls;assembly=Infra.Wpf"
     x:Class="TestControls.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" Height="500" Width="150"
+    Title="MainWindow" Height="500" Width="650"
     FontFamily="IRANSans"
     x:Name="wnd">
     <Window.DataContext>
@@ -19,9 +19,14 @@
 
     <DockPanel FlowDirection="RightToLeft">
         <ctl:SearchPanel DockPanel.Dock="Top" IsExpanded="True" SearchCommand="{Binding GetParentsCommand}" ColumnMargin="5" RowMargin="3" Stretch="True">
-            <ctl:ComboSearchField Title="وضعیت" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
-            <ctl:MultiSelectSearchField Title="دانش آموز" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
-            <ctl:TextSearchField Title="تست"/>
+            <ctl:ComboField Title="وضعیت" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
+            <ctl:MultiSelectField Title="دانش آموز" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
+            <ctl:TextField Title="تست" OpertatorVisible="False"/>
+            <ctl:BoolField Title="تست"/>
+            <ctl:DateField Title="تاریخ" OpertatorVisible="False" SuggestionVisible="False"/>
+            <ctl:LookupField Title="دانش آموز"/>
+            <ctl:NumericField Title="عدد" OpertatorVisible="False" ShowButtons="True"/>
+
         </ctl:SearchPanel>
         <ctl:GridWrapPanel>
             <TextBlock Text="وضعیت"/>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Infra.Wpf.Controls.DateSearchField"
+﻿<UserControl x:Class="Infra.Wpf.Controls.DateField"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -41,7 +41,7 @@
                               Visibility="{Binding OpertatorVisible, ElementName=searchfield,Converter={StaticResource converter}}"
                               SelectedItem="{Binding Operator,ElementName=searchfield}"/>
         <local:PersianDatePicker x:Name="pd" Grid.Column="1" SelectedDate="{Binding SelectedDate,ElementName=searchfield , Mode=OneWayToSource}"/>
-        <ToggleButton x:Name="suggestbtn" Grid.Column="1" Margin="5,0" Checked="suggestbtn_Checked">
+        <ToggleButton x:Name="suggestbtn" Grid.Column="1" Margin="5,0" Checked="suggestbtn_Checked" Visibility="{Binding SuggestionVisible, ElementName=searchfield,Converter={StaticResource converter}}">
             <ToggleButton.Resources>
                 <SolidColorBrush x:Key="suggestColor" Color="Gray"/>
                 <SolidColorBrush x:Key="suggestColorOver" Color="Black"/>

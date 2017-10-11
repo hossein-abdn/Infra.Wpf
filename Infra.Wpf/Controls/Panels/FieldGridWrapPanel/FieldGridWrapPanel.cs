@@ -7,15 +7,15 @@ using System.Windows.Controls;
 
 namespace Infra.Wpf.Controls
 {
-    internal class SearchGridWrapPanel : Panel
+    internal class FieldGridWrapPanel : Panel
     {
         #region Properties
 
         private List<Size> desiredList;
 
-        private List<SearchGridWrapColumn> columnList { get; set; }
+        private List<FieldGridWrapColumn> columnList { get; set; }
 
-        private List<SearchGridWrapRow> rowList { get; set; }
+        private List<FieldGridWrapRow> rowList { get; set; }
 
         public bool Stretch
         {
@@ -23,7 +23,7 @@ namespace Infra.Wpf.Controls
             set { SetValue(StretchProperty, value); }
         }
 
-        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(bool), typeof(SearchGridWrapPanel),
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(bool), typeof(FieldGridWrapPanel),
                 new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public double RowMargin
@@ -32,7 +32,7 @@ namespace Infra.Wpf.Controls
             set { SetValue(RowMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty RowMarginProperty = DependencyProperty.Register("RowMargin", typeof(double), typeof(SearchGridWrapPanel),
+        public static readonly DependencyProperty RowMarginProperty = DependencyProperty.Register("RowMargin", typeof(double), typeof(FieldGridWrapPanel),
                 new FrameworkPropertyMetadata(3d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public double ColumnMargin
@@ -41,17 +41,17 @@ namespace Infra.Wpf.Controls
             set { SetValue(ColumnMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty ColumnMarginProperty = DependencyProperty.Register("ColumnMargin", typeof(double), typeof(SearchGridWrapPanel),
+        public static readonly DependencyProperty ColumnMarginProperty = DependencyProperty.Register("ColumnMargin", typeof(double), typeof(FieldGridWrapPanel),
             new FrameworkPropertyMetadata(5d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         #endregion
 
         #region Methods
 
-        public SearchGridWrapPanel()
+        public FieldGridWrapPanel()
         {
-            columnList = new List<SearchGridWrapColumn>();
-            rowList = new List<SearchGridWrapRow>();
+            columnList = new List<FieldGridWrapColumn>();
+            rowList = new List<FieldGridWrapRow>();
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -166,10 +166,10 @@ namespace Infra.Wpf.Controls
             for (int desiredIndex = 0; desiredIndex < desiredList.Count; desiredIndex++)
             {
                 if (column == 0)
-                    rowList.Add(new SearchGridWrapRow());
+                    rowList.Add(new FieldGridWrapRow());
 
                 if (columnList.Count < columnCount)
-                    columnList.Add(new SearchGridWrapColumn());
+                    columnList.Add(new FieldGridWrapColumn());
 
                 double margin = 0;
                 if (column > 1 && column % 2 == 0 && Stretch == true)
@@ -207,9 +207,7 @@ namespace Infra.Wpf.Controls
 
             double totalWidth = rowList.First().TotalWidth;
             if (totalWidth > finalWidth)
-            {
                 return new List<double> { 0d, 0d };
-            }
 
             var widthList = new List<double>();
             int columnCount = rowList.First().RectList.Count();

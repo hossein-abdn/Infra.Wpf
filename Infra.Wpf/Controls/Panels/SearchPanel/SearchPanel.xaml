@@ -17,7 +17,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <local:SearchGridWrapPanel x:Name="searchpanel" Stretch="{Binding Stretch,ElementName=mainpanel}" RowMargin="{Binding RowMargin,ElementName=mainpanel}"
+                <local:FieldGridWrapPanel x:Name="searchpanel" Stretch="{Binding Stretch,ElementName=mainpanel}" RowMargin="{Binding RowMargin,ElementName=mainpanel}"
                                            ColumnMargin="{Binding ColumnMargin,ElementName=mainpanel}" Margin="5"/>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,10">
                     <Button Name="Submit" Click="Submit_Click" Padding="3">
