@@ -40,7 +40,7 @@
         <local:CustomComboBox VerticalContentAlignment="Center"  Margin="0,0,5,0" EnumType="{x:Type local:NumericOperator}"
                               Visibility="{Binding OpertatorVisible, ElementName=searchfield,Converter={StaticResource converter}}"
                               SelectedItem="{Binding Operator,ElementName=searchfield}"/>
-        <local:PersianDatePicker x:Name="pd" Grid.Column="1" SelectedDate="{Binding SelectedDate,ElementName=searchfield , Mode=OneWayToSource}"/>
+        <local:PersianDatePicker x:Name="pd" Grid.Column="1" SelectedDate="{Binding SelectedDate,ElementName=searchfield}"/>
         <ToggleButton x:Name="suggestbtn" Grid.Column="1" Margin="5,0" Checked="suggestbtn_Checked" Visibility="{Binding SuggestionVisible, ElementName=searchfield,Converter={StaticResource converter}}">
             <ToggleButton.Resources>
                 <SolidColorBrush x:Key="suggestColor" Color="Gray"/>

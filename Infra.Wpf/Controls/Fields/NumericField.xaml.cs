@@ -31,17 +31,6 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        private string _FilterText;
-        public string FilterText
-        {
-            get { return _FilterText; }
-            set
-            {
-                _FilterText = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _ShowButtons;
         public bool ShowButtons
         {
@@ -53,6 +42,17 @@ namespace Infra.Wpf.Controls
             }
         }
 
+
+
+        public long? Value
+        {
+            get { return (long?) GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
+
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(long?), typeof(NumericField), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         private NumericOperator defaultOperator;
 
         public string Title { get; set; }
@@ -63,32 +63,34 @@ namespace Infra.Wpf.Controls
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(FilterText) || string.IsNullOrWhiteSpace(FilterField))
+                string filterText = Value?.ToString();
+                if (string.IsNullOrWhiteSpace(filterText) || string.IsNullOrWhiteSpace(FilterField))
                     return "";
 
                 double field;
-                if (double.TryParse(FilterText, out field) == false)
+                if (double.TryParse(filterText, out field) == false)
                     return "";
 
+                filterText = filterText.Trim();
                 switch (Operator)
                 {
                     case NumericOperator.Equals:
-                        return $@"{FilterField}=={FilterText.Trim()}";
+                        return $@"{FilterField}=={filterText}";
                         break;
                     case NumericOperator.NotEquals:
-                        return $@"{FilterField}!={FilterText.Trim()}";
+                        return $@"{FilterField}!={filterText}";
                         break;
                     case NumericOperator.GreaterThan:
-                        return $@"{FilterField}>{FilterText.Trim()}";
+                        return $@"{FilterField}>{filterText}";
                         break;
                     case NumericOperator.GreaterThanEqual:
-                        return $@"{FilterField}>={FilterText.Trim()}";
+                        return $@"{FilterField}>={filterText}";
                         break;
                     case NumericOperator.LessThan:
-                        return $@"{FilterField}<{FilterText.Trim()}";
+                        return $@"{FilterField}<{filterText}";
                         break;
                     case NumericOperator.LessThanEqual:
-                        return $@"{FilterField}<={FilterText.Trim()}";
+                        return $@"{FilterField}<={filterText}";
                         break;
                     default:
                         return "";
@@ -123,7 +125,7 @@ namespace Infra.Wpf.Controls
 
         public void Clear()
         {
-            FilterText = string.Empty;
+            Value = null;
             Operator = defaultOperator;
         }
 

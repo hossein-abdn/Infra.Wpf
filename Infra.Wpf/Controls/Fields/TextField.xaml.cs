@@ -31,45 +31,43 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        private string _FilterText;
-        public string FilterText
-        {
-            get { return _FilterText; }
-            set
-            {
-                _FilterText = value;
-                OnPropertyChanged();
-            }
-        }
-
         private StringOperator defaultOperator;
 
         public string Title { get; set; }
 
         public string FilterField { get; set; }
 
+        public string Text
+        {
+            get { return (string) GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(TextField), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
         public string SearchPhrase
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(FilterText) || string.IsNullOrWhiteSpace(FilterField))
+                if (string.IsNullOrWhiteSpace(Text) || string.IsNullOrWhiteSpace(FilterField))
                     return "";
 
                 switch (Operator)
                 {
                     case StringOperator.Equals:
-                        return $@"{FilterField}.Equals(""{FilterText.Trim()}"")";
+                        return $@"{FilterField}.Equals(""{Text.Trim()}"")";
                     case StringOperator.NotEquals:
-                        return $@"!{FilterField}.Equals(""{FilterText.Trim()}"")";
+                        return $@"!{FilterField}.Equals(""{Text.Trim()}"")";
                         break;
                     case StringOperator.Contains:
-                        return $@"{FilterField}.Contains(""{FilterText.Trim()}"")";
+                        return $@"{FilterField}.Contains(""{Text.Trim()}"")";
                         break;
                     case StringOperator.StartsWith:
-                        return $@"{FilterField}.StartsWith(""{FilterText.Trim()}"")";
+                        return $@"{FilterField}.StartsWith(""{Text.Trim()}"")";
                         break;
                     case StringOperator.EndsWith:
-                        return $@"{FilterField}.EndsWith(""{FilterText.Trim()}"")";
+                        return $@"{FilterField}.EndsWith(""{Text.Trim()}"")";
                         break;
                     default:
                         return "";
@@ -112,7 +110,7 @@ namespace Infra.Wpf.Controls
 
         public void Clear()
         {
-            FilterText = string.Empty;
+            Text = string.Empty;
             Operator = defaultOperator;
         }
 

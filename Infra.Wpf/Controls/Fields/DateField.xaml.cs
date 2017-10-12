@@ -44,16 +44,14 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        private DateTime? _SelectedDate;
         public DateTime? SelectedDate
         {
-            get { return _SelectedDate; }
-            set
-            {
-                _SelectedDate = value;
-                OnPropertyChanged();
-            }
+            get { return (DateTime?) GetValue(SelectedDateProperty); }
+            set { SetValue(SelectedDateProperty, value); }
         }
+
+        public static readonly DependencyProperty SelectedDateProperty =
+            DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DateField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         private bool _IsDropDown;
         public bool IsDropDown

@@ -2,18 +2,8 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml</string>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\searchpanel\searchgridwraprow.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\searchpanel\searchgridwrapcolumn.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\SearchPanel\BoolSearchField.xaml</string>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\searchpanel\boolsearchfield.xaml.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel.xaml</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel.xaml.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

@@ -26,6 +26,11 @@ namespace TestControls
             set { Set(value); }
         }
 
+        public bool IsCheck
+        {
+            get { return Get<bool>(); }
+            set { Set(value); }
+        }
 
         public ParentViewModel()
         {

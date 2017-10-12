@@ -1,6 +1,5 @@
 ﻿using Infra.Wpf.Common.Helpers;
 using Infra.Wpf.Mvvm;
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,7 +42,6 @@ namespace Infra.Wpf.Controls
             get { return (ICommand) GetValue(SearchCommandProperty); }
             set { SetValue(SearchCommandProperty, value); }
         }
-
 
         public static readonly DependencyProperty SearchCommandProperty =
             DependencyProperty.Register("SearchCommand", typeof(ICommand), typeof(SearchPanel), new PropertyMetadata(null));
@@ -175,20 +173,6 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        private void Submit_Click(object sender, RoutedEventArgs e)
-        {
-            new System.Threading.Thread(new System.Threading.ThreadStart(() =>
-            {
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    if (SearchCommand != null)
-                    {
-                        SearchCommand.Execute(SearchPhrase);
-                    }
-                }));
-            })).Start();
-        }
-
         private void ClearExecute()
         {
             foreach (var item in SearchFields)
@@ -207,8 +191,12 @@ namespace Infra.Wpf.Controls
         private void mainpanel_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                Submit_Click(this, new RoutedEventArgs());
+            {
+                if (SearchCommand != null)
+                    SearchCommand.Execute(SearchPhrase);
+            }
         }
+
         #endregion
     }
 }

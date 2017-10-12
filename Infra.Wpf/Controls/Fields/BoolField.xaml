@@ -10,6 +10,6 @@
              Name="searchfield">
 
     <Grid>
-        <local:CustomCheckBox IsChecked="{Binding FilterValue,ElementName=searchfield}" VerticalAlignment="Center"/>
+        <local:CustomCheckBox IsChecked="{Binding IsChecked,ElementName=searchfield}" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>
