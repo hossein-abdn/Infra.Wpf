@@ -2,8 +2,16 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel.xaml</string>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel.xaml.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Business\BusinessBase.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\logger.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\businessmessage.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Business\BusinessResult.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

@@ -179,6 +179,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\BusinessBase.cs" />
+    <Compile Include="Business\BusinessMessage.cs" />
+    <Compile Include="Business\BusinessResult.cs" />
+    <Compile Include="Business\ILogInfo.cs" />
+    <Compile Include="Business\Logger.cs" />
+    <Compile Include="Business\LogInfo.cs" />
     <Compile Include="Common\Class\RectItem.cs" />
     <Compile Include="Common\Helpers\CustomConverter.cs" />
     <Compile Include="Common\Helpers\DynamicLinq.cs" />
