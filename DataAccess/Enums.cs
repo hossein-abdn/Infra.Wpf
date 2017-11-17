@@ -1,4 +1,4 @@
-﻿using Infra.Wpf;
+﻿using Infra.Wpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;

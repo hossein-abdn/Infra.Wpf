@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Infra.Wpf
+namespace Infra.Wpf.Controls
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class EnumDisplayAttribute : Attribute

@@ -2,46 +2,7 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\getallbusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\getallasyncbusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Repository\Repository.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\repository\irepository.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\getfirstbusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\removebusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\addbusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\findbyidbusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\updatebusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\businessbase.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\repository\iunitofwork.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\anybusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Repository\UnitOfWork.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\MainWindow.xaml.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>
