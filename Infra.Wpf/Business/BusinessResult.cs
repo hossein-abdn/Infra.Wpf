@@ -8,7 +8,7 @@ namespace Infra.Wpf.Business
 {
     public class BusinessResult<T>
     {
-        public T Date { get; set; }
+        public T Data { get; set; }
 
         public Exception Exception;
 

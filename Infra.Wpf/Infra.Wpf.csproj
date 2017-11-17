@@ -32,14 +32,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="C1.WPF.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
     <Reference Include="C1.WPF.DataGrid.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
     <Reference Include="C1.WPF.DataGrid.Filters.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
     <Reference Include="C1.WPF.DateTimeEditors.4, Version=4.0.20162.517, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
@@ -179,12 +187,23 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\AddBusiness.cs" />
+    <Compile Include="Business\AnyBusiness.cs" />
     <Compile Include="Business\BusinessBase.cs" />
     <Compile Include="Business\BusinessMessage.cs" />
     <Compile Include="Business\BusinessResult.cs" />
+    <Compile Include="Business\FindByIdAsyncBusiness.cs" />
+    <Compile Include="Business\FindByIdBusiness.cs" />
+    <Compile Include="Business\GetAllAsyncBusiness.cs" />
+    <Compile Include="Business\GetAllBusiness.cs" />
+    <Compile Include="Business\GetCountAsyncBusiness.cs" />
+    <Compile Include="Business\GetCountBusiness.cs" />
+    <Compile Include="Business\GetFirstBusiness.cs" />
     <Compile Include="Business\ILogInfo.cs" />
     <Compile Include="Business\Logger.cs" />
     <Compile Include="Business\LogInfo.cs" />
+    <Compile Include="Business\RemoveBusiness.cs" />
+    <Compile Include="Business\UpdateBusiness.cs" />
     <Compile Include="Common\Class\RectItem.cs" />
     <Compile Include="Common\Helpers\CustomConverter.cs" />
     <Compile Include="Common\Helpers\DynamicLinq.cs" />
@@ -325,6 +344,10 @@
       <SubType>Code</SubType>
     </Compile>
     <AppDesigner Include="Properties\" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IUnitOfWork.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Controls\Resources\Calendar-32.png" />
@@ -350,6 +373,7 @@
     <Resource Include="Controls\Resources\Warning-45.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="Mvvm\ntprop.snippet" />
     <None Include="Mvvm\vmprop.snippet" />
     <None Include="packages.config" />

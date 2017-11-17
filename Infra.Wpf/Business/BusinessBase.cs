@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Infra.Wpf.Business
 {
-    public abstract class BusinessBase<T>
+    public class BusinessBase<T>
     {
         #region Properties
 
         private Logger logger { get; set; }
 
-        public BusinessResult<T> Result { get; set; }
+        public ILogInfo LogInfo { get; set; }
 
-        public bool Continue { get; set; }
+        public BusinessResult<T> Result { get; set; }
 
         public bool HasException
         {
@@ -24,54 +24,86 @@ namespace Infra.Wpf.Business
             }
         }
 
+        public bool ThrowException { get; set; }
+
+        public Func<bool> OnBeforeExecute { get; set; }
+
+        public Func<bool> OnExecute { get; set; }
+
+        public Action OnAfterExecute { get; set; }
+
         #endregion
 
         #region Methods
 
-        protected abstract ILogInfo OnBeforeExecute();
-
-        protected virtual ILogInfo OnExecute()
-        {
-            return null;
-        }
-
-        protected virtual ILogInfo OnAfterExecute()
-        {
-            return null;
-        }
-
         public BusinessBase(Logger logger = null)
         {
             Result = new BusinessResult<T>();
-            Continue = true;
             this.logger = logger;
+            ThrowException = true;
+            OnBeforeExecute = () => true;
         }
 
-        public void Execute(bool throwException = true)
+        public BusinessBase(Func<bool> onExecute, Logger logger = null) : this(logger)
+        {
+            OnExecute = onExecute;
+        }
+
+        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, Logger logger = null) : this(onExecute, logger)
+        {
+            OnBeforeExecute = onBeforeExecute;
+        }
+
+        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Action onAfterExecute, Logger logger = null) : this(onBeforExecute, onExecute, logger)
+        {
+            OnAfterExecute = onAfterExecute;
+        }
+
+        public void Execute()
         {
             if (Result == null)
                 Result = new BusinessResult<T>();
 
             try
             {
-                var logInfo = OnBeforeExecute();
-                if (logger != null && logger.LogOnException == false && logInfo != null)
-                    logger.Log(logInfo);
+                if (OnExecute == null)
+                    throw new ArgumentNullException("OnExecute");
 
-                if (Continue == false)
-                    return;
+                if (OnBeforeExecute != null)
+                {
+                    var beforResult = OnBeforeExecute();
+                    if (logger != null && logger.LogOnException == false && LogInfo != null)
+                    {
+                        logger.Log(LogInfo);
+                        LogInfo = null;
+                    }
 
-                logInfo = OnExecute();
-                if (logger != null && logger.LogOnException == false && logInfo != null)
-                    logger.Log(logInfo);
+                    if (beforResult == false)
+                        return;
+                }
 
-                if (Continue == false)
-                    return;
+                if (OnExecute != null)
+                {
+                    var result = OnExecute();
+                    if (logger != null && logger.LogOnException == false && LogInfo != null)
+                    {
+                        logger.Log(LogInfo);
+                        LogInfo = null;
+                    }
 
-                logInfo = OnAfterExecute();
-                if (logger != null && logger.LogOnException == false && logInfo != null)
-                    logger.Log(logInfo);
+                    if (result == false)
+                        return;
+                }
 
+                if (OnAfterExecute != null)
+                {
+                    OnAfterExecute();
+                    if (logger != null && logger.LogOnException == false && LogInfo != null)
+                    {
+                        logger.Log(LogInfo);
+                        LogInfo = null;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -79,10 +111,9 @@ namespace Infra.Wpf.Business
                     logger.Log(ex);
 
                 Result.Exception = ex;
-                Continue = false;
                 Result.Message = new BusinessMessage("خطا", "در سامانه خطایی رخ داده است.");
 
-                if (throwException)
+                if (ThrowException)
                     throw ex;
             }
         }
