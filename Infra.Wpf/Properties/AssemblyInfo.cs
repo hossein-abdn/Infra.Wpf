@@ -55,6 +55,7 @@ using System.Windows.Markup;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Infra.Wpf.Common.Helpers")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Infra.Wpf.Common.Controls")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Infra.Wpf.Common.Converters")]
+[assembly: XmlnsPrefix("http://Infra.Wpf", "ctl")]
+[assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Common.Helpers", AssemblyName = "Infra.Wpf")]
+[assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Controls", AssemblyName = "Infra.Wpf")]
+[assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Converters", AssemblyName = "Infra.Wpf")]

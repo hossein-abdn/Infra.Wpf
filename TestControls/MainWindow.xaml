@@ -4,35 +4,36 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:TestControls"
-    xmlns:ctl="clr-namespace:Infra.Wpf.Controls;assembly=Infra.Wpf"
+    xmlns:ctl="http://Infra.Wpf"
     x:Class="TestControls.MainWindow"
     mc:Ignorable="d"
     Title="MainWindow" Height="500" Width="650"
     FontFamily="IRANSans"
     x:Name="wnd">
-    <Window.DataContext>
+
+    <!--<Window.DataContext>
         <local:ParentViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <local:ViewModel x:Key="vm"/>
-    </Window.Resources>
+    </Window.Resources>-->
 
-    <DockPanel FlowDirection="RightToLeft">
-        <ctl:SearchPanel DockPanel.Dock="Top" IsExpanded="True" SearchCommand="{Binding GetParentsCommand}" ColumnMargin="5" RowMargin="3" Stretch="True">
-            <ctl:ComboField Title="وضعیت" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
-            <ctl:MultiSelectField Title="دانش آموز" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
-            <ctl:TextField Title="تست" OpertatorVisible="False"/>
-            <ctl:BoolField Title="تست"/>
-            <ctl:DateField Title="تاریخ" OpertatorVisible="False" SuggestionVisible="False"/>
-            <ctl:LookupField Title="دانش آموز"/>
-            <ctl:NumericField Title="عدد" OpertatorVisible="False" ShowButtons="True"/>
+    <!--<DockPanel FlowDirection="RightToLeft">
+        <SearchPanel DockPanel.Dock="Top" IsExpanded="True" SearchCommand="{Binding GetParentsCommand}" ColumnMargin="5" RowMargin="3" Stretch="True">
+            <ComboField Title="وضعیت" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
+            <MultiSelectField Title="دانش آموز" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
+            <TextField Title="تست" OpertatorVisible="False"/>
+            <BoolField Title="تست"/>
+            <DateField Title="تاریخ" OpertatorVisible="False" SuggestionVisible="False"/>
+            <LookupField Title="دانش آموز"/>
+            <NumericField Title="عدد" OpertatorVisible="False" ShowButtons="True"/>
 
-        </ctl:SearchPanel>
-        <ctl:GridWrapPanel>
+        </SearchPanel>
+        <GridWrapPanel>
             <TextBlock Text="وضعیت"/>
-            <ctl:CustomComboBox/>
+            <CustomComboBox/>
             <TextBlock Text="دانش آموز"/>
-            <ctl:MultiSelect ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName"/>
-        </ctl:GridWrapPanel>
-    </DockPanel>
+            <MultiSelect ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName"/>
+        </GridWrapPanel>
+    </DockPanel>-->
 </Window>
