@@ -6,32 +6,29 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Infra.Wpf.Controls
 {
     [ContentProperty("SearchFields")]
-    public partial class SearchPanel : UserControl
+    public partial class SearchPanel : UserControl, INotifyPropertyChanged
     {
         #region Property
 
         public FieldCollection SearchFields { get; set; }
 
+        private string searchPhrase;
+
         public string SearchPhrase
         {
+            private set
+            {
+                searchPhrase = value;
+                OnPropertyChanged();
+            }
             get
             {
-                string result = "";
-                foreach (var item in SearchFields)
-                {
-                    if (string.IsNullOrWhiteSpace(item.SearchPhrase) == false)
-                    {
-                        if (string.IsNullOrWhiteSpace(result) == false)
-                            result = result + " AND ";
-                        result = result + item.SearchPhrase;
-                    }
-                }
-
-                return result;
+                return searchPhrase;
             }
         }
 
@@ -51,6 +48,8 @@ namespace Infra.Wpf.Controls
             get { return (bool) GetValue(StretchProperty); }
             set { SetValue(StretchProperty, value); }
         }
+
+        public string Test { get; set; }
 
         public static readonly DependencyProperty StretchProperty = FieldGridWrapPanel.StretchProperty.AddOwner(typeof(SearchPanel));
 
@@ -78,6 +77,8 @@ namespace Infra.Wpf.Controls
 
         public static readonly DependencyProperty IsExpandedProperty = Expander.IsExpandedProperty.AddOwner(typeof(SearchPanel));
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         #endregion
 
         #region Method
@@ -94,9 +95,9 @@ namespace Infra.Wpf.Controls
         {
             if (DataContext != null && !string.IsNullOrWhiteSpace(filterField))
             {
-                var type = DataContext.GetType().GetProperty("ItemsSource").PropertyType;
+                var type = DataContext?.GetType()?.GetProperty("ItemsSource")?.PropertyType;
 
-                if (type.IsGenericType)
+                if (type != null && type.IsGenericType)
                 {
                     var propInfo = type.GenericTypeArguments[0].GetProperty(filterField);
                     if (propInfo != null)
@@ -110,6 +111,7 @@ namespace Infra.Wpf.Controls
 
             return string.Empty;
         }
+
         private void mainpanel_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < SearchFields.Count; i++)
@@ -195,6 +197,27 @@ namespace Infra.Wpf.Controls
                 if (SearchCommand != null)
                     SearchCommand.Execute(SearchPhrase);
             }
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+            string result = "";
+            foreach (var item in SearchFields)
+            {
+                if (string.IsNullOrWhiteSpace(item.SearchPhrase) == false)
+                {
+                    if (string.IsNullOrWhiteSpace(result) == false)
+                        result = result + " AND ";
+                    result = result + item.SearchPhrase;
+                }
+            }
+
+            SearchPhrase = result;
+        }
+
+        public void OnPropertyChanged([CallerMemberName]string prop = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         #endregion

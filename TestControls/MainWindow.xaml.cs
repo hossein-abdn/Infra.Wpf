@@ -27,6 +27,7 @@ using System.Linq.Expressions;
 using Infra.Wpf.Common.Helpers;
 using Infra.Wpf.Repository;
 using System.Data.Entity;
+using Infra.Wpf.Mvvm;
 
 namespace TestControls
 {
@@ -35,14 +36,24 @@ namespace TestControls
     /// </summary>
     public partial class MainWindow : Window
     {
+        public RelayCommand<string> GetAllCommand { get; set; }
+
+        private static void Execute(string obj)
+        {
+            int a = 1;
+        }
+
         public MainWindow()
         {
+            GetAllCommand = new RelayCommand<string>(Execute);
+
             InitializeComponent();
 
             CultureInfo calture = new CultureInfo("fa-IR");
             calture.NumberFormat.DigitSubstitution = DigitShapes.NativeNational;
             Thread.CurrentThread.CurrentCulture = calture;
             Thread.CurrentThread.CurrentUICulture = calture;
+            
         }
     }
 }

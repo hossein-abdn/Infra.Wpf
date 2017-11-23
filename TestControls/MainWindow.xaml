@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:TestControls"
     xmlns:ctl="http://Infra.Wpf"
     x:Class="TestControls.MainWindow"
@@ -10,30 +11,21 @@
     Title="MainWindow" Height="500" Width="650"
     FontFamily="IRANSans"
     x:Name="wnd">
-
-    <!--<Window.DataContext>
-        <local:ParentViewModel/>
+    <Window.DataContext>
+        <local:StudentVm/>
     </Window.DataContext>
-    <Window.Resources>
-        <local:ViewModel x:Key="vm"/>
-    </Window.Resources>-->
 
-    <!--<DockPanel FlowDirection="RightToLeft">
-        <SearchPanel DockPanel.Dock="Top" IsExpanded="True" SearchCommand="{Binding GetParentsCommand}" ColumnMargin="5" RowMargin="3" Stretch="True">
-            <ComboField Title="وضعیت" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
-            <MultiSelectField Title="دانش آموز" FilterField="StudentId" ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName" TargetColumn="StudentId"/>
-            <TextField Title="تست" OpertatorVisible="False"/>
-            <BoolField Title="تست"/>
-            <DateField Title="تاریخ" OpertatorVisible="False" SuggestionVisible="False"/>
-            <LookupField Title="دانش آموز"/>
-            <NumericField Title="عدد" OpertatorVisible="False" ShowButtons="True"/>
+    <i:Interaction.Behaviors>
+        <ctl:EventToCommand EventName="Loaded" Command="{Binding LoadedCommand}"/>
+    </i:Interaction.Behaviors>
+    <DockPanel FlowDirection="RightToLeft">
+        <Button DockPanel.Dock="Top" Content="تست" Command="{Binding GetStudentsCommand}"/>
+        <ctl:CustomGrid Name="grid" ItemsSource="{Binding ItemsSource}" ColumnsToAdd="FirstName,LastName">
+            <ctl:CustomGrid.ButtonColumns>
+                <ctl:CustomButtonColumn ButtonType="Edit" Order="2" />
+                <ctl:CustomButtonColumn ButtonType="Delete" Order="3" />
+            </ctl:CustomGrid.ButtonColumns>
+        </ctl:CustomGrid>
 
-        </SearchPanel>
-        <GridWrapPanel>
-            <TextBlock Text="وضعیت"/>
-            <CustomComboBox/>
-            <TextBlock Text="دانش آموز"/>
-            <MultiSelect ItemsSource="{Binding StudentList}" DisplayMemberPath="LastName"/>
-        </GridWrapPanel>
-    </DockPanel>-->
+    </DockPanel>
 </Window>

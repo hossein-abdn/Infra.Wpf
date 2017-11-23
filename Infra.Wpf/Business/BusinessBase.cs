@@ -40,7 +40,7 @@ namespace Infra.Wpf.Business
         {
             Result = new BusinessResult<T>();
             this.logger = logger;
-            ThrowException = true;
+            ThrowException = false;
             OnBeforeExecute = () => true;
         }
 

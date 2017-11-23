@@ -7,6 +7,7 @@
                 <ControlTemplate>
                     <Grid>
                         <DockPanel LastChildFill="False" Background="LightGray">
+                            <Border BorderBrush="Black" BorderThickness="1" Width="1" DockPanel.Dock="Left"/>
                             <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                                 <Button Margin="3" Command="{Binding RefreshCommand}">
                                     <Button.Template>

@@ -118,14 +118,17 @@ namespace Infra.Wpf.Controls
                         case ColumnType.Edit:
                             Image = new BitmapImage(new Uri("pack://application:,,,/Infra.Wpf;component/Controls/Resources/Edit-24.png"));
                             MouseOverImage = new BitmapImage(new Uri("pack://application:,,,/Infra.Wpf;component/Controls/Resources/EditOver-24.png"));
+                            ToolTip = "ویرایش";
                             break;
                         case ColumnType.Delete:
                             Image = new BitmapImage(new Uri("pack://application:,,,/Infra.Wpf;component/Controls/Resources/Delete-24.png"));
                             MouseOverImage = new BitmapImage(new Uri("pack://application:,,,/Infra.Wpf;component/Controls/Resources/DeleteOver-24.png"));
+                            ToolTip = "حذف";
                             break;
                         case ColumnType.View:
                             Image = new BitmapImage(new Uri("pack://application:,,,/Infra.Wpf;component/Controls/Resources/View-24.png"));
                             MouseOverImage = new BitmapImage(new Uri("pack://application:,,,/Infra.Wpf;component/Controls/Resources/ViewOver-24.png"));
+                            ToolTip = "نمایش";
                             break;
                     }
                 }

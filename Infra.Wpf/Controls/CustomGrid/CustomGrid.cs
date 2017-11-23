@@ -7,6 +7,7 @@ using C1.WPF.DataGrid;
 using System.Windows.Media;
 using System.Windows.Data;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Infra.Wpf.Controls
 {
@@ -30,6 +31,9 @@ namespace Infra.Wpf.Controls
         private void OnItemsSourceChanged(object sender, EventArgs e)
         {
             ItemsSourceChanged?.Invoke(this, e);
+
+            if (loadedFlag)
+                OrderButtonColumns();
         }
 
         private void CustomGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -126,7 +130,7 @@ namespace Infra.Wpf.Controls
                 customColumn.Binding = new Binding(e.Property.Name);
                 customColumn.Format = "d";
                 if (this.FlowDirection == FlowDirection.RightToLeft)
-                    customColumn.HorizontalAlignment = HorizontalAlignment.Right;
+                    customColumn.HorizontalAlignment = HorizontalAlignment.Left;
                 e.Column = customColumn;
             }
         }
@@ -151,17 +155,14 @@ namespace Infra.Wpf.Controls
             return string.Empty;
         }
 
-        void CustomGrid_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void CustomGrid_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             this.BottomRows.Add(new CustomBottomRow() { Height = new DataGridLength(32) });
             this.FrozenBottomRowsCount = 1;
 
             foreach (var item in ButtonColumns)
-            {
                 this.Columns.Add(item);
-                if (item.Order.HasValue)
-                    item.DisplayIndex = item.Order.Value;
-            }
+            OrderButtonColumns();
 
             this.CanUserAddRows = false;
             this.CanUserEditRows = true;
@@ -172,6 +173,24 @@ namespace Infra.Wpf.Controls
             this.CanUserSort = true;
             this.IsReadOnly = false;
             this.SelectionMode = DataGridSelectionMode.SingleRange;
+            loadedFlag = true;
+        }
+
+        private void OrderButtonColumns()
+        {
+            if (DesignerProperties.GetIsInDesignMode(this))
+                return;
+
+            Dictionary<CustomButtonColumn, int> orders = new Dictionary<CustomButtonColumn, int>();
+            foreach (var item in ButtonColumns)
+            {
+                if (item.Order.HasValue)
+                    orders.Add(item, item.Order.Value);
+            }
+
+            var sortOrders = orders.OrderByDescending(x => x.Value);
+            foreach (var item in sortOrders)
+                item.Key.DisplayIndex = item.Value;
         }
 
         #endregion
@@ -199,6 +218,8 @@ namespace Infra.Wpf.Controls
                 return counter;
             }
         }
+
+        private bool loadedFlag = false;
 
         #endregion
     }

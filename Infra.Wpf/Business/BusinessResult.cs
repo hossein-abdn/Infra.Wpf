@@ -10,7 +10,7 @@ namespace Infra.Wpf.Business
     {
         public T Data { get; set; }
 
-        public Exception Exception;
+        public Exception Exception { get; set; }
 
         public BusinessMessage Message { get; set; }
     }
