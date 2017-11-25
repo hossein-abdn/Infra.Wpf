@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // RolePermission
@@ -27,15 +27,12 @@ namespace DebugMode
         [Column(@"RolePermissionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Role permission ID")]
         public int RolePermissionId { get; set; } // RolePermissionId (Primary key)
 
         [Required]
-        [Display(Name = "Role ID")]
         public int RoleId { get; set; } // RoleId
 
         [Required]
-        [Display(Name = "Permission ID")]
         public int PermissionId { get; set; } // PermissionId
 
         // Foreign keys

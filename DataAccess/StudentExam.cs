@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // StudentExam
@@ -27,23 +27,18 @@ namespace DebugMode
         [Column(@"StudentExamId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Student exam ID")]
         public int StudentExamId { get; set; } // StudentExamId (Primary key)
 
         [Required]
-        [Display(Name = "Exam ID")]
         public int ExamId { get; set; } // ExamId
 
         [Required]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId
 
         [Required]
-        [Display(Name = "Exam mark")]
         public decimal ExamMark { get; set; } // ExamMark
 
         [Required]
-        [Display(Name = "Record stauts ID")]
         public int RecordStautsId { get; set; } // RecordStautsId
 
         // Foreign keys

@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // ClassSession
@@ -27,30 +27,23 @@ namespace DebugMode
         [Column(@"ClassSessionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Class session ID")]
         public int ClassSessionId { get; set; } // ClassSessionId (Primary key)
 
-        [Display(Name = "Class scadule ID")]
         public int? ClassScaduleId { get; set; } // ClassScaduleId
 
         [Required]
-        [Display(Name = "Date")]
         public System.DateTime Date { get; set; } // Date
 
         [Required]
-        [Display(Name = "Stat time")]
         public System.TimeSpan StatTime { get; set; } // StatTime
 
         [Required]
-        [Display(Name = "End time")]
         public System.TimeSpan EndTime { get; set; } // EndTime
 
         [Required]
-        [Display(Name = "Holding")]
         public bool Holding { get; set; } // Holding
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

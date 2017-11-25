@@ -1055,8 +1055,10 @@
                 string value;
                 if(columnNameToDataAnnotation.TryGetValue(NameHumanCase.ToLowerInvariant(), out value))
                     DataAnnotations.Add(value);
-
-                DataAnnotations.Add(string.Format("Display(Name = \"{0}\")", DisplayName));
+                
+                //Edit By Hossein
+                if(!string.IsNullOrEmpty(DisplayName))
+                    DataAnnotations.Add(string.Format("Display(Name = \"{0}\")", DisplayName));
             }
 
             public void SetupEntityAndConfig(CommentsStyle includeComments, CommentsStyle includeExtendedPropertyComments, bool usePrivateSetterForComputedColumns, bool dataAnnotations, bool dataAnnotationsSchema, bool isSqlCe, Dictionary<string, string> columnNameToDataAnnotation)
@@ -1844,11 +1846,13 @@ FROM    sys.objects AS PK
                AND k.parent_column_id = FkCol.column_id
 ORDER BY FK_Table, FK_Column";
 
+        //Edit By Hossein
         private const string ExtendedPropertySQL = @"
 SELECT  s.name AS [schema],
         t.name AS [table],
         c.name AS [column],
-        value AS [property]
+        value AS [property],
+        ep.name AS [property_name]
 FROM    sys.extended_properties AS ep
         INNER JOIN sys.tables AS t
             ON ep.major_id = t.object_id
@@ -2428,6 +2432,7 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
                     Cmd.CommandTimeout = 600;
                 }
 
+                //Edit By Hossein
                 using(DbDataReader rdr = Cmd.ExecuteReader())
                 {
                     Table t = null;
@@ -2436,9 +2441,14 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
                         string schema           = rdr["schema"].ToString().Trim();
                         string tableName        = rdr["table"].ToString().Trim();
                         string column           = rdr["column"].ToString().Trim();
-                        string extendedProperty = rdr["property"].ToString().Trim();
+                        string extendedProperty = "";
+                        if(rdr["property_name"].ToString().Trim()=="MS_Description")
+                            extendedProperty = rdr["property"].ToString().Trim();
+                        string displayProperty = "";
+                        if(rdr["property_name"].ToString().Trim()=="DisplayName")
+                            displayProperty = rdr["property"].ToString().Trim();
 
-                        if (string.IsNullOrEmpty(extendedProperty))
+                        if (string.IsNullOrEmpty(extendedProperty) && string.IsNullOrEmpty(displayProperty))
                             continue;
 
                         if(t == null || t.Name != tableName || t.Schema != schema)
@@ -2456,8 +2466,16 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
                                 var col = t.Columns.Find(x => x.Name == column);
                                 if (col != null)
                                 {
-                                    extendedProperty = extendedProperty.Replace("\n", " ").Replace("\r", " ");
-                                    col.ExtendedProperty = extendedProperty;
+                                    if(!string.IsNullOrEmpty(extendedProperty))
+                                    {
+                                        extendedProperty = extendedProperty.Replace("\n", " ").Replace("\r", " ");
+                                        col.ExtendedProperty = extendedProperty;
+                                    }
+                                    else if(!string.IsNullOrEmpty(displayProperty))
+                                    {
+                                        displayProperty = displayProperty.Replace("\n", " ").Replace("\r", " ");
+                                        col.DisplayName = displayProperty;
+                                    }
                                 }
                             }
                         }
@@ -2860,8 +2878,9 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
 
                 if (ReservedKeywords.Contains(col.NameHumanCase))
                     col.NameHumanCase = "@" + col.NameHumanCase;
-
-                col.DisplayName = ToDisplayName(col.Name);
+                
+                //Edit By Hossein
+                //col.DisplayName = ToDisplayName(col.Name);
 
                 var titleCase = (usePascalCase ? Inflector.ToTitleCase(col.NameHumanCase) : col.NameHumanCase).Replace(" ", "");
                 if (titleCase != string.Empty)

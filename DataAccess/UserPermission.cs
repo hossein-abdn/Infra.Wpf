@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // UserPermission
@@ -27,13 +27,10 @@ namespace DebugMode
         [Column(@"UserPermissionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "User permission ID")]
         public int UserPermissionId { get; set; } // UserPermissionId (Primary key)
 
-        [Display(Name = "User ID")]
         public int? UserId { get; set; } // UserId
 
-        [Display(Name = "Permission ID")]
         public int? PermissionId { get; set; } // PermissionId
 
         // Foreign keys

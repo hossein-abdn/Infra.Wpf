@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // RollCall
@@ -27,24 +27,19 @@ namespace DebugMode
         [Column(@"RollCallId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Roll call ID")]
         public int RollCallId { get; set; } // RollCallId (Primary key)
 
         [Required]
-        [Display(Name = "Class session ID")]
         public int ClassSessionId { get; set; } // ClassSessionId
 
-        [Display(Name = "Student ID")]
         public int? StudentId { get; set; } // StudentId
 
-        [Display(Name = "Parent ID")]
         public int? ParentId { get; set; } // ParentId
 
         ///<summary>
         /// حضور، غیبت، تاخیر، غیبت موجه
         ///</summary>
         [Required]
-        [Display(Name = "Presence ID")]
         public int PresenceId { get; set; } // PresenceId
 
         ///<summary>
@@ -52,17 +47,14 @@ namespace DebugMode
         ///</summary>
         [MaxLength(50)]
         [StringLength(50)]
-        [Display(Name = "Comment")]
         public string Comment { get; set; } // Comment (length: 50)
 
         ///<summary>
         /// میزان تاخیر
         ///</summary>
-        [Display(Name = "Delay")]
         public int? Delay { get; set; } // Delay
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // AwardScore
@@ -27,23 +27,18 @@ namespace DebugMode
         [Column(@"AwardScoreId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Award score ID")]
         public int AwardScoreId { get; set; } // AwardScoreId (Primary key)
 
         [Required]
-        [Display(Name = "Award ID")]
         public int AwardId { get; set; } // AwardId
 
         [Required]
-        [Display(Name = "Score")]
         public int Score { get; set; } // Score
 
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

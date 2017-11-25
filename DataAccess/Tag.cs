@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Tag
@@ -27,24 +27,20 @@ namespace DebugMode
         [Column(@"TagId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Tag ID")]
         public int TagId { get; set; } // TagId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         ///<summary>
         /// نوع آیکون تگ
         ///</summary>
         [Required]
-        [Display(Name = "Tag type ID")]
         public int TagTypeId { get; set; } // TagTypeId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

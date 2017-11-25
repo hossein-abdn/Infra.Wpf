@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // WorkBook
@@ -27,40 +27,33 @@ namespace DebugMode
         [Column(@"WorkBookId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Work book ID")]
         public int WorkBookId { get; set; } // WorkBookId (Primary key)
 
         [Required]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId
 
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
         ///<summary>
         /// امتیاز رتبه بندی
         ///</summary>
         [Required]
-        [Display(Name = "Rank score")]
         public int RankScore { get; set; } // RankScore
 
         ///<summary>
         /// امتیاز جوایز
         ///</summary>
         [Required]
-        [Display(Name = "Award score")]
         public int AwardScore { get; set; } // AwardScore
 
         ///<summary>
         /// امتیاز کل
         ///</summary>
         [Required]
-        [Display(Name = "Total score")]
         public int TotalScore { get; set; } // TotalScore
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

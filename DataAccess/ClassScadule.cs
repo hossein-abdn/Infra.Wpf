@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // ClassScadule
@@ -27,36 +27,28 @@ namespace DebugMode
         [Column(@"ClassScaduleId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Class scadule ID")]
         public int ClassScaduleId { get; set; } // ClassScaduleId (Primary key)
 
         [Required]
-        [Display(Name = "Class ID")]
         public int ClassId { get; set; } // ClassId
 
         ///<summary>
         /// هفتگی یا روزانه
         ///</summary>
         [Required]
-        [Display(Name = "Scadule type ID")]
         public int ScaduleTypeId { get; set; } // ScaduleTypeId
 
-        [Display(Name = "Date")]
         public System.DateTime? Date { get; set; } // Date
 
-        [Display(Name = "Day ID")]
         public int? DayId { get; set; } // DayId
 
         [Required]
-        [Display(Name = "Start time")]
         public System.TimeSpan StartTime { get; set; } // StartTime
 
         [Required]
-        [Display(Name = "End time")]
         public System.TimeSpan EndTime { get; set; } // EndTime
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

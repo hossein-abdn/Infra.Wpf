@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // StudentPersonality
@@ -27,33 +27,26 @@ namespace DebugMode
         [Column(@"StudentPersonalityId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Student personality ID")]
         public int StudentPersonalityId { get; set; } // StudentPersonalityId (Primary key)
 
         [Required]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId
 
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
         [Required]
-        [Display(Name = "Register date")]
         public System.DateTime RegisterDate { get; set; } // RegisterDate
 
         [Required]
-        [Display(Name = "User ID")]
         public int UserId { get; set; } // UserId
 
         [Required]
         [MaxLength(200)]
         [StringLength(200)]
-        [Display(Name = "Detail")]
         public string Detail { get; set; } // Detail (length: 200)
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

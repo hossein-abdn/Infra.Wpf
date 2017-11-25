@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // TermQuestion
@@ -27,15 +27,12 @@ namespace DebugMode
         [Column(@"TermQuestionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Term question ID")]
         public int TermQuestionId { get; set; } // TermQuestionId (Primary key)
 
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
         [Required]
-        [Display(Name = "Question ID")]
         public int QuestionId { get; set; } // QuestionId
 
         // Reverse navigation

@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Question
@@ -27,23 +27,19 @@ namespace DebugMode
         [Column(@"QuestionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Question ID")]
         public int QuestionId { get; set; } // QuestionId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Title")]
         public string Title { get; set; } // Title (length: 30)
 
         [Required]
         [MaxLength(200)]
         [StringLength(200)]
-        [Display(Name = "Text")]
         public string Text { get; set; } // Text (length: 200)
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

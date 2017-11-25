@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // RegisterQuestion
@@ -27,34 +27,29 @@ namespace DebugMode
         [Column(@"RegisterQuestionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Register question ID")]
         public int RegisterQuestionId { get; set; } // RegisterQuestionId (Primary key)
 
         ///<summary>
         /// مرتبط با ثبت نام شونده
         ///</summary>
         [Required]
-        [Display(Name = "Register ID")]
         public int RegisterId { get; set; } // RegisterId
 
         ///<summary>
         /// مرتبط با خود سوال
         ///</summary>
         [Required]
-        [Display(Name = "Term question ID")]
         public int TermQuestionId { get; set; } // TermQuestionId
 
         ///<summary>
         /// مرتبط با گزینه پاسخ
         ///</summary>
         [Required]
-        [Display(Name = "Question item ID")]
         public int QuestionItemId { get; set; } // QuestionItemId
 
         ///<summary>
         /// مربوط به پاسخ های گزینه ای
         ///</summary>
-        [Display(Name = "Answer item")]
         public bool? AnswerItem { get; set; } // AnswerItem
 
         ///<summary>
@@ -62,11 +57,9 @@ namespace DebugMode
         ///</summary>
         [MaxLength(200)]
         [StringLength(200)]
-        [Display(Name = "Answer text")]
         public string AnswerText { get; set; } // AnswerText (length: 200)
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

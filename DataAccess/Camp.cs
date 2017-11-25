@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Camp
@@ -27,32 +27,27 @@ namespace DebugMode
         [Column(@"CampId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Camp ID")]
         public int CampId { get; set; } // CampId (Primary key)
 
         ///<summary>
         /// جلسه اردو
         ///</summary>
         [Required]
-        [Display(Name = "Class session ID")]
         public int ClassSessionId { get; set; } // ClassSessionId
 
         ///<summary>
         /// اردو خانوادگی
         ///</summary>
         [Required]
-        [Display(Name = "Domestic")]
         public bool Domestic { get; set; } // Domestic
 
         ///<summary>
         /// مکان اردو
         ///</summary>
         [Required]
-        [Display(Name = "Place ID")]
         public int PlaceId { get; set; } // PlaceId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // PhoneNumber
@@ -27,38 +27,30 @@ namespace DebugMode
         [Column(@"PhoneNumberId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Phone number ID")]
         public int PhoneNumberId { get; set; } // PhoneNumberId (Primary key)
 
-        [Display(Name = "Student ID")]
         public int? StudentId { get; set; } // StudentId
 
-        [Display(Name = "Parent ID")]
         public int? ParentId { get; set; } // ParentId
 
-        [Display(Name = "Teacher ID")]
         public int? TeacherId { get; set; } // TeacherId
 
         ///<summary>
         /// شماره تلفن متعلق به کیست (معلم، دانش آموز، والدین)
         ///</summary>
         [Required]
-        [Display(Name = "Owner ID")]
         public int OwnerId { get; set; } // OwnerId
 
         [Required]
-        [Display(Name = "Phone number")]
         public int PhoneNumber_ { get; set; } // PhoneNumber
 
         ///<summary>
         /// خانه، کار، موبایل
         ///</summary>
         [Required]
-        [Display(Name = "Phone number type ID")]
         public int PhoneNumberTypeId { get; set; } // PhoneNumberTypeId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

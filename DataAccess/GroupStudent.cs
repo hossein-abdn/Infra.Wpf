@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // GroupStudent
@@ -27,19 +27,15 @@ namespace DebugMode
         [Column(@"GroupStudentId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Group student ID")]
         public int GroupStudentId { get; set; } // GroupStudentId (Primary key)
 
         [Required]
-        [Display(Name = "Group ID")]
         public int GroupId { get; set; } // GroupId
 
         [Required]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

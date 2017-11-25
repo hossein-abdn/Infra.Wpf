@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // ReligiousMission
@@ -27,32 +27,27 @@ namespace DebugMode
         [Column(@"ReligiousMissionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Religious mission ID")]
         public int ReligiousMissionId { get; set; } // ReligiousMissionId (Primary key)
 
         ///<summary>
         /// جلسه هئیت
         ///</summary>
         [Required]
-        [Display(Name = "Class session ID")]
         public int ClassSessionId { get; set; } // ClassSessionId
 
         ///<summary>
         /// هیئت خانوادگی
         ///</summary>
         [Required]
-        [Display(Name = "Domestic")]
         public bool Domestic { get; set; } // Domestic
 
         ///<summary>
         /// مکان هیئت
         ///</summary>
         [Required]
-        [Display(Name = "Place ID")]
         public int PlaceId { get; set; } // PlaceId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

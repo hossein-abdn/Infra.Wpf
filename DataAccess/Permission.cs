@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Permission
@@ -27,7 +27,6 @@ namespace DebugMode
         [Column(@"PermissionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Permission ID")]
         public int PermissionId { get; set; } // PermissionId (Primary key)
 
         ///<summary>
@@ -36,24 +35,20 @@ namespace DebugMode
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
-        [Display(Name = "Title")]
         public string Title { get; set; } // Title (length: 50)
 
         ///<summary>
         /// آدرس دسترسی
         ///</summary>
         [Required]
-        [Display(Name = "Uri")]
         public string Uri { get; set; } // Uri
 
         ///<summary>
         /// نوع دسترسی (فرم، دکمه، کلاس)
         ///</summary>
         [Required]
-        [Display(Name = "Permition type ID")]
         public int PermitionTypeId { get; set; } // PermitionTypeId
 
-        [Display(Name = "Parent permission ID")]
         public int? ParentPermissionId { get; set; } // ParentPermissionId
 
         // Reverse navigation

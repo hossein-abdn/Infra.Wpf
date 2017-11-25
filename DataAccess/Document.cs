@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Document
@@ -27,57 +27,46 @@ namespace DebugMode
         [Column(@"DocumentId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Document ID")]
         public int DocumentId { get; set; } // DocumentId (Primary key)
 
         ///<summary>
         /// عمومی، مربوط به دوره
         ///</summary>
         [Required]
-        [Display(Name = "Root ID")]
         public int RootId { get; set; } // RootId
 
         ///<summary>
         /// فولدر، فایل
         ///</summary>
         [Required]
-        [Display(Name = "Document type ID")]
         public int DocumentTypeId { get; set; } // DocumentTypeId
 
         [Required]
         [MaxLength(100)]
         [StringLength(100)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 100)
 
         ///<summary>
         /// فیلم، عکس، مستند، ...
         ///</summary>
         [Required]
-        [Display(Name = "Extension type ID")]
         public int ExtensionTypeId { get; set; } // ExtensionTypeId
 
-        [Display(Name = "Description")]
         public string Description { get; set; } // Description
 
-        [Display(Name = "Date")]
         public System.DateTime? Date { get; set; } // Date
 
         [Required]
-        [Display(Name = "Register date")]
         public System.DateTime RegisterDate { get; set; } // RegisterDate
 
         [Required]
-        [Display(Name = "Path")]
         public string Path { get; set; } // Path
 
         [MaxLength(100)]
         [StringLength(100)]
-        [Display(Name = "Save source path")]
         public string SaveSourcePath { get; set; } // SaveSourcePath (length: 100)
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

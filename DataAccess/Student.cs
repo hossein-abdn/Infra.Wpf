@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Student
@@ -27,56 +27,45 @@ namespace DebugMode
         [Column(@"StudentId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "First name")]
         public string FirstName { get; set; } // FirstName (length: 30)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
-        [Display(Name = "Last name")]
         public string LastName { get; set; } // LastName (length: 50)
 
-        [Display(Name = "Birthday")]
         public System.DateTime? Birthday { get; set; } // Birthday
 
         ///<summary>
         /// کدملی
         ///</summary>
-        [Display(Name = "National code")]
         public int? NationalCode { get; set; } // NationalCode
 
         ///<summary>
         /// شماره شناسنامه
         ///</summary>
-        [Display(Name = "Identifiere no")]
         public int? IdentifiereNo { get; set; } // IdentifiereNo
 
         [MaxLength(2147483647)]
-        [Display(Name = "Picture")]
         public byte[] Picture { get; set; } // Picture (length: 2147483647)
 
-        [Display(Name = "Basij status ID")]
         public int? BasijStatusId { get; set; } // BasijStatusId
 
         [MaxLength(200)]
         [StringLength(200)]
-        [Display(Name = "Address")]
         public string Address { get; set; } // Address (length: 200)
 
         [MaxLength(50)]
         [StringLength(50)]
         [EmailAddress]
-        [Display(Name = "Email")]
         public string Email { get; set; } // Email (length: 50)
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

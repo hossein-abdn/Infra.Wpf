@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Place
@@ -27,37 +27,31 @@ namespace DebugMode
         [Column(@"PlaceId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Place ID")]
         public int PlaceId { get; set; } // PlaceId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         ///<summary>
         /// منزل دانش آموز، غیره
         ///</summary>
         [Required]
-        [Display(Name = "Place type ID")]
         public int PlaceTypeId { get; set; } // PlaceTypeId
 
         ///<summary>
         /// برای منزل دانش آموز
         ///</summary>
-        [Display(Name = "Term ID")]
         public int? TermId { get; set; } // TermId
 
         ///<summary>
         /// جداکننده هیئت، اردو
         ///</summary>
         [Required]
-        [Display(Name = "Place group ID")]
         public int PlaceGroupId { get; set; } // PlaceGroupId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

@@ -2,13 +2,20 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\Models\FBSDB.tt</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\EF.Reverse.POCO.Core.ttinclude</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\ef.reverse.poco.ttinclude</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\Models\Account.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\class.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\Models\AccountDetail.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\classmap.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\parent.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\user.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

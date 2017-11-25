@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Class
@@ -27,49 +27,40 @@ namespace DebugMode
         [Column(@"ClassId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Class ID")]
         public int ClassId { get; set; } // ClassId (Primary key)
 
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
-        [Display(Name = "Group ID")]
         public int? GroupId { get; set; } // GroupId
 
         [Required]
-        [Display(Name = "Teacher ID")]
         public int TeacherId { get; set; } // TeacherId
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         ///<summary>
         /// امتیاز کلاس محاسبه شود یا خیر
         ///</summary>
         [Required]
-        [Display(Name = "Calc score")]
         public bool CalcScore { get; set; } // CalcScore
 
         ///<summary>
         /// اجباری، اختیاری
         ///</summary>
         [Required]
-        [Display(Name = "Class type ID")]
         public int ClassTypeId { get; set; } // ClassTypeId
 
         ///<summary>
         /// عمومی، والدین، هیئت، اردو، جشنواره
         ///</summary>
         [Required]
-        [Display(Name = "Class model ID")]
         public int ClassModelId { get; set; } // ClassModelId
 
         [Required]
-        [Display(Name = "Recored status ID")]
         public int RecoredStatusId { get; set; } // RecoredStatusId
 
         // Reverse navigation

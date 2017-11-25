@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // RankConfig
@@ -27,32 +27,26 @@ namespace DebugMode
         [Column(@"RankConfigId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Rank config ID")]
         public int RankConfigId { get; set; } // RankConfigId (Primary key)
 
         ///<summary>
         /// عنوان امتیاز
         ///</summary>
         [Required]
-        [Display(Name = "Score item ID")]
         public int ScoreItemId { get; set; } // ScoreItemId
 
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
         [Required]
-        [Display(Name = "Score")]
         public decimal Score { get; set; } // Score
 
         ///<summary>
         /// میزان تاخیر
         ///</summary>
-        [Display(Name = "Delay")]
         public int? Delay { get; set; } // Delay
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

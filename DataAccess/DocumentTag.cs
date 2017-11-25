@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // DocumentTag
@@ -27,19 +27,15 @@ namespace DebugMode
         [Column(@"DocumentTagId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Document tag ID")]
         public int DocumentTagId { get; set; } // DocumentTagId (Primary key)
 
         [Required]
-        [Display(Name = "Tag ID")]
         public int TagId { get; set; } // TagId
 
         [Required]
-        [Display(Name = "Document ID")]
         public int DocumentId { get; set; } // DocumentId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Term
@@ -27,32 +27,26 @@ namespace DebugMode
         [Column(@"TermId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         [Required]
-        [Display(Name = "Start date")]
         public System.DateTime StartDate { get; set; } // StartDate
 
         [Required]
-        [Display(Name = "End date")]
         public System.DateTime EndDate { get; set; } // EndDate
 
         ///<summary>
         /// شماره دوره
         ///</summary>
         [Required]
-        [Display(Name = "Period")]
         public int Period { get; set; } // Period
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

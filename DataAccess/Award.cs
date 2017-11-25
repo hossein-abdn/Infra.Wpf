@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Award
@@ -27,23 +27,19 @@ namespace DebugMode
         [Column(@"AwardId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Award ID")]
         public int AwardId { get; set; } // AwardId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         ///<summary>
         /// تعداد جایزه
         ///</summary>
-        [Display(Name = "Count")]
         public int? Count { get; set; } // Count
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

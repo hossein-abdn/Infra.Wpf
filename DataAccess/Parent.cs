@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Parent
@@ -27,22 +27,18 @@ namespace DebugMode
         [Column(@"ParentId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Parent ID")]
         public int ParentId { get; set; } // ParentId (Primary key)
 
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "First name")]
         public string FirstName { get; set; } // FirstName (length: 30)
 
         [MaxLength(50)]
         [StringLength(50)]
-        [Display(Name = "Last name")]
         public string LastName { get; set; } // LastName (length: 50)
 
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Job")]
         public string Job { get; set; } // Job (length: 30)
 
         ///<summary>
@@ -50,29 +46,23 @@ namespace DebugMode
         ///</summary>
         [MaxLength(50)]
         [StringLength(50)]
-        [Display(Name = "Assistant context")]
         public string AssistantContext { get; set; } // AssistantContext (length: 50)
 
         [Required]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId
 
         [Required]
-        [Display(Name = "Without parent")]
         public bool WithoutParent { get; set; } // WithoutParent
 
         [Required]
-        [Display(Name = "Relationship ID")]
         public int RelationshipId { get; set; } // RelationshipId
 
         [MaxLength(50)]
         [StringLength(50)]
         [EmailAddress]
-        [Display(Name = "Email")]
         public string Email { get; set; } // Email (length: 50)
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

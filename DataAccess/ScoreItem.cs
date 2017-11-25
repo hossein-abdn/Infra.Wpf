@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // ScoreItem
@@ -27,17 +27,14 @@ namespace DebugMode
         [Column(@"ScoreItemId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Score item ID")]
         public int ScoreItemId { get; set; } // ScoreItemId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         [Required]
-        [Display(Name = "Code")]
         public int Code { get; set; } // Code
 
         // Reverse navigation

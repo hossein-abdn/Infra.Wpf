@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // ClassScore
@@ -27,25 +27,19 @@ namespace DebugMode
         [Column(@"ClassScoreId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Class score ID")]
         public int ClassScoreId { get; set; } // ClassScoreId (Primary key)
 
         ///<summary>
         /// نوع امتیاز (جایزه، رتبه)
         ///</summary>
-        [Display(Name = "Score type ID")]
         public int? ScoreTypeId { get; set; } // ScoreTypeId
 
-        [Display(Name = "Class ID")]
         public int? ClassId { get; set; } // ClassId
 
-        [Display(Name = "Student ID")]
         public int? StudentId { get; set; } // StudentId
 
-        [Display(Name = "Score")]
         public int? Score { get; set; } // Score
 
-        [Display(Name = "Record status ID")]
         public int? RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

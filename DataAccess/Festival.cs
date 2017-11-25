@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Festival
@@ -27,44 +27,36 @@ namespace DebugMode
         [Column(@"FestivalId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Festival ID")]
         public int FestivalId { get; set; } // FestivalId (Primary key)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         [MaxLength(100)]
         [StringLength(100)]
-        [Display(Name = "Description")]
         public string Description { get; set; } // Description (length: 100)
 
         [Required]
-        [Display(Name = "Class session ID")]
         public int ClassSessionId { get; set; } // ClassSessionId
 
         ///<summary>
         /// رتبه اول
         ///</summary>
-        [Display(Name = "First place ID")]
         public int? FirstPlaceId { get; set; } // FirstPlaceId
 
         ///<summary>
         /// رتبه دوم
         ///</summary>
-        [Display(Name = "Second place ID")]
         public int? SecondPlaceId { get; set; } // SecondPlaceId
 
         ///<summary>
         /// رتبه سوم
         ///</summary>
-        [Display(Name = "Third place ID")]
         public int? ThirdPlaceId { get; set; } // ThirdPlaceId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // User
@@ -27,49 +27,41 @@ namespace DebugMode
         [Column(@"UserId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "User ID")]
         public int UserId { get; set; } // UserId (Primary key)
 
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "First name")]
         public string FirstName { get; set; } // FirstName (length: 30)
 
         [MaxLength(50)]
         [StringLength(50)]
-        [Display(Name = "Last name")]
         public string LastName { get; set; } // LastName (length: 50)
 
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
         [DataType(DataType.Text)]
-        [Display(Name = "User name")]
         public string UserName { get; set; } // UserName (length: 30)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; } // Password (length: 50)
 
         ///<summary>
         /// فعال بودن حساب کاربری
         ///</summary>
         [Required]
-        [Display(Name = "Is active")]
         public bool IsActive { get; set; } // IsActive
 
         ///<summary>
         /// نقش کاربر در سطح دسترسی
         ///</summary>
         [Required]
-        [Display(Name = "Role ID")]
         public int RoleId { get; set; } // RoleId
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

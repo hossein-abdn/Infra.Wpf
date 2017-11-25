@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // ClassPoint
@@ -27,27 +27,21 @@ namespace DebugMode
         [Column(@"ClassPointId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Class point ID")]
         public int ClassPointId { get; set; } // ClassPointId (Primary key)
 
         [Required]
-        [Display(Name = "Class ID")]
         public int ClassId { get; set; } // ClassId
 
         [Required]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId
 
         [Required]
-        [Display(Name = "Date")]
         public System.DateTime Date { get; set; } // Date
 
         [Required]
-        [Display(Name = "Point")]
         public int Point { get; set; } // Point
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Foreign keys

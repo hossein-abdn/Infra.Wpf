@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Register
@@ -27,27 +27,22 @@ namespace DebugMode
         [Column(@"RegisterId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Register ID")]
         public int RegisterId { get; set; } // RegisterId (Primary key)
 
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
         [Required]
-        [Display(Name = "Student ID")]
         public int StudentId { get; set; } // StudentId
 
         ///<summary>
         /// نوع معدل (ترمی، پایانی)
         ///</summary>
-        [Display(Name = "Average type ID")]
         public int? AverageTypeId { get; set; } // AverageTypeId
 
         ///<summary>
         /// معدل
         ///</summary>
-        [Display(Name = "Average")]
         public decimal? Average { get; set; } // Average
 
         ///<summary>
@@ -55,7 +50,6 @@ namespace DebugMode
         ///</summary>
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Current school name")]
         public string CurrentSchoolName { get; set; } // CurrentSchoolName (length: 30)
 
         ///<summary>
@@ -63,18 +57,15 @@ namespace DebugMode
         ///</summary>
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Next school name")]
         public string NextSchoolName { get; set; } // NextSchoolName (length: 30)
 
         ///<summary>
         /// آماده میزبانی هیئت
         ///</summary>
         [Required]
-        [Display(Name = "Host religious mission")]
         public bool HostReligiousMission { get; set; } // HostReligiousMission
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

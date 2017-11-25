@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // GeneralBaseType
@@ -27,11 +27,9 @@ namespace DebugMode
         [Column(@"GeneralBaseTypeId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "General base type ID")]
         public int GeneralBaseTypeId { get; set; } // GeneralBaseTypeId (Primary key)
 
         [Required]
-        [Display(Name = "General base category ID")]
         public int GeneralBaseCategoryId { get; set; } // GeneralBaseCategoryId
 
         ///<summary>
@@ -40,7 +38,6 @@ namespace DebugMode
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Name")]
         public string Name { get; set; } // Name (length: 30)
 
         ///<summary>
@@ -49,11 +46,9 @@ namespace DebugMode
         [Required]
         [MaxLength(30)]
         [StringLength(30)]
-        [Display(Name = "Titile")]
         public string Titile { get; set; } // Titile (length: 30)
 
         [Required]
-        [Display(Name = "Code")]
         public int Code { get; set; } // Code
 
         // Reverse navigation

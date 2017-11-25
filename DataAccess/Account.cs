@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Account
@@ -27,21 +27,18 @@ namespace DebugMode
         [Column(@"AcountId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Acount ID")]
         public int AcountId { get; set; } // AcountId (Primary key)
 
         ///<summary>
         /// دوره
         ///</summary>
         [Required]
-        [Display(Name = "Term ID")]
         public int TermId { get; set; } // TermId
 
         ///<summary>
         /// تاریخ صورت حساب
         ///</summary>
         [Required]
-        [Display(Name = "Bill date")]
         public System.DateTime BillDate { get; set; } // BillDate
 
         ///<summary>
@@ -50,38 +47,32 @@ namespace DebugMode
         [Required]
         [MaxLength(150)]
         [StringLength(150)]
-        [Display(Name = "Description")]
         public string Description { get; set; } // Description (length: 150)
 
         ///<summary>
         /// تعداد اقلام
         ///</summary>
-        [Display(Name = "Count")]
         public int? Count { get; set; } // Count
 
         ///<summary>
         /// هزینه پایه
         ///</summary>
-        [Display(Name = "Base charge")]
         public int? BaseCharge { get; set; } // BaseCharge
 
         ///<summary>
         /// مبلغ طلبکار
         ///</summary>
-        [Display(Name = "Creditor")]
         public int? Creditor { get; set; } // Creditor
 
         ///<summary>
         /// مبلغ بدهکار
         ///</summary>
-        [Display(Name = "Debtor")]
         public int? Debtor { get; set; } // Debtor
 
         ///<summary>
         /// جزئیات دارد؟
         ///</summary>
         [Required]
-        [Display(Name = "Is detailed")]
         public bool IsDetailed { get; set; } // IsDetailed
 
         public Account()

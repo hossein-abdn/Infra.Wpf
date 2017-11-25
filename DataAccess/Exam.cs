@@ -14,7 +14,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DebugMode
+namespace DataAccess
 {
 
     // Exam
@@ -27,25 +27,20 @@ namespace DebugMode
         [Column(@"ExamId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        [Display(Name = "Exam ID")]
         public int ExamId { get; set; } // ExamId (Primary key)
 
         [Required]
-        [Display(Name = "Class ID")]
         public int ClassId { get; set; } // ClassId
 
         ///<summary>
         /// مستمر، نهایی
         ///</summary>
         [Required]
-        [Display(Name = "Exam type ID")]
         public int ExamTypeId { get; set; } // ExamTypeId
 
-        [Display(Name = "Date")]
         public System.DateTime? Date { get; set; } // Date
 
         [Required]
-        [Display(Name = "Record status ID")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation
