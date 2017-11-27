@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Infra.Wpf.Controls
 {
@@ -42,8 +43,6 @@ namespace Infra.Wpf.Controls
             }
         }
 
-
-
         public long? Value
         {
             get { return (long?) GetValue(ValueProperty); }
@@ -51,7 +50,7 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(long?), typeof(NumericField), new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register("Value", typeof(long?), typeof(NumericField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         private NumericOperator defaultOperator;
 
@@ -116,6 +115,12 @@ namespace Infra.Wpf.Controls
 
             OpertatorVisible = true;
             ShowButtons = false;
+            Binding bind = new Binding("Value")
+            {
+                Source = this
+            };
+
+            textbox.SetBinding(NumericBox.ValueProperty, bind);
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)

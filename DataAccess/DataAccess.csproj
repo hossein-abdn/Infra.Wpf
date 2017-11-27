@@ -55,295 +55,117 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Enums.cs" />
+    <Compile Include="Mapping\AccountMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="AccountDetail.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\DebtDemandLabelMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="AccountDetailMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\DebtDemandMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="AccountMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Award.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AwardConfig.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AwardConfigMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AwardMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AwardScore.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AwardScoreMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Camp.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CampMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Class.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassPoint.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassPointMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassScadule.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassScaduleMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassScore.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassScoreMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassSession.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ClassSessionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database1.cs">
+    <Compile Include="Mapping\HomeAccountingMap.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Database1.tt</DependentUpon>
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="Document.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\InstallmentMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="DocumentMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\LabelMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="DocumentTag.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\LoanLabelMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="DocumentTagMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\LoanMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="Enums.cs" />
-    <Compile Include="Exam.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\NoteMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExamMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\NotificationMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="Festival.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\PersonMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="FestivalMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\SettleDebtDemandMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="GeneralBaseCategory.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\TransactionGroupMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="GeneralBaseCategoryMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\TransactionLabelMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="GeneralBaseType.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\TransactionMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="GeneralBaseTypeMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Mapping\UserMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
-    <Compile Include="Group.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="GroupMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\AccountingContext.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="GroupStudent.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\AccountingContextFactory.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="GroupStudentMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\DebtDemand.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="IMyDbContext.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\DebtDemandLabel.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="MyDbContext.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\HomeAccounting.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="Parent.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\IAccountingContext.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="ParentMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\Installment.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="Permission.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\Label.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="PermissionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\Loan.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="PhoneNumber.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\LoanLabel.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="PhoneNumberMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\Note.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="Place.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\Notification.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
-    <Compile Include="PlaceMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SettleDebtDemand.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Transaction.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransactionGroup.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransactionLabel.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Question.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QuestionItem.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QuestionItemMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="QuestionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RankConfig.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RankConfigMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Register.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RegisterMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RegisterQuestion.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RegisterQuestionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ReligiousMission.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ReligiousMissionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Role.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RoleMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RolePermission.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RolePermissionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RollCall.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RollCallMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Score.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ScoreItem.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ScoreItemMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ScoreMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Student.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentAward.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentAwardMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentClass.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentClassMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentExam.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentExamMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentPersonality.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="StudentPersonalityMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Tag.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TagMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Teacher.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TeacherMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Term.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TermMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TermQuestion.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TermQuestionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="User.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserPermission.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserPermissionMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkBook.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WorkBookMap.cs">
-      <DependentUpon>Database1.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -354,12 +176,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Database1.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +183,17 @@
       <Project>{DBEE0F13-A22C-43BA-A0A7-9962531770A9}</Project>
       <Name>Infra.Wpf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Mapping\HomeAccountingMap.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HomeAccountingMap.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\HomeAccounting.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HomeAccounting.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

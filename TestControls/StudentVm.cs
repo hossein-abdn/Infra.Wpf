@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace TestControls
 {
-    public class StudentVm : ViewModelBase<Student>
+    public class StudentVm : ViewModelBase<DataAccess.Models.Person>
     {
         public RelayCommand GetStudentsCommand { get; set; }
 
@@ -29,11 +29,11 @@ namespace TestControls
 
         private void GetStudents()
         {
-            
-            FBSDBContext context = new FBSDBContext();
+            var t = this.View;
+            AccountingContext context = new AccountingContext();
 
-            List<Student> list = context.Students.ToList();
-            ItemsSource = new ObservableCollection<Student>(list);
+            List<DataAccess.Models.Person> list = context.People.ToList();
+            ItemsSource = new ObservableCollection<DataAccess.Models.Person>(list);
         }
     }
 }

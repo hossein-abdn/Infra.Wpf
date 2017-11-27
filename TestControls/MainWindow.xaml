@@ -6,26 +6,31 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:TestControls"
     xmlns:ctl="http://Infra.Wpf"
+    xmlns:da="clr-namespace:DataAccess;assembly=DataAccess"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
     x:Class="TestControls.MainWindow"
     mc:Ignorable="d"
     Title="MainWindow" Height="500" Width="650"
     FontFamily="IRANSans"
     x:Name="wnd">
-    <Window.DataContext>
-        <local:StudentVm/>
-    </Window.DataContext>
 
     <i:Interaction.Behaviors>
         <ctl:EventToCommand EventName="Loaded" Command="{Binding LoadedCommand}"/>
     </i:Interaction.Behaviors>
     <DockPanel FlowDirection="RightToLeft">
-        <Button DockPanel.Dock="Top" Content="تست" Command="{Binding GetStudentsCommand}"/>
-        <ctl:CustomGrid Name="grid" ItemsSource="{Binding ItemsSource}" ColumnsToAdd="FirstName,LastName">
+        <!--<ctl:CustomGrid Name="grid" ItemsSource="{Binding ItemsSource}" ColumnsToAdd="Name,CreateDate">
             <ctl:CustomGrid.ButtonColumns>
                 <ctl:CustomButtonColumn ButtonType="Edit" Order="2" />
                 <ctl:CustomButtonColumn ButtonType="Delete" Order="3" />
             </ctl:CustomGrid.ButtonColumns>
-        </ctl:CustomGrid>
+        </ctl:CustomGrid>-->
+
+        <ctl:EditViewPanel x:Name="search" DockPanel.Dock="Top">
+            <ctl:TextField Text="{Binding Model.Name}"/>
+        </ctl:EditViewPanel>
+        <c1:C1DataGrid  ItemsSource="{Binding ItemsSource}"/>
+
+
 
     </DockPanel>
 </Window>

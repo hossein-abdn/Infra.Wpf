@@ -73,7 +73,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ParentViewModel.cs" />
     <Compile Include="StudentVm.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">

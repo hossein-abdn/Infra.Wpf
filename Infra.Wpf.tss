@@ -2,20 +2,37 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\EF.Reverse.POCO.Core.ttinclude</string>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\ef.reverse.poco.ttinclude</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\CustomGrid\CustomGrid.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\class.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\App.config</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\classmap.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\App.config</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\parent.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\Models\HomeAccounting.tt</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\user.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\Mapping\HomeAccountingMap.tt</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\MainWindow.xaml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\StudentVm.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\Mapping\AccountMap.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\DataAccess\Models\Person.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel.xaml.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\SearchPanel\SearchPanel.xaml.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

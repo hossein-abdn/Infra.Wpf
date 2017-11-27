@@ -1,6 +1,7 @@
 ﻿using Infra.Wpf.Mvvm;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -75,17 +76,20 @@ namespace Infra.Wpf.Controls
                     var propInfo = type.GenericTypeArguments[0].GetProperty(filterField);
                     if (propInfo != null)
                     {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayNameAttribute), false);
+                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
                         if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayNameAttribute) attrib[0]).DisplayName;
+                            return ((DisplayAttribute) attrib[0]).Name;
                     }
                 }
             }
 
             return string.Empty;
         }
+
         private void mainpanel_Loaded(object sender, RoutedEventArgs e)
         {
+            editpanel.Children.Clear();
+
             for (int i = 0; i < EditFields.Count; i++)
             {
                 var item = EditFields[i];
@@ -133,8 +137,8 @@ namespace Infra.Wpf.Controls
                 displayText.VerticalAlignment = VerticalAlignment.Center;
                 displayText.Margin = new Thickness(0, 0, 5, 0);
 
-                searchpanel.Children.Add(displayText);
-                searchpanel.Children.Add((Control) item);
+                editpanel.Children.Add(displayText);
+                editpanel.Children.Add((Control) item);
             }
         }
 

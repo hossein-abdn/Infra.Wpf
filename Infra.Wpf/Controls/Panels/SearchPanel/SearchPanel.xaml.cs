@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.ComponentModel.DataAnnotations;
 
 namespace Infra.Wpf.Controls
 {
@@ -102,9 +103,9 @@ namespace Infra.Wpf.Controls
                     var propInfo = type.GenericTypeArguments[0].GetProperty(filterField);
                     if (propInfo != null)
                     {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayNameAttribute), false);
+                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
                         if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayNameAttribute) attrib[0]).DisplayName;
+                            return ((DisplayAttribute) attrib[0]).Name;
                     }
                 }
             }
@@ -114,6 +115,8 @@ namespace Infra.Wpf.Controls
 
         private void mainpanel_Loaded(object sender, RoutedEventArgs e)
         {
+            searchpanel.Children.Clear();
+
             for (int i = 0; i < SearchFields.Count; i++)
             {
                 var item = SearchFields[i];

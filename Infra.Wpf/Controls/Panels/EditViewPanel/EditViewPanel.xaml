@@ -17,12 +17,12 @@
 
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid>
-                    <local:FieldGridWrapPanel x:Name="searchpanel" Stretch="{Binding Stretch,ElementName=mainpanel}" RowMargin="{Binding RowMargin,ElementName=mainpanel}"
+                    <local:FieldGridWrapPanel x:Name="editpanel" Stretch="{Binding Stretch,ElementName=mainpanel}" RowMargin="{Binding RowMargin,ElementName=mainpanel}"
                                               ColumnMargin="{Binding ColumnMargin,ElementName=mainpanel}"/>
                 </Grid>
             </ScrollViewer>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10">
-                <Button Name="Submit" Padding="3">
+                <Button Name="Submit" Padding="3" Command="{Binding SubmitCommand,ElementName=mainpanel}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Infra.Wpf;component/Controls/Resources/Ok-24.png" Height="16"/>
                         <TextBlock Text="تأیید" Margin="5,0,0,0"/>

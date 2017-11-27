@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Data;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Infra.Wpf.Controls
 {
@@ -145,9 +146,9 @@ namespace Infra.Wpf.Controls
                     var propInfo = type.GenericTypeArguments[0].GetProperty(filterField);
                     if (propInfo != null)
                     {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayNameAttribute), false);
+                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
                         if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayNameAttribute) attrib[0]).DisplayName;
+                            return ((DisplayAttribute) attrib[0]).Name;
                     }
                 }
             }

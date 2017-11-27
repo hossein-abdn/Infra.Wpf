@@ -49,6 +49,8 @@ namespace TestControls
 
             InitializeComponent();
 
+            DataContext = new StudentVm { Model = new DataAccess.Models.Person() };
+
             CultureInfo calture = new CultureInfo("fa-IR");
             calture.NumberFormat.DigitSubstitution = DigitShapes.NativeNational;
             Thread.CurrentThread.CurrentCulture = calture;

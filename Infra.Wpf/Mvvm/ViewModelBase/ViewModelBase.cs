@@ -68,9 +68,9 @@ namespace Infra.Wpf.Mvvm
             set { Set(value); }
         }
 
-        public object Item
+        public T Model
         {
-            get { return Get<object>(); }
+            get { return Get<T>(); }
             set { Set(value); }
         }
     }
