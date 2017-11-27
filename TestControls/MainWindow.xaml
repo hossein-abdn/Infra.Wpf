@@ -28,7 +28,7 @@
         <ctl:EditViewPanel x:Name="search" DockPanel.Dock="Top">
             <ctl:TextField Text="{Binding Model.Name}"/>
         </ctl:EditViewPanel>
-        <c1:C1DataGrid  ItemsSource="{Binding ItemsSource}"/>
+        <!--<c1:C1DataGrid  ItemsSource="{Binding ItemsSource}"/>-->
 
 
 

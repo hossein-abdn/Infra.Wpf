@@ -65,27 +65,6 @@ namespace Infra.Wpf.Controls
             InitializeComponent();
         }
 
-        private string GetDisplayName(string filterField)
-        {
-            if (DataContext != null && !string.IsNullOrWhiteSpace(filterField))
-            {
-                var type = DataContext.GetType().GetProperty("ItemsSource").PropertyType;
-
-                if (type.IsGenericType)
-                {
-                    var propInfo = type.GenericTypeArguments[0].GetProperty(filterField);
-                    if (propInfo != null)
-                    {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
-                        if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayAttribute) attrib[0]).Name;
-                    }
-                }
-            }
-
-            return string.Empty;
-        }
-
         private void mainpanel_Loaded(object sender, RoutedEventArgs e)
         {
             editpanel.Children.Clear();
@@ -96,42 +75,26 @@ namespace Infra.Wpf.Controls
 
                 TextBlock displayText = new TextBlock();
 
-                string displayAttribText = GetDisplayName(EditFields[i].FilterField);
                 if (!string.IsNullOrWhiteSpace(item.Title))
                     displayText.Text = item.Title;
-                else if (!string.IsNullOrEmpty(displayAttribText))
-                    displayText.Text = displayAttribText;
                 else
                 {
-                    BindingExpression bindExpression = null;
-                    if (item is BoolField)
-                        bindExpression = BindingOperations.GetBindingExpression((BoolField) item, BoolField.IsCheckedProperty);
-                    else if (item is ComboField)
-                        bindExpression = BindingOperations.GetBindingExpression((ComboField) item, CustomComboBox.SelectedItemProperty);
-                    else if (item is DateField)
-                    {
-                        bindExpression = BindingOperations.GetBindingExpression((DateField) item, DateField.SelectedDateProperty);
-                        ((DateField) item).OpertatorVisible = false;
-                        ((DateField) item).SuggestionVisible = false;
-                    }
-                    else if (item is LookupField)
-                        bindExpression = BindingOperations.GetBindingExpression((LookupField) item, Lookup.SelectedItemsProperty);
-                    else if (item is MultiSelect)
-                        bindExpression = BindingOperations.GetBindingExpression((MultiSelect) item, MultiSelect.SelectedItemsProperty);
-                    else if (item is NumericField)
-                    {
-                        bindExpression = BindingOperations.GetBindingExpression((NumericField) item, NumericField.ValueProperty);
-                        ((NumericField) item).OpertatorVisible = false;
-                        ((NumericField) item).ShowButtons = true;
-                    }
-                    else if (item is TextField)
-                    {
-                        bindExpression = BindingOperations.GetBindingExpression((TextField) item, TextField.TextProperty);
-                        ((TextField) item).OpertatorVisible = false;
-                    }
-
-                    displayText.Text = bindExpression?.ParentBinding?.Path?.Path;
+                    Binding bind = new Binding("DisplayName") { Source = item };
+                    displayText.SetBinding(TextBlock.TextProperty, bind);
                 }
+
+                if (item is DateField)
+                {
+                    ((DateField) item).OpertatorVisible = false;
+                    ((DateField) item).SuggestionVisible = false;
+                }
+                else if (item is NumericField)
+                {
+                    ((NumericField) item).OpertatorVisible = false;
+                    ((NumericField) item).ShowButtons = true;
+                }
+                else if (item is TextField)
+                    ((TextField) item).OpertatorVisible = false;
 
                 displayText.HorizontalAlignment = HorizontalAlignment.Right;
                 displayText.VerticalAlignment = VerticalAlignment.Center;

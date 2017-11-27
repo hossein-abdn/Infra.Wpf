@@ -8,6 +8,8 @@
 
         string FilterField { get; set; }
 
+        string DisplayName { get; set; }
+
         void Clear();
     }
 }

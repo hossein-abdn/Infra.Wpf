@@ -1,14 +1,18 @@
 ﻿using C1.WPF;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace Infra.Wpf.Controls
 {
-    public class MultiSelectField : MultiSelect, IField
+    public class MultiSelectField : MultiSelect, INotifyPropertyChanged, IField
     {
         #region Properties
 
@@ -18,9 +22,18 @@ namespace Infra.Wpf.Controls
 
         public string TargetColumn { get; set; }
 
-        #endregion
+        private string _DisplayName;
+        public string DisplayName
+        {
+            get { return _DisplayName; }
+            set
+            {
+                _DisplayName = value;
+                OnPropertyChanged();
+            }
+        }
 
-        #region Methods
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public string SearchPhrase
         {
@@ -56,7 +69,7 @@ namespace Infra.Wpf.Controls
 
                     if (string.IsNullOrEmpty(filterValue))
                         continue;
-                    
+
                     if (targetType.IsNumeric())
                         query = query + $@"{FilterField}=={filterValue.Trim()}" + " OR ";
                     else
@@ -73,9 +86,70 @@ namespace Infra.Wpf.Controls
             }
         }
 
+        #endregion
+
+        #region Methods
+
+        public MultiSelectField()
+        {
+            Loaded += MultiSelectField_Loaded;
+        }
+
+        private void MultiSelectField_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            DisplayName = GetDisplayName();
+        }
+
         public void Clear()
         {
             SelectedItems.Clear();
+        }
+
+        public void OnPropertyChanged([CallerMemberName]string prop = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private string GetDisplayName()
+        {
+            BindingExpression bindEx = BindingOperations.GetBindingExpression(this, SelectedItemsProperty);
+            if (bindEx != null && !string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
+            {
+                var type = DataContext?.GetType().GetProperty("Model")?.PropertyType;
+                if (type != null)
+                {
+                    var propInfo = type?.GetProperty(bindEx.ResolvedSourcePropertyName);
+                    var attrib = propInfo?.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    if (attrib != null && attrib.Count() > 0)
+                        return ((DisplayAttribute) attrib[0]).Name;
+                }
+                else
+                {
+                    var displayText = bindEx.ResolvedSourcePropertyName;
+                    if (string.IsNullOrEmpty(displayText))
+                        return displayText;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(FilterField))
+            {
+                var type = DataContext?.GetType().GetProperty("ItemsSource")?.PropertyType;
+
+                if (type != null && type.IsGenericType)
+                {
+                    var propInfo = type.GenericTypeArguments[0].GetProperty(FilterField);
+                    if (propInfo != null)
+                    {
+                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
+                        if (attrib != null && attrib.Count() > 0)
+                            return ((DisplayAttribute) attrib[0]).Name;
+                    }
+                }
+
+                return FilterField;
+            }
+
+            return string.Empty;
         }
 
         #endregion

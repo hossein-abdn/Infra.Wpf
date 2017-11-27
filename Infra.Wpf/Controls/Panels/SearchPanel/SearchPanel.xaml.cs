@@ -8,6 +8,7 @@ using System.Windows.Markup;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations;
+using System.Windows.Data;
 
 namespace Infra.Wpf.Controls
 {
@@ -92,27 +93,6 @@ namespace Infra.Wpf.Controls
             InitializeComponent();
         }
 
-        private string GetDisplayName(string filterField)
-        {
-            if (DataContext != null && !string.IsNullOrWhiteSpace(filterField))
-            {
-                var type = DataContext?.GetType()?.GetProperty("ItemsSource")?.PropertyType;
-
-                if (type != null && type.IsGenericType)
-                {
-                    var propInfo = type.GenericTypeArguments[0].GetProperty(filterField);
-                    if (propInfo != null)
-                    {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
-                        if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayAttribute) attrib[0]).Name;
-                    }
-                }
-            }
-
-            return string.Empty;
-        }
-
         private void mainpanel_Loaded(object sender, RoutedEventArgs e)
         {
             searchpanel.Children.Clear();
@@ -123,13 +103,13 @@ namespace Infra.Wpf.Controls
 
                 TextBlock displayText = new TextBlock();
 
-                string displayAttribText = GetDisplayName(SearchFields[i].FilterField);
                 if (!string.IsNullOrWhiteSpace(item.Title))
                     displayText.Text = item.Title;
-                else if (!string.IsNullOrEmpty(displayAttribText))
-                    displayText.Text = displayAttribText;
                 else
-                    displayText.Text = item.FilterField;
+                {
+                    Binding bind = new Binding("DisplayName") { Source = item };
+                    displayText.SetBinding(TextBlock.TextProperty, bind);
+                }
 
                 displayText.HorizontalAlignment = HorizontalAlignment.Right;
                 displayText.VerticalAlignment = VerticalAlignment.Center;
