@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infra.Wpf.Business
 {
-    class GetFirstBusiness<TEntity> : BusinessBase<TEntity> where TEntity : class
+    public class GetFirstBusiness<TEntity> : BusinessBase<TEntity> where TEntity : class
     {
         private DbSet<TEntity> _set;
 
@@ -19,7 +19,11 @@ namespace Infra.Wpf.Business
 
         private string _include;
 
-        public GetFirstBusiness(DbSet<TEntity> set, string orderBy = null, string include = null)
+        public GetFirstBusiness()
+        {
+        }
+
+        public void Config(DbSet<TEntity> set, string orderBy = null, string include = null)
         {
             _set = set;
             _orderBy = orderBy;
@@ -27,15 +31,17 @@ namespace Infra.Wpf.Business
             OnExecute = () => GetFirstExecute();
         }
 
-        public GetFirstBusiness(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, string orderBy = null, string include = null) : this(set, orderBy, include)
+        public void Config(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, string orderBy = null, string include = null)
         {
+            Config(set, orderBy, include);
             _predicate = predicate;
             OnExecute = () => GetFirstExecute();
         }
 
-        public GetFirstBusiness(DbSet<TEntity> set, string predicate, string orderBy = null, string include = null) : this(set, orderBy, include)
+        public void Config(DbSet<TEntity> set, string predicate, object[] values, string orderBy = null, string include = null)
         {
-            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate);
+            Config(set, orderBy, include);
+            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
             OnExecute = () => GetFirstExecute();
         }
 

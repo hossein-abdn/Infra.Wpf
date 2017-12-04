@@ -12,13 +12,13 @@ namespace Infra.Wpf.Common.Helpers
 {
     public static class DynamicLinq
     {
-        public static Func<T, bool> ConvertToFunc<T>(string where)
+        public static Func<T, bool> ConvertToFunc<T>(string where, params object[] values)
         {
             try
             {
                 if (string.IsNullOrEmpty(where) || string.IsNullOrWhiteSpace(where))
                     where = "true";
-                return DynamicExpression.ParseLambda<T, bool>(where).Compile();
+                return DynamicExpression.ParseLambda<T, bool>(where, values).Compile();
             }
             catch
             {
@@ -26,13 +26,13 @@ namespace Infra.Wpf.Common.Helpers
             }
         }
 
-        public static Expression<Func<T, bool>> ConvertToExpression<T>(string where)
+        public static Expression<Func<T, bool>> ConvertToExpression<T>(string where, params object[] values)
         {
             try
             {
                 if (string.IsNullOrEmpty(where) || string.IsNullOrWhiteSpace(where))
                     where = "true";
-                return DynamicExpression.ParseLambda<T, bool>(where);
+                return DynamicExpression.ParseLambda<T, bool>(where, values);
             }
             catch (Exception ex)
             {

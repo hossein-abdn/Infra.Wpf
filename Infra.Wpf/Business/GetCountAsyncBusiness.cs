@@ -18,39 +18,48 @@ namespace Infra.Wpf.Business
 
         private CancellationToken _cancellationToken;
 
-        public GetCountAsyncBusiness(DbSet<TEntity> set)
+        public GetCountAsyncBusiness()
+        {
+        }
+
+        public void Config(DbSet<TEntity> set)
         {
             _set = set;
             OnExecute = () => GetCountAsyncExecute();
         }
 
-        public GetCountAsyncBusiness(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate) : this(set)
+        public void Config(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate)
         {
+            Config(set);
             _predicate = predicate;
             OnExecute = () => GetCountAsyncPredicateExecute();
         }
 
-        public GetCountAsyncBusiness(DbSet<TEntity> set, string predicate) : this(set)
+        public void Config(DbSet<TEntity> set, string predicate, object[] values)
         {
-            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate);
+            Config(set);
+            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
             OnExecute = () => GetCountAsyncPredicateExecute();
         }
 
-        public GetCountAsyncBusiness(DbSet<TEntity> set, CancellationToken cancellationToken) : this(set)
+        public void Config(DbSet<TEntity> set, CancellationToken cancellationToken)
         {
+            Config(set);
             _cancellationToken = cancellationToken;
             OnExecute = () => GetCountAsyncTokenExecute();
         }
 
-        public GetCountAsyncBusiness(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken) : this(set, cancellationToken)
+        public void Config(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
+            Config(set, cancellationToken);
             _predicate = predicate;
             OnExecute = () => GetCountAsyncTokenPredicateExecute();
         }
 
-        public GetCountAsyncBusiness(DbSet<TEntity> set, string predicate, CancellationToken cancellationToken) : this(set, cancellationToken)
+        public void Config(DbSet<TEntity> set, string predicate, object[] values, CancellationToken cancellationToken)
         {
-            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate);
+            Config(set, cancellationToken);
+            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
             OnExecute = () => GetCountAsyncTokenPredicateExecute();
         }
 

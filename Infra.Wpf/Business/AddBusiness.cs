@@ -13,7 +13,11 @@ namespace Infra.Wpf.Business
 
         private DbSet<TEntity> _set;
 
-        public AddBusiness(DbSet<TEntity> set, TEntity entity, Logger logger = null) : base(logger)
+        public AddBusiness(Logger logger = null) : base(logger)
+        {
+        }
+
+        public void Config(DbSet<TEntity> set, TEntity entity)
         {
             _entity = entity;
             _set = set;

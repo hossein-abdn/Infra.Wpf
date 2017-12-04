@@ -152,7 +152,7 @@ namespace Infra.Wpf.Controls
 
         public static readonly DependencyProperty ToolTipProperty =
             DependencyProperty.Register("ToolTip", typeof(object), typeof(CustomButtonColumn), new PropertyMetadata(null));
-   
+
         #endregion
     }
 }

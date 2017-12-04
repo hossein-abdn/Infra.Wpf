@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infra.Wpf.Business;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Infra.Wpf.Repository
 {
     public interface IUnitOfWork : IDisposable
     {
-        int SaveChange();
+        BusinessResult<int> SaveChange();
 
         Task<int> SaveChangeAsync();
 

@@ -114,7 +114,7 @@ namespace Infra.Wpf.Controls
         public TextField()
         {
             InitializeComponent();
-
+            
             OpertatorVisible = true;
         }
 

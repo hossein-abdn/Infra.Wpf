@@ -15,7 +15,11 @@ namespace Infra.Wpf.Business
 
         private DbContext _context;
 
-        public UpdateBusiness(DbContext context, DbSet<TEntity> set, TEntity entity, Logger logger = null) : base(logger)
+        public UpdateBusiness(Logger logger = null) : base(logger)
+        {
+        }
+
+        public void Config(DbContext context, DbSet<TEntity> set, TEntity entity)
         {
             _context = context;
             _entity = entity;

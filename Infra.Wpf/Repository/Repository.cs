@@ -16,9 +16,43 @@ namespace Infra.Wpf.Repository
 
         private DbSet<TEntity> _set;
 
+        protected AddBusiness<TEntity> AddBusiness { get; set; }
+
+        protected AnyBusiness<TEntity> AnyBusiness { get; set; }
+
+        protected FindByIdAsyncBusiness<TEntity> FindByIdAsyncBusiness { get; set; }
+
+        protected FindByIdBusiness<TEntity> FindByIdBusiness { get; set; }
+
+        protected GetAllAsyncBusiness<TEntity> GetAllAsyncBusiness { get; set; }
+
+        protected GetAllBusiness<TEntity> GetAllBusiness { get; set; }
+
+        protected GetCountAsyncBusiness<TEntity> GetCountAsyncBusiness { get; set; }
+
+        protected GetCountBusiness<TEntity> GetCountBusiness { get; set; }
+
+        protected GetFirstBusiness<TEntity> GetFirstBusiness { get; set; }
+
+        protected RemoveBusiness<TEntity> RemoveBusiness { get; set; }
+
+        protected UpdateBusiness<TEntity> UpdateBusiness { get; set; }
+
         public Repository(DbContext context)
         {
             _context = context;
+
+            AddBusiness = new AddBusiness<TEntity>();
+            AnyBusiness = new AnyBusiness<TEntity>();
+            FindByIdAsyncBusiness = new FindByIdAsyncBusiness<TEntity>();
+            FindByIdBusiness = new FindByIdBusiness<TEntity>();
+            GetAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>();
+            GetAllBusiness = new GetAllBusiness<TEntity>();
+            GetCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>();
+            GetCountBusiness = new GetCountBusiness<TEntity>();
+            GetFirstBusiness = new GetFirstBusiness<TEntity>();
+            RemoveBusiness = new RemoveBusiness<TEntity>();
+            UpdateBusiness = new UpdateBusiness<TEntity>();
         }
 
         protected DbSet<TEntity> Set
@@ -28,250 +62,250 @@ namespace Infra.Wpf.Repository
 
         public virtual BusinessResult<bool> Add(TEntity entity)
         {
-            var addBusiness = new AddBusiness<TEntity>(Set, entity);
-            addBusiness.Execute();
+            AddBusiness.Config(Set, entity);
+            AddBusiness.Execute();
 
-            return addBusiness.Result;
+            return AddBusiness.Result;
         }
 
         public virtual BusinessResult<bool> Any()
         {
-            var anyBusiness = new AnyBusiness<TEntity>(Set);
-            anyBusiness.Execute();
+            AnyBusiness.Config(Set);
+            AnyBusiness.Execute();
 
-            return anyBusiness.Result;
+            return AnyBusiness.Result;
         }
 
         public virtual BusinessResult<bool> Any(Expression<Func<TEntity, bool>> predicate)
         {
-            var anyBusiness = new AnyBusiness<TEntity>(Set, predicate);
-            anyBusiness.Execute();
+            AnyBusiness.Config(Set, predicate);
+            AnyBusiness.Execute();
 
-            return anyBusiness.Result;
+            return AnyBusiness.Result;
         }
 
-        public virtual BusinessResult<bool> Any(string predicate)
+        public virtual BusinessResult<bool> Any(string predicate, object[] values = null)
         {
-            var anyBusiness = new AnyBusiness<TEntity>(Set, predicate);
-            anyBusiness.Execute();
+            AnyBusiness.Config(Set, predicate, values);
+            AnyBusiness.Execute();
 
-            return anyBusiness.Result;
+            return AnyBusiness.Result;
         }
 
         public virtual BusinessResult<TEntity> FindById(object id)
         {
-            var findByIdBusiness = new FindByIdBusiness<TEntity>(Set, id);
-            findByIdBusiness.Execute();
+            FindByIdBusiness.Config(Set, id);
+            FindByIdBusiness.Execute();
 
-            return findByIdBusiness.Result;
+            return FindByIdBusiness.Result;
         }
 
         public virtual BusinessResult<Task<TEntity>> FindByIdAsync(object id)
         {
-            var findByIdAsyncBusiness = new FindByIdAsyncBusiness<TEntity>(Set, id);
-            findByIdAsyncBusiness.Execute();
+            FindByIdAsyncBusiness.Config(Set, id);
+            FindByIdAsyncBusiness.Execute();
 
-            return findByIdAsyncBusiness.Result;
+            return FindByIdAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<Task<TEntity>> FindByIdAsync(CancellationToken cancellationToken, object id)
         {
-            var findByIdAsyncBusiness = new FindByIdAsyncBusiness<TEntity>(Set, id, cancellationToken);
-            findByIdAsyncBusiness.Execute();
+            FindByIdAsyncBusiness.Config(Set, id, cancellationToken);
+            FindByIdAsyncBusiness.Execute();
 
-            return findByIdAsyncBusiness.Result;
+            return FindByIdAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<List<TEntity>> GetAll(string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllBusiness = new GetAllBusiness<TEntity>(Set, orderBy, take, skip, include);
-            getAllBusiness.Execute();
+            GetAllBusiness.Config(Set, orderBy, take, skip, include);
+            GetAllBusiness.Execute();
 
-            return getAllBusiness.Result;
+            return GetAllBusiness.Result;
         }
 
         public virtual BusinessResult<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllBusiness = new GetAllBusiness<TEntity>(Set, predicate, orderBy, take, skip, include);
-            getAllBusiness.Execute();
+            GetAllBusiness.Config(Set, predicate, orderBy, take, skip, include);
+            GetAllBusiness.Execute();
 
-            return getAllBusiness.Result;
+            return GetAllBusiness.Result;
         }
 
-        public virtual BusinessResult<List<TEntity>> GetAll(string predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual BusinessResult<List<TEntity>> GetAll(string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllBusiness = new GetAllBusiness<TEntity>(Set, predicate, orderBy, take, skip, include);
-            getAllBusiness.Execute();
+            GetAllBusiness.Config(Set, predicate, values, orderBy, take, skip, include);
+            GetAllBusiness.Execute();
 
-            return getAllBusiness.Result;
+            return GetAllBusiness.Result;
         }
 
         public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(Set, orderBy, take, skip, include);
-            getAllAsyncBusiness.Execute();
+            GetAllAsyncBusiness.Config(Set, orderBy, take, skip, include);
+            GetAllAsyncBusiness.Execute();
 
-            return getAllAsyncBusiness.Result;
+            return GetAllAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(Set, predicate, orderBy, take, skip, include);
-            getAllAsyncBusiness.Execute();
+            GetAllAsyncBusiness.Config(Set, predicate, orderBy, take, skip, include);
+            GetAllAsyncBusiness.Execute();
 
-            return getAllAsyncBusiness.Result;
+            return GetAllAsyncBusiness.Result;
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(string predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(Set, predicate, orderBy, take, skip, include);
-            getAllAsyncBusiness.Execute();
+            GetAllAsyncBusiness.Config(Set, predicate, values, orderBy, take, skip, include);
+            GetAllAsyncBusiness.Execute();
 
-            return getAllAsyncBusiness.Result;
+            return GetAllAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(Set, cancellationToken, orderBy, take, skip, include);
-            getAllAsyncBusiness.Execute();
+            GetAllAsyncBusiness.Config(Set, cancellationToken, orderBy, take, skip, include);
+            GetAllAsyncBusiness.Execute();
 
-            return getAllAsyncBusiness.Result;
+            return GetAllAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(Set, predicate, cancellationToken, orderBy, take, skip, include);
-            getAllAsyncBusiness.Execute();
+            GetAllAsyncBusiness.Config(Set, predicate, cancellationToken, orderBy, take, skip, include);
+            GetAllAsyncBusiness.Execute();
 
-            return getAllAsyncBusiness.Result;
+            return GetAllAsyncBusiness.Result;
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, string predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            var getAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(Set, predicate, cancellationToken, orderBy, take, skip, include);
-            getAllAsyncBusiness.Execute();
+            GetAllAsyncBusiness.Config(Set, predicate, values, cancellationToken, orderBy, take, skip, include);
+            GetAllAsyncBusiness.Execute();
 
-            return getAllAsyncBusiness.Result;
+            return GetAllAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<int> GetCount()
         {
-            var getCountBusiness = new GetCountBusiness<TEntity>(Set);
-            getCountBusiness.Execute();
+            GetCountBusiness.Config(Set);
+            GetCountBusiness.Execute();
 
-            return getCountBusiness.Result;
+            return GetCountBusiness.Result;
         }
 
-        public virtual BusinessResult<int> GetCount(string predicate)
+        public virtual BusinessResult<int> GetCount(string predicate, object[] values = null)
         {
-            var getCountBusiness = new GetCountBusiness<TEntity>(Set, predicate);
-            getCountBusiness.Execute();
+            GetCountBusiness.Config(Set, predicate, values);
+            GetCountBusiness.Execute();
 
-            return getCountBusiness.Result;
+            return GetCountBusiness.Result;
         }
 
         public virtual BusinessResult<int> GetCount(Expression<Func<TEntity, bool>> predicate)
         {
-            var getCountBusiness = new GetCountBusiness<TEntity>(Set, predicate);
-            getCountBusiness.Execute();
+            GetCountBusiness.Config(Set, predicate);
+            GetCountBusiness.Execute();
 
-            return getCountBusiness.Result;
+            return GetCountBusiness.Result;
         }
 
         public virtual BusinessResult<Task<int>> GetCountAsync()
         {
-            var getCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(Set);
-            getCountAsyncBusiness.Execute();
+            GetCountAsyncBusiness.Config(Set);
+            GetCountAsyncBusiness.Execute();
 
-            return getCountAsyncBusiness.Result;
+            return GetCountAsyncBusiness.Result;
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync(string predicate)
+        public virtual BusinessResult<Task<int>> GetCountAsync(string predicate, object[] values = null)
         {
-            var getCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(Set, predicate);
-            getCountAsyncBusiness.Execute();
+            GetCountAsyncBusiness.Config(Set, predicate, values);
+            GetCountAsyncBusiness.Execute();
 
-            return getCountAsyncBusiness.Result;
+            return GetCountAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<Task<int>> GetCountAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var getCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(Set, predicate);
-            getCountAsyncBusiness.Execute();
+            GetCountAsyncBusiness.Config(Set, predicate);
+            GetCountAsyncBusiness.Execute();
 
-            return getCountAsyncBusiness.Result;
+            return GetCountAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<Task<int>> GetCountAsync(CancellationToken cancellationToken)
         {
-            var getCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(Set, cancellationToken);
-            getCountAsyncBusiness.Execute();
+            GetCountAsyncBusiness.Config(Set, cancellationToken);
+            GetCountAsyncBusiness.Execute();
 
-            return getCountAsyncBusiness.Result;
+            return GetCountAsyncBusiness.Result;
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync(CancellationToken cancellationToken, string predicate)
+        public virtual BusinessResult<Task<int>> GetCountAsync(CancellationToken cancellationToken, string predicate, object[] values = null)
         {
-            var getCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(Set, predicate, cancellationToken);
-            getCountAsyncBusiness.Execute();
+            GetCountAsyncBusiness.Config(Set, predicate, values, cancellationToken);
+            GetCountAsyncBusiness.Execute();
 
-            return getCountAsyncBusiness.Result;
+            return GetCountAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<Task<int>> GetCountAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate)
         {
-            var getCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(Set, predicate, cancellationToken);
-            getCountAsyncBusiness.Execute();
+            GetCountAsyncBusiness.Config(Set, predicate, cancellationToken);
+            GetCountAsyncBusiness.Execute();
 
-            return getCountAsyncBusiness.Result;
+            return GetCountAsyncBusiness.Result;
         }
 
         public virtual BusinessResult<TEntity> GetFirst(string orderBy = null, string include = null)
         {
-            var getFirstBusiness = new GetFirstBusiness<TEntity>(Set, orderBy, include);
-            getFirstBusiness.Execute();
+            GetFirstBusiness.Config(Set, orderBy, include);
+            GetFirstBusiness.Execute();
 
-            return getFirstBusiness.Result;
+            return GetFirstBusiness.Result;
         }
 
         public virtual BusinessResult<TEntity> GetFirst(Expression<Func<TEntity, bool>> predicate, string orderBy = null, string include = null)
         {
-            var getFirstBusiness = new GetFirstBusiness<TEntity>(Set, predicate, orderBy, include);
-            getFirstBusiness.Execute();
+            GetFirstBusiness.Config(Set, predicate, orderBy, include);
+            GetFirstBusiness.Execute();
 
-            return getFirstBusiness.Result;
+            return GetFirstBusiness.Result;
         }
 
-        public virtual BusinessResult<TEntity> GetFirst(string predicate, string orderBy = null, string include = null)
+        public virtual BusinessResult<TEntity> GetFirst(string predicate, object[] values = null, string orderBy = null, string include = null)
         {
-            var getFirstBusiness = new GetFirstBusiness<TEntity>(Set, predicate, orderBy, include);
-            getFirstBusiness.Execute();
+            GetFirstBusiness.Config(Set, predicate, values, orderBy, include);
+            GetFirstBusiness.Execute();
 
-            return getFirstBusiness.Result;
+            return GetFirstBusiness.Result;
         }
 
         public virtual BusinessResult<bool> Remove(object id)
         {
-            var removeBusiness = new RemoveBusiness<TEntity>(Set, id);
-            removeBusiness.Execute();
+            RemoveBusiness.Config(Set, id);
+            RemoveBusiness.Execute();
 
-            return removeBusiness.Result;
+            return RemoveBusiness.Result;
         }
 
         public virtual BusinessResult<bool> Remove(TEntity entity)
         {
-            var removeBusiness = new RemoveBusiness<TEntity>(Set, entity);
-            removeBusiness.Execute();
+            RemoveBusiness.Config(Set, entity);
+            RemoveBusiness.Execute();
 
-            return removeBusiness.Result;
+            return RemoveBusiness.Result;
         }
 
         public virtual BusinessResult<bool> Update(TEntity entity)
         {
-            var updateBusiness = new UpdateBusiness<TEntity>(_context, Set, entity);
-            updateBusiness.Execute();
+            UpdateBusiness.Config(_context, Set, entity);
+            UpdateBusiness.Execute();
 
-            return updateBusiness.Result;
+            return UpdateBusiness.Result;
         }
     }
 }

@@ -16,15 +16,20 @@ namespace Infra.Wpf.Business
 
         private CancellationToken _cancellationToken;
 
-        public FindByIdAsyncBusiness(DbSet<TEntity> set, object id, Logger logger = null) : base(logger)
+        public FindByIdAsyncBusiness(Logger logger = null):base(logger)
+        {
+        }
+
+        public void Config(DbSet<TEntity> set, object id)
         {
             _id = id;
             _set = set;
             OnExecute = () => FindByIdAsyncExecute();
         }
 
-        public FindByIdAsyncBusiness(DbSet<TEntity> set, object id, CancellationToken cancellationToken, Logger logger = null) : this(set, id, logger)
+        public void Config(DbSet<TEntity> set, object id, CancellationToken cancellationToken)
         {
+            Config(set, id);
             _cancellationToken = cancellationToken;
             OnExecute = () => FindByIdTokenExecute();
         }

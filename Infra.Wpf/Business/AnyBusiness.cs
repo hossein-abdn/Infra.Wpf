@@ -17,21 +17,27 @@ namespace Infra.Wpf.Business
 
         private Expression<Func<TEntity, bool>> _predicate;
 
-        public AnyBusiness(DbSet<TEntity> set)
+        public AnyBusiness()
+        {
+        }
+
+        public void Config(DbSet<TEntity> set)
         {
             _set = set;
             OnExecute = () => AnyExecute();
         }
 
-        public AnyBusiness(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate) : this(set)
+        public void Config(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate)
         {
+            Config(set);
             _predicate = predicate;
             OnExecute = () => AnyExecute();
         }
 
-        public AnyBusiness(DbSet<TEntity> set, string predicate) : this(set)
+        public void Config(DbSet<TEntity> set, string predicate, object[] values)
         {
-            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate);
+            Config(set);
+            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
             OnExecute = () => AnyExecute();
         }
 

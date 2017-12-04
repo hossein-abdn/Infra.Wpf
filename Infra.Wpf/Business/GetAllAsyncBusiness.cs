@@ -26,7 +26,11 @@ namespace Infra.Wpf.Business
 
         private CancellationToken _cancellationToken;
 
-        public GetAllAsyncBusiness(DbSet<TEntity> set, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public GetAllAsyncBusiness()
+        {
+        }
+
+        public void Config(DbSet<TEntity> set, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
             _set = set;
             _orderBy = orderBy;
@@ -36,35 +40,38 @@ namespace Infra.Wpf.Business
             OnExecute = () => GetAllAsyncExecute();
         }
 
-        public GetAllAsyncBusiness(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null) : this(set, orderBy, take, skip, include)
+        public void Config(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
+            Config(set, orderBy, take, skip, include);
             _predicate = predicate;
             OnExecute = () => GetAllAsyncExecute();
         }
 
-        public GetAllAsyncBusiness(DbSet<TEntity> set, string predicate, string orderBy = null, int? take = null, int? skip = null, string include = null) : this(set, orderBy, take, skip, include)
+        public void Config(DbSet<TEntity> set, string predicate, object[] values, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate);
+            Config(set, orderBy, take, skip, include);
+            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
             OnExecute = () => GetAllAsyncExecute();
         }
 
-        public GetAllAsyncBusiness(DbSet<TEntity> set, CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null) : this(set, orderBy, take, skip, include)
+        public void Config(DbSet<TEntity> set, CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
+            Config(set, orderBy, take, skip, include);
             _cancellationToken = cancellationToken;
             OnExecute = () => GetAllAsyncTokenExecute();
         }
 
-        public GetAllAsyncBusiness(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null)
-            : this(set, cancellationToken, orderBy, take, skip, include)
+        public void Config(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
+            Config(set, cancellationToken, orderBy, take, skip, include);
             _predicate = predicate;
             OnExecute = () => GetAllAsyncTokenExecute();
         }
 
-        public GetAllAsyncBusiness(DbSet<TEntity> set, string predicate, CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null)
-            : this(set, cancellationToken, orderBy, take, skip, include)
+        public void Config(DbSet<TEntity> set, string predicate, object[] values, CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate);
+            Config(set, cancellationToken, orderBy, take, skip, include);
+            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
             OnExecute = () => GetAllAsyncTokenExecute();
         }
 

@@ -30,7 +30,7 @@ namespace Infra.Wpf.Business
 
         public Func<bool> OnExecute { get; set; }
 
-        public Action OnAfterExecute { get; set; }
+        public Func<bool> OnAfterExecute { get; set; }
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace Infra.Wpf.Business
             OnBeforeExecute = onBeforeExecute;
         }
 
-        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Action onAfterExecute, Logger logger = null) : this(onBeforExecute, onExecute, logger)
+        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, Logger logger = null) : this(onBeforExecute, onExecute, logger)
         {
             OnAfterExecute = onAfterExecute;
         }
@@ -71,33 +71,33 @@ namespace Infra.Wpf.Business
 
                 if (OnBeforeExecute != null)
                 {
-                    var beforResult = OnBeforeExecute();
+                    Result.IsOnBeforExecute = OnBeforeExecute();
                     if (logger != null && logger.LogOnException == false && LogInfo != null)
                     {
                         logger.Log(LogInfo);
                         LogInfo = null;
                     }
 
-                    if (beforResult == false)
+                    if (Result.IsOnBeforExecute == false)
                         return;
                 }
 
                 if (OnExecute != null)
                 {
-                    var result = OnExecute();
+                    Result.IsOnExecute = OnExecute();
                     if (logger != null && logger.LogOnException == false && LogInfo != null)
                     {
                         logger.Log(LogInfo);
                         LogInfo = null;
                     }
 
-                    if (result == false)
+                    if (Result.IsOnExecute == false)
                         return;
                 }
 
                 if (OnAfterExecute != null)
                 {
-                    OnAfterExecute();
+                    Result.IsOnAfterExecute = OnAfterExecute();
                     if (logger != null && logger.LogOnException == false && LogInfo != null)
                     {
                         logger.Log(LogInfo);

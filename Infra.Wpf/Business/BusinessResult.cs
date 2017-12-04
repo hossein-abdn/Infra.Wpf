@@ -13,5 +13,11 @@ namespace Infra.Wpf.Business
         public Exception Exception { get; set; }
 
         public BusinessMessage Message { get; set; }
+
+        public bool IsOnBeforExecute { get; set; }
+
+        public bool IsOnExecute { get; set; }
+
+        public bool IsOnAfterExecute { get; set; }
     }
 }

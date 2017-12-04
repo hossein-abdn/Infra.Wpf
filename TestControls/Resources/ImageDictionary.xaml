@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageSource x:Key="GeneralInfo-32">/Resources/GeneralInfo-32.png</ImageSource>
+    <ImageSource x:Key="GeneralInfoOver-32">/Resources/GeneralInfoOver-32.png</ImageSource>
+    <ImageSource x:Key="Person-32">/Resources/Person-32.png</ImageSource>
+    <ImageSource x:Key="PersonOver-32">/Resources/PersonOver-32.png</ImageSource>
+    <ImageSource x:Key="LabelInfo-32">/Resources/Label-32.png</ImageSource>
+    <ImageSource x:Key="LabelOver-32">/Resources/LabelOver-32.png</ImageSource>
+    <ImageSource x:Key="Group-32">/Resources/Group-32.png</ImageSource>
+    <ImageSource x:Key="GroupOver-32">/Resources/GroupOver-32.png</ImageSource>
+    <ImageSource x:Key="Add-32">/Resources/Add-32.png</ImageSource>
+    <ImageSource x:Key="AddOver-32">/Resources/AddOver-32.png</ImageSource>
+    <ImageSource x:Key="Chart-32">/Resources/Chart-32.png</ImageSource>
+    <ImageSource x:Key="ChartOver-32">/Resources/ChartOver-32.png</ImageSource>
+</ResourceDictionary>

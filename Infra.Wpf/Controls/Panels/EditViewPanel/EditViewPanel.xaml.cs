@@ -51,7 +51,16 @@ namespace Infra.Wpf.Controls
             set { SetValue(RowMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty RowMarginProperty = FieldGridWrapPanel.RowMarginProperty.AddOwner(typeof(EditViewPanel));
+        public static readonly DependencyProperty RowMarginProperty = FieldGridWrapPanel.RowMarginProperty.AddOwner(typeof(EditViewPanel),new PropertyMetadata(RowMarginChanged));
+
+        public Visibility VisibleTopButton
+        {
+            get { return (Visibility) GetValue(VisibleTopButtonProperty); }
+            set { SetValue(VisibleTopButtonProperty, value); }
+        }
+
+        public static readonly DependencyProperty VisibleTopButtonProperty =
+            DependencyProperty.Register("VisibleTopButton", typeof(Visibility), typeof(EditViewPanel), new PropertyMetadata(Visibility.Collapsed));
 
         #endregion
 
@@ -114,12 +123,15 @@ namespace Infra.Wpf.Controls
         private static void RowMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var @this = ((EditViewPanel) d);
-            var margin = @this.Submit.Margin;
-            @this.Submit.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
+            var margin = @this.Submit2.Margin;
+            @this.Submit1.Margin = new Thickness(margin.Left, margin.Top , margin.Right, margin.Bottom + (double) e.NewValue);
+            @this.Submit2.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
 
-            margin = @this.Cancel.Margin;
-            @this.Cancel.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
+            margin = @this.Cancel2.Margin;
+            @this.Cancel1.Margin = new Thickness(margin.Left, margin.Top , margin.Right, margin.Bottom + (double) e.NewValue);
+            @this.Cancel2.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
         }
+
         private void mainpanel_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

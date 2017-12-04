@@ -23,7 +23,11 @@ namespace Infra.Wpf.Business
 
         private string _include;
 
-        public GetAllBusiness(DbSet<TEntity> set, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public GetAllBusiness()
+        {
+        }
+
+        public void Config(DbSet<TEntity> set, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
             _set = set;
             _orderBy = orderBy;
@@ -33,15 +37,17 @@ namespace Infra.Wpf.Business
             OnExecute = () => GetAllExecute();
         }
 
-        public GetAllBusiness(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null) : this(set, orderBy, take, skip, include)
+        public void Config(DbSet<TEntity> set, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
+            Config(set, orderBy, take, skip, include);
             _predicate = predicate;
             OnExecute = () => GetAllExecute();
         }
 
-        public GetAllBusiness(DbSet<TEntity> set, string predicate, string orderBy = null, int? take = null, int? skip = null, string include = null) : this(set, orderBy, take, skip, include)
+        public void Config(DbSet<TEntity> set, string predicate, object[] values, string orderBy = null, int? take = null, int? skip = null, string include = null)
         {
-            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate);
+            Config(set, orderBy, take, skip, include);
+            _predicate = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
             OnExecute = () => GetAllExecute();
         }
 

@@ -2,6 +2,7 @@
 using AutoMapper.Configuration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -76,7 +77,7 @@ namespace Infra.Wpf.Common.Helpers
 
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
-            return (Expression < Func < T, bool>>) DynamicExpression.ParseLambda(typeof(T), typeof(bool), "@0(it) and @1(it)",first,second);
+            return (Expression<Func<T, bool>>) DynamicExpression.ParseLambda(typeof(T), typeof(bool), "@0(it) and @1(it)", first, second);
         }
 
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
@@ -107,6 +108,19 @@ namespace Infra.Wpf.Common.Helpers
             else if (original.Source != null) duplicate.Source = original.Source;
 
             return duplicate;
+        }
+
+        public static int? GetMaxLength(this Type obj, string propertyName)
+        {
+            var attrib = obj.GetProperty(propertyName)?.GetCustomAttributes(typeof(MaxLengthAttribute), false);
+            if (attrib != null && attrib.Count() > 0)
+                return ((MaxLengthAttribute) attrib[0]).Length;
+
+            attrib = obj.GetProperty(propertyName)?.GetCustomAttributes(typeof(StringLengthAttribute), false);
+            if (attrib != null && attrib.Count() > 0)
+                return ((StringLengthAttribute) attrib[0]).MaximumLength;
+
+            return null;
         }
     }
 }

@@ -207,6 +207,7 @@
     <Compile Include="Business\UpdateBusiness.cs" />
     <Compile Include="Common\Class\RectItem.cs" />
     <Compile Include="Common\Helpers\AttachImage.cs" />
+    <Compile Include="Common\Helpers\BindingProxy.cs" />
     <Compile Include="Common\Helpers\CustomConverter.cs" />
     <Compile Include="Common\Helpers\DynamicLinq.cs" />
     <Compile Include="Common\Helpers\Extensions.cs" />

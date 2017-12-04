@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TestControls"
+                    xmlns:ctl="http://Infra.Wpf">
+
+    <Style x:Key="HeaderPage" TargetType="GroupBox">
+        <Setter Property="FlowDirection" Value="RightToLeft"/>
+        <Setter Property="Header" Value="{Binding ViewTitle}"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="5"/>
+    </Style>
+</ResourceDictionary>

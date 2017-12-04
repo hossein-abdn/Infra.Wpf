@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infra.Wpf.Business;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Infra.Wpf.Repository
     {
         protected DbContext _context;
 
+        private bool disposed = false;
+
         public UnitOfWork(DbContext context)
         {
             _context = context;
@@ -22,9 +25,21 @@ namespace Infra.Wpf.Repository
             return new Repository<TEntity>(_context);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                    _context.Dispose();
+            }
+
+            this.disposed = true;
+        }
+
         public void Dispose()
         {
-            _context.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public void RejectChange()
@@ -44,9 +59,22 @@ namespace Infra.Wpf.Repository
             }
         }
 
-        public int SaveChange()
+        public BusinessResult<int> SaveChange()
         {
-            return _context.SaveChanges();
+            var result = new BusinessResult<int>();
+
+            try
+            {
+                result.Data = _context.SaveChanges();
+                result.Message = new BusinessMessage("انجام عملیات", "عملیات با موفقیت انجام شد.", Controls.MessageType.Information);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Exception = ex;
+                result.Message = new BusinessMessage("خطا", "در سامانه خطایی رخ داده است.");
+                return result;
+            }
         }
 
         public Task<int> SaveChangeAsync()

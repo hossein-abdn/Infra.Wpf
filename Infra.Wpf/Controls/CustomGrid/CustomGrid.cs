@@ -93,7 +93,7 @@ namespace Infra.Wpf.Controls
                 e.Column = customColumn;
             }
 
-            if (e.Property.PropertyType == typeof(bool)|| e.Property.PropertyType == typeof(bool?))
+            if (e.Property.PropertyType == typeof(bool) || e.Property.PropertyType == typeof(bool?))
             {
                 var customColumn = new CustomCheckBoxColumn();
 
@@ -119,7 +119,7 @@ namespace Infra.Wpf.Controls
                 e.Column = customColumn;
             }
 
-            if (e.Property.PropertyType == typeof(DateTime)|| e.Property.PropertyType == typeof(DateTime?))
+            if (e.Property.PropertyType == typeof(DateTime) || e.Property.PropertyType == typeof(DateTime?))
             {
                 var customColumn = new CustomDateTimeColumn();
 
@@ -158,13 +158,16 @@ namespace Infra.Wpf.Controls
 
         private void CustomGrid_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (loadedFlag)
+                return;
+
             this.BottomRows.Add(new CustomBottomRow() { Height = new DataGridLength(32) });
-            this.FrozenBottomRowsCount = 1;
 
             foreach (var item in ButtonColumns)
                 this.Columns.Add(item);
             OrderButtonColumns();
 
+            this.FrozenBottomRowsCount = 1;
             this.CanUserAddRows = false;
             this.CanUserEditRows = true;
             this.CanUserGroup = true;

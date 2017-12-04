@@ -69,7 +69,7 @@ namespace Infra.Wpf.Controls
             set { SetValue(RowMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty RowMarginProperty = FieldGridWrapPanel.RowMarginProperty.AddOwner(typeof(SearchPanel));
+        public static readonly DependencyProperty RowMarginProperty = FieldGridWrapPanel.RowMarginProperty.AddOwner(typeof(SearchPanel), new PropertyMetadata(RowMarginChanged));
 
         public bool IsExpanded
         {
@@ -173,6 +173,7 @@ namespace Infra.Wpf.Controls
             margin = @this.Clear.Margin;
             @this.Clear.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
         }
+
         private void mainpanel_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

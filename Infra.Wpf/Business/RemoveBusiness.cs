@@ -13,8 +13,11 @@ namespace Infra.Wpf.Business
 
         private DbSet<TEntity> _set;
 
+        public RemoveBusiness(Logger logger = null) : base(logger)
+        {
+        }
 
-        public RemoveBusiness(DbSet<TEntity> set, TEntity entity, Logger logger = null) : base(logger)
+        public void Config(DbSet<TEntity> set, TEntity entity)
         {
             _entity = entity;
             _set = set;
@@ -22,7 +25,7 @@ namespace Infra.Wpf.Business
             OnExecute = () => RemoveExecute();
         }
 
-        public RemoveBusiness(DbSet<TEntity> set, object id, Logger logger = null) : base(logger)
+        public void Config(DbSet<TEntity> set, object id)
         {
             _set = set;
             _entity = _set.Find(id);
