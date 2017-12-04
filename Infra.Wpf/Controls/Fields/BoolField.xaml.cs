@@ -53,6 +53,8 @@ namespace Infra.Wpf.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event SearchPhraseChangedEventHandler SearchPhraseChanged;
+
         #endregion
 
         #region Methods
@@ -83,7 +85,10 @@ namespace Infra.Wpf.Controls
         {
             var @this = (BoolField) d;
             if (@this != null)
-                @this.FilterText = ((bool)e.NewValue).ToString();
+            {
+                @this.FilterText = ((bool) e.NewValue).ToString();
+                @this.SearchPhraseChanged?.Invoke();
+            }
         }
 
         private string GetDisplayName()

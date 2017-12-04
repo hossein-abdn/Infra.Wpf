@@ -26,6 +26,8 @@ namespace Infra.Wpf.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event SearchPhraseChangedEventHandler SearchPhraseChanged;
+
         #endregion
 
         #region Methods
@@ -33,6 +35,12 @@ namespace Infra.Wpf.Controls
         public LookupField()
         {
             Loaded += LookupField_Loaded;
+            SelectionChanged += LookupField_SelectionChanged;
+        }
+
+        private void LookupField_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SearchPhraseChanged?.Invoke();
         }
 
         private void LookupField_Loaded(object sender, System.Windows.RoutedEventArgs e)

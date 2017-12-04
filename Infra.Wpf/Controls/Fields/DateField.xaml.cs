@@ -22,6 +22,7 @@ namespace Infra.Wpf.Controls
             {
                 _Operator = value;
                 OnPropertyChanged();
+                SearchPhraseChanged?.Invoke();
             }
         }
 
@@ -65,7 +66,12 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty SelectedDateProperty =
-            DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DateField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DateField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,SelectedDateChanged));
+
+        private static void SelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as DateField).SearchPhraseChanged?.Invoke();
+        }
 
         private bool _IsDropDown;
         public bool IsDropDown
@@ -127,6 +133,8 @@ namespace Infra.Wpf.Controls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event SearchPhraseChangedEventHandler SearchPhraseChanged;
 
         #endregion
 

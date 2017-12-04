@@ -23,7 +23,7 @@
                 </Grid>
             </ScrollViewer>
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,10">
-                <Button Name="Submit" CommandParameter="{Binding SearchPhrase,ElementName=mainpanel}" Command="{Binding SearchCommand,ElementName=mainpanel}"  Padding="3" Click="Submit_Click">
+                <Button Name="Submit" CommandParameter="{Binding SearchPhrase,ElementName=mainpanel}" Command="{Binding SearchCommand,ElementName=mainpanel}"  Padding="3">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Infra.Wpf;component/Controls/Resources/Search-24.png" Height="16"/>
                         <TextBlock Text="جستجو" Margin="5,0,0,0"/>

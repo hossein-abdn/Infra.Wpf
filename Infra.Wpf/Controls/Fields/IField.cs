@@ -11,5 +11,7 @@
         string DisplayName { get; set; }
 
         void Clear();
+
+        event SearchPhraseChangedEventHandler SearchPhraseChanged;
     }
 }

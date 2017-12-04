@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -63,7 +64,12 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(long?), typeof(NumericField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register("Value", typeof(long?), typeof(NumericField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
+
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as NumericField).SearchPhraseChanged?.Invoke();
+        }
 
         private NumericOperator defaultOperator;
 
@@ -112,6 +118,8 @@ namespace Infra.Wpf.Controls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event SearchPhraseChangedEventHandler SearchPhraseChanged;
 
         #endregion
 

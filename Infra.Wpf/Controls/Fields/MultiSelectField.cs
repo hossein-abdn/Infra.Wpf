@@ -35,6 +35,8 @@ namespace Infra.Wpf.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event SearchPhraseChangedEventHandler SearchPhraseChanged;
+
         public string SearchPhrase
         {
             get
@@ -93,6 +95,12 @@ namespace Infra.Wpf.Controls
         public MultiSelectField()
         {
             Loaded += MultiSelectField_Loaded;
+            SelectionChanged += MultiSelectField_SelectionChanged;
+        }
+
+        private void MultiSelectField_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            SearchPhraseChanged?.Invoke();
         }
 
         private void MultiSelectField_Loaded(object sender, System.Windows.RoutedEventArgs e)

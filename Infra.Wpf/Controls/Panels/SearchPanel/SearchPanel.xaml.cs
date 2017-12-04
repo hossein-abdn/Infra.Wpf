@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Data;
+using System;
 
 namespace Infra.Wpf.Controls
 {
@@ -19,20 +20,14 @@ namespace Infra.Wpf.Controls
 
         public FieldCollection SearchFields { get; set; }
 
-        private string searchPhrase;
-
         public string SearchPhrase
         {
-            private set
-            {
-                searchPhrase = value;
-                OnPropertyChanged();
-            }
-            get
-            {
-                return searchPhrase;
-            }
+            get { return (string) GetValue(SearchPhraseProperty); }
+            set { SetValue(SearchPhraseProperty, value); }
         }
+
+        public static readonly DependencyProperty SearchPhraseProperty =
+            DependencyProperty.Register("SearchPhrase", typeof(string), typeof(SearchPanel), new PropertyMetadata(null));
 
         public RelayCommand ClearCommand { get; set; }
 
@@ -153,9 +148,27 @@ namespace Infra.Wpf.Controls
                     SearchFields.Insert(i + 1, item2);
                 }
 
+                item.SearchPhraseChanged += GenerateShearchPhrase;
+
                 searchpanel.Children.Add(displayText);
                 searchpanel.Children.Add((Control) item);
             }
+        }
+
+        private void GenerateShearchPhrase()
+        {
+            string result = "";
+            foreach (var item in SearchFields)
+            {
+                if (string.IsNullOrWhiteSpace(item.SearchPhrase) == false)
+                {
+                    if (string.IsNullOrWhiteSpace(result) == false)
+                        result = result + " AND ";
+                    result = result + item.SearchPhrase;
+                }
+            }
+
+            SetValue(SearchPhraseProperty, result);
         }
 
         private void ClearExecute()
@@ -181,22 +194,6 @@ namespace Infra.Wpf.Controls
                 if (SearchCommand != null)
                     SearchCommand.Execute(SearchPhrase);
             }
-        }
-
-        private void Submit_Click(object sender, RoutedEventArgs e)
-        {
-            string result = "";
-            foreach (var item in SearchFields)
-            {
-                if (string.IsNullOrWhiteSpace(item.SearchPhrase) == false)
-                {
-                    if (string.IsNullOrWhiteSpace(result) == false)
-                        result = result + " AND ";
-                    result = result + item.SearchPhrase;
-                }
-            }
-
-            SearchPhrase = result;
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)

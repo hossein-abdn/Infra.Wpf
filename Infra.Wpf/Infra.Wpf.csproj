@@ -205,6 +205,7 @@
     <Compile Include="Business\LogInfo.cs" />
     <Compile Include="Business\RemoveBusiness.cs" />
     <Compile Include="Business\UpdateBusiness.cs" />
+    <Compile Include="Controls\Fields\Common.cs" />
     <Compile Include="Common\Class\RectItem.cs" />
     <Compile Include="Common\Helpers\AttachImage.cs" />
     <Compile Include="Common\Helpers\BindingProxy.cs" />

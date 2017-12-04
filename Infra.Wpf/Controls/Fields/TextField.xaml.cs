@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -20,6 +21,7 @@ namespace Infra.Wpf.Controls
             {
                 _Operator = value;
                 OnPropertyChanged();
+                SearchPhraseChanged?.Invoke();
             }
         }
 
@@ -58,7 +60,7 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(TextField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            DependencyProperty.Register("Text", typeof(string), typeof(TextField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTextPropertyChanged));
 
         public string SearchPhrase
         {
@@ -101,6 +103,8 @@ namespace Infra.Wpf.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event SearchPhraseChangedEventHandler SearchPhraseChanged;
+
         #endregion
 
         #region Methods
@@ -114,8 +118,13 @@ namespace Infra.Wpf.Controls
         public TextField()
         {
             InitializeComponent();
-            
+
             OpertatorVisible = true;
+        }
+
+        private static void OnTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as TextField).SearchPhraseChanged?.Invoke();
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)

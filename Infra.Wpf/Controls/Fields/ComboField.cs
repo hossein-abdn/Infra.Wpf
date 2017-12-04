@@ -25,6 +25,7 @@ namespace Infra.Wpf.Controls
             {
                 _FilterItem = value;
                 OnPropertyChanged();
+                SearchPhraseChanged?.Invoke();
             }
         }
 
@@ -92,6 +93,8 @@ namespace Infra.Wpf.Controls
         public bool UseEnumValue { get; set; }
         
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event SearchPhraseChangedEventHandler SearchPhraseChanged;
 
         #endregion
 
