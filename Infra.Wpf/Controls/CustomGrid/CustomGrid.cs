@@ -176,7 +176,7 @@ namespace Infra.Wpf.Controls
             this.CanUserResizeRows = false;
             this.CanUserSort = true;
             this.IsReadOnly = false;
-            this.SelectionMode = DataGridSelectionMode.SingleRange;
+            this.SelectionMode = DataGridSelectionMode.SingleRow;
             loadedFlag = true;
         }
 

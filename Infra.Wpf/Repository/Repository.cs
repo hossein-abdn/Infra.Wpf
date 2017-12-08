@@ -12,9 +12,7 @@ namespace Infra.Wpf.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected DbContext _context;
-
-        private DbSet<TEntity> _set;
+        protected DbContext Context { get; private set; }
 
         protected AddBusiness<TEntity> AddBusiness { get; set; }
 
@@ -38,9 +36,16 @@ namespace Infra.Wpf.Repository
 
         protected UpdateBusiness<TEntity> UpdateBusiness { get; set; }
 
+        private DbSet<TEntity> _set;
+
+        protected DbSet<TEntity> Set
+        {
+            get { return _set ?? (_set = Context.Set<TEntity>()); }
+        }
+
         public Repository(DbContext context)
         {
-            _context = context;
+            Context = context;
 
             AddBusiness = new AddBusiness<TEntity>();
             AnyBusiness = new AnyBusiness<TEntity>();
@@ -53,11 +58,6 @@ namespace Infra.Wpf.Repository
             GetFirstBusiness = new GetFirstBusiness<TEntity>();
             RemoveBusiness = new RemoveBusiness<TEntity>();
             UpdateBusiness = new UpdateBusiness<TEntity>();
-        }
-
-        protected DbSet<TEntity> Set
-        {
-            get { return _set ?? (_set = _context.Set<TEntity>()); }
         }
 
         public virtual BusinessResult<bool> Add(TEntity entity)
@@ -302,7 +302,7 @@ namespace Infra.Wpf.Repository
 
         public virtual BusinessResult<bool> Update(TEntity entity)
         {
-            UpdateBusiness.Config(_context, Set, entity);
+            UpdateBusiness.Config(Context, Set, entity);
             UpdateBusiness.Execute();
 
             return UpdateBusiness.Result;

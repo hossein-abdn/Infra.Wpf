@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using System.Windows;
 using Infra.Wpf.Controls;
 using System.Collections.ObjectModel;
+using Infra.Wpf.Repository;
 
 namespace Infra.Wpf.Mvvm
 {
@@ -24,12 +25,8 @@ namespace Infra.Wpf.Mvvm
         public string ViewTitle
         {
             get { return Get<string>(); }
-            set
-            {
-                Set(value);
-            }
+            set { Set(value); }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
