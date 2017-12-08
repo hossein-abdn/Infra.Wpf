@@ -22,6 +22,7 @@
         <local:CustomComboBox VerticalContentAlignment="Center"  Margin="0,0,5,0" EnumType="{x:Type local:NumericOperator}"
                             Visibility="{Binding OpertatorVisible, ElementName=searchfield,Converter={StaticResource converter}}"
                             SelectedItem="{Binding Operator,ElementName=searchfield}"/>
-        <local:NumericBox x:Name="textbox" Grid.Column="1"  ShowButtons="{Binding ShowButtons,ElementName=searchfield}"/>
+        <local:NumericBox Grid.Column="1"  ShowButtons="{Binding ShowButtons,ElementName=searchfield}" Value="{Binding Value,ElementName=searchfield}" 
+                          MinValue="{Binding MinValue,ElementName=searchfield}" MaxValue="{Binding MaxValue,ElementName=searchfield}"/>
     </Grid>
 </UserControl>

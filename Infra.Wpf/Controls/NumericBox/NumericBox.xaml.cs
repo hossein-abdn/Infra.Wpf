@@ -173,9 +173,9 @@ namespace Infra.Wpf.Controls
             if (value.HasValue)
             {
                 if (value.Value < nb.MinValue)
-                    return (long?) nb.MaxValue;
-                if (value.Value > nb.MaxValue)
                     return (long?) nb.MinValue;
+                if (value.Value > nb.MaxValue)
+                    return (long?) nb.MaxValue;
             }
             else
             {

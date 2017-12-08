@@ -66,10 +66,35 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(long?), typeof(NumericField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
 
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public long MaxValue
         {
-            (d as NumericField).SearchPhraseChanged?.Invoke();
+            get
+            {
+                return (long) GetValue(MaxValueProperty);
+            }
+            set
+            {
+                SetValue(MaxValueProperty, value);
+            }
         }
+
+        public static readonly DependencyProperty MaxValueProperty =
+            DependencyProperty.Register("MaxValue", typeof(long), typeof(NumericField), new PropertyMetadata(long.MaxValue));
+
+        public long MinValue
+        {
+            get
+            {
+                return (long) GetValue(MinValueProperty);
+            }
+            set
+            {
+                SetValue(MinValueProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty MinValueProperty =
+            DependencyProperty.Register("MinValue", typeof(long), typeof(NumericField), new PropertyMetadata(long.MinValue));
 
         private NumericOperator defaultOperator;
 
@@ -137,12 +162,6 @@ namespace Infra.Wpf.Controls
 
             OpertatorVisible = true;
             ShowButtons = false;
-            Binding bind = new Binding("Value")
-            {
-                Source = this
-            };
-
-            textbox.SetBinding(NumericBox.ValueProperty, bind);
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)
@@ -154,6 +173,11 @@ namespace Infra.Wpf.Controls
         {
             Value = null;
             Operator = defaultOperator;
+        }
+
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as NumericField).SearchPhraseChanged?.Invoke();
         }
 
         private string GetDisplayName()
