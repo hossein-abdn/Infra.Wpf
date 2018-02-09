@@ -204,6 +204,7 @@
     <Compile Include="Business\GetAllBusiness.cs" />
     <Compile Include="Business\GetCountAsyncBusiness.cs" />
     <Compile Include="Business\GetCountBusiness.cs" />
+    <Compile Include="Business\GetDateTimeBusiness.cs" />
     <Compile Include="Business\GetFirstBusiness.cs" />
     <Compile Include="Business\ILogInfo.cs" />
     <Compile Include="Business\Logger.cs" />

@@ -1,6 +1,7 @@
 ﻿using Infra.Wpf.Business;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -72,5 +73,7 @@ namespace Infra.Wpf.Repository
         BusinessResult<bool> Remove(TEntity entity);
 
         BusinessResult<bool> Remove(object id);
+
+        BusinessResult<DateTime> GetDateTime();
     }
 }

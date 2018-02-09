@@ -36,6 +36,8 @@ namespace Infra.Wpf.Repository
 
         protected UpdateBusiness<TEntity> UpdateBusiness { get; set; }
 
+        protected GetDateTimeBusiness GetDateTimeBusiness { get; set; }
+
         protected Logger Logger { get; set; }
 
         private bool logOnException { get; set; }
@@ -64,6 +66,7 @@ namespace Infra.Wpf.Repository
             GetFirstBusiness = new GetFirstBusiness<TEntity>(logger);
             RemoveBusiness = new RemoveBusiness<TEntity>(logger, logOnException);
             UpdateBusiness = new UpdateBusiness<TEntity>(logger, logOnException);
+            GetDateTimeBusiness = new GetDateTimeBusiness(logger);
         }
 
         public virtual BusinessResult<bool> Add(TEntity entity)
@@ -312,6 +315,14 @@ namespace Infra.Wpf.Repository
             UpdateBusiness.Execute();
 
             return UpdateBusiness.Result;
+        }
+
+        public BusinessResult<DateTime> GetDateTime()
+        {
+            GetDateTimeBusiness.Config(Context);
+            GetDateTimeBusiness.Execute();
+
+            return GetDateTimeBusiness.Result;
         }
     }
 }
