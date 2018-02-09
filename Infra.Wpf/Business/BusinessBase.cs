@@ -6,23 +6,17 @@ using System.Threading.Tasks;
 
 namespace Infra.Wpf.Business
 {
-    public class BusinessBase<T>
+    public class BusinessBase
     {
         #region Properties
 
         private Logger logger { get; set; }
 
+        private bool logOnException { get; set; }
+
         public ILogInfo LogInfo { get; set; }
 
-        public BusinessResult<T> Result { get; set; }
-
-        public bool HasException
-        {
-            get
-            {
-                return Result.Exception != null;
-            }
-        }
+        public BusinessResult Result { get; set; }
 
         public bool ThrowException { get; set; }
 
@@ -36,33 +30,34 @@ namespace Infra.Wpf.Business
 
         #region Methods
 
-        public BusinessBase(Logger logger = null)
+        public BusinessBase(Logger logger = null, bool logOnException = true)
         {
-            Result = new BusinessResult<T>();
+            Result = new BusinessResult();
             this.logger = logger;
             ThrowException = false;
+            this.logOnException = logOnException;
             OnBeforeExecute = () => true;
         }
 
-        public BusinessBase(Func<bool> onExecute, Logger logger = null) : this(logger)
+        public BusinessBase(Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(logger, logOnException)
         {
             OnExecute = onExecute;
         }
 
-        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, Logger logger = null) : this(onExecute, logger)
+        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(onExecute, logger, logOnException)
         {
             OnBeforeExecute = onBeforeExecute;
         }
 
-        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, Logger logger = null) : this(onBeforExecute, onExecute, logger)
+        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, Logger logger = null, bool logOnException = true) : this(onBeforExecute, onExecute, logger, logOnException)
         {
             OnAfterExecute = onAfterExecute;
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
             if (Result == null)
-                Result = new BusinessResult<T>();
+                Result = new BusinessResult();
 
             try
             {
@@ -72,12 +67,6 @@ namespace Infra.Wpf.Business
                 if (OnBeforeExecute != null)
                 {
                     Result.IsOnBeforExecute = OnBeforeExecute();
-                    if (logger != null && logger.LogOnException == false && LogInfo != null)
-                    {
-                        logger.Log(LogInfo);
-                        LogInfo = null;
-                    }
-
                     if (Result.IsOnBeforExecute == false)
                         return;
                 }
@@ -85,9 +74,9 @@ namespace Infra.Wpf.Business
                 if (OnExecute != null)
                 {
                     Result.IsOnExecute = OnExecute();
-                    if (logger != null && logger.LogOnException == false && LogInfo != null)
+                    if (logger != null && logOnException == false && LogInfo != null)
                     {
-                        logger.Log(LogInfo);
+                        logger.LogList.Add(LogInfo);
                         LogInfo = null;
                     }
 
@@ -96,19 +85,15 @@ namespace Infra.Wpf.Business
                 }
 
                 if (OnAfterExecute != null)
-                {
                     Result.IsOnAfterExecute = OnAfterExecute();
-                    if (logger != null && logger.LogOnException == false && LogInfo != null)
-                    {
-                        logger.Log(LogInfo);
-                        LogInfo = null;
-                    }
-                }
             }
             catch (Exception ex)
             {
                 if (logger != null)
-                    logger.Log(ex);
+                {
+                    logger.Log(ex, this.GetType().FullName, 0);
+                    LogInfo = null;
+                }
 
                 Result.Exception = ex;
                 Result.Message = new BusinessMessage("خطا", "در سامانه خطایی رخ داده است.");
@@ -119,5 +104,47 @@ namespace Infra.Wpf.Business
         }
 
         #endregion
+    }
+
+    public class BusinessBase<T> : BusinessBase
+    {
+        public BusinessResult<T> Result { get; set; }
+
+        public BusinessBase(Logger logger = null, bool logOnException = true) : base(logger, logOnException)
+        {
+            Result = new BusinessResult<T>();
+        }
+
+        public BusinessBase(Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(logger, logOnException)
+        {
+            OnExecute = onExecute;
+        }
+
+        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(onExecute, logger, logOnException)
+        {
+            OnBeforeExecute = onBeforeExecute;
+        }
+
+        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, Logger logger = null, bool logOnException = true) : this(onBeforExecute, onExecute, logger, logOnException)
+        {
+            OnAfterExecute = onAfterExecute;
+        }
+
+        public override void Execute()
+        {
+            if (Result == null)
+                Result = new BusinessResult<T>();
+
+            base.Execute();
+
+            Result.IsOnBeforExecute = base.Result.IsOnBeforExecute;
+            Result.IsOnExecute = base.Result.IsOnExecute;
+            Result.IsOnAfterExecute = base.Result.IsOnAfterExecute;
+            if (Result.HasException == false && base.Result.HasException)
+            {
+                Result.Exception = base.Result.Exception;
+                Result.Message = base.Result.Message;
+            }
+        }
     }
 }

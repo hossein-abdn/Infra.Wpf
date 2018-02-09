@@ -22,7 +22,7 @@ namespace TestControls
             GetAllCommand = new RelayCommand<string>(GetAllExecute);
             LoadedEventCommand = new RelayCommand(LoadedEventExecute);
             CreateCommand = new RelayCommand(CreateExecute);
-            EditCommand = new RelayCommand<Person>(EditExecute); 
+            EditCommand = new RelayCommand<Person>(EditExecute);
         }
 
         private void EditExecute(Person obj)

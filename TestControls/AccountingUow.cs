@@ -14,7 +14,7 @@ namespace TestControls
 
         public IRepository<Person> PersonRepository
         {
-            get { return personRepository ?? (personRepository = new PersonRepository(_context)); }
+            get { return personRepository ?? (personRepository = new PersonRepository(Context)); }
         }
 
         public AccountingUow() : this(new AccountingContext())
@@ -22,7 +22,7 @@ namespace TestControls
         }
         public AccountingUow(System.Data.Entity.DbContext context) : base(context)
         {
-            _context = context;
+            base.Context = context;
         }
 
         protected override void Dispose(bool disposing)

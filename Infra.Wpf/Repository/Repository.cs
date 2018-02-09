@@ -36,6 +36,10 @@ namespace Infra.Wpf.Repository
 
         protected UpdateBusiness<TEntity> UpdateBusiness { get; set; }
 
+        protected Logger Logger { get; set; }
+
+        private bool logOnException { get; set; }
+
         private DbSet<TEntity> _set;
 
         protected DbSet<TEntity> Set
@@ -43,26 +47,28 @@ namespace Infra.Wpf.Repository
             get { return _set ?? (_set = Context.Set<TEntity>()); }
         }
 
-        public Repository(DbContext context)
+        public Repository(DbContext context, Logger logger = null, bool logOnException = true)
         {
             Context = context;
+            this.Logger = logger;
+            this.logOnException = logOnException;
 
-            AddBusiness = new AddBusiness<TEntity>();
-            AnyBusiness = new AnyBusiness<TEntity>();
-            FindByIdAsyncBusiness = new FindByIdAsyncBusiness<TEntity>();
-            FindByIdBusiness = new FindByIdBusiness<TEntity>();
-            GetAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>();
-            GetAllBusiness = new GetAllBusiness<TEntity>();
-            GetCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>();
-            GetCountBusiness = new GetCountBusiness<TEntity>();
-            GetFirstBusiness = new GetFirstBusiness<TEntity>();
-            RemoveBusiness = new RemoveBusiness<TEntity>();
-            UpdateBusiness = new UpdateBusiness<TEntity>();
+            AddBusiness = new AddBusiness<TEntity>(logger, logOnException);
+            AnyBusiness = new AnyBusiness<TEntity>(logger);
+            FindByIdAsyncBusiness = new FindByIdAsyncBusiness<TEntity>(logger);
+            FindByIdBusiness = new FindByIdBusiness<TEntity>(logger);
+            GetAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(logger);
+            GetAllBusiness = new GetAllBusiness<TEntity>(logger);
+            GetCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(logger);
+            GetCountBusiness = new GetCountBusiness<TEntity>(logger);
+            GetFirstBusiness = new GetFirstBusiness<TEntity>(logger);
+            RemoveBusiness = new RemoveBusiness<TEntity>(logger, logOnException);
+            UpdateBusiness = new UpdateBusiness<TEntity>(logger, logOnException);
         }
 
         public virtual BusinessResult<bool> Add(TEntity entity)
         {
-            AddBusiness.Config(Set, entity);
+            AddBusiness.Config(Context, Set, entity);
             AddBusiness.Execute();
 
             return AddBusiness.Result;
@@ -286,7 +292,7 @@ namespace Infra.Wpf.Repository
 
         public virtual BusinessResult<bool> Remove(object id)
         {
-            RemoveBusiness.Config(Set, id);
+            RemoveBusiness.Config(Context, Set, id);
             RemoveBusiness.Execute();
 
             return RemoveBusiness.Result;
@@ -294,7 +300,7 @@ namespace Infra.Wpf.Repository
 
         public virtual BusinessResult<bool> Remove(TEntity entity)
         {
-            RemoveBusiness.Config(Set, entity);
+            RemoveBusiness.Config(Context, Set, entity);
             RemoveBusiness.Execute();
 
             return RemoveBusiness.Result;

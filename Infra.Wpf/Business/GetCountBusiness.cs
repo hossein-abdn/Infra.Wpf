@@ -15,7 +15,7 @@ namespace Infra.Wpf.Business
 
         private Expression<Func<TEntity, bool>> _predicate;
 
-        public GetCountBusiness()
+        public GetCountBusiness(Logger logger) : base(logger)
         {
         }
 

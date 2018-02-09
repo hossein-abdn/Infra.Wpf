@@ -23,7 +23,7 @@ namespace Infra.Wpf.Business
 
         private string _include;
 
-        public GetAllBusiness()
+        public GetAllBusiness(Logger logger) : base(logger)
         {
         }
 

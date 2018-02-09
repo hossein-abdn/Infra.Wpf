@@ -17,7 +17,7 @@ namespace Infra.Wpf.Business
 
         private Expression<Func<TEntity, bool>> _predicate;
 
-        public AnyBusiness()
+        public AnyBusiness(Logger logger) : base(logger)
         {
         }
 

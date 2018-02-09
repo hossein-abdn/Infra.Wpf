@@ -19,7 +19,7 @@ namespace Infra.Wpf.Business
 
         private string _include;
 
-        public GetFirstBusiness()
+        public GetFirstBusiness(Logger logger) : base(logger)
         {
         }
 

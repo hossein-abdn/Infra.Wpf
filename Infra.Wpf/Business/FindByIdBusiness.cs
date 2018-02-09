@@ -14,7 +14,7 @@ namespace Infra.Wpf.Business
 
         private DbSet<TEntity> _set;
 
-        public FindByIdBusiness(Logger logger = null):base(logger)
+        public FindByIdBusiness(Logger logger = null) : base(logger)
         {
         }
 

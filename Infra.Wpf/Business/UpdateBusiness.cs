@@ -15,7 +15,7 @@ namespace Infra.Wpf.Business
 
         private DbContext _context;
 
-        public UpdateBusiness(Logger logger = null) : base(logger)
+        public UpdateBusiness(Logger logger, bool logOnException) : base(logger, logOnException)
         {
         }
 
@@ -39,6 +39,14 @@ namespace Infra.Wpf.Business
 
             Result.Data = true;
             Result.Message = new BusinessMessage("ثبت اطلاعات", "اطلاعات با موفقیت به روزرسانی شد.", Controls.MessageType.Information);
+
+            LogInfo = new LogInfo()
+            {
+                CallSite = typeof(TEntity).Name + ".UpdateBusiness",
+                LogType = LogType.Update,
+                UserId = 1,
+                Entry = _context?.Entry(_entity)
+            };
 
             return true;
         }

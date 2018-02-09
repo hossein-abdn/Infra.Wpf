@@ -13,14 +13,17 @@ namespace Infra.Wpf.Business
 
         private DbSet<TEntity> _set;
 
-        public AddBusiness(Logger logger = null) : base(logger)
+        private DbContext _context;
+
+        public AddBusiness(Logger logger, bool logOnException) : base(logger, logOnException)
         {
         }
 
-        public void Config(DbSet<TEntity> set, TEntity entity)
+        public void Config(DbContext context, DbSet<TEntity> set, TEntity entity)
         {
             _entity = entity;
             _set = set;
+            _context = context;
             OnExecute = () => AddExecute();
         }
 
@@ -31,6 +34,13 @@ namespace Infra.Wpf.Business
             Result.Data = true;
             Result.Message = new BusinessMessage("ثبت اطلاعات", "اطلاعات با موفقیت ثبت شد.", Controls.MessageType.Information);
 
+            LogInfo = new LogInfo()
+            {
+                CallSite = typeof(TEntity).Name + ".AddBusiness",
+                LogType = LogType.Add,
+                UserId = 1,
+                Entry = _context?.Entry(_entity)
+            };
             return true;
         }
     }

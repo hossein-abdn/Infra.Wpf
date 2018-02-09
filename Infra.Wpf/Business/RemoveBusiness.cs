@@ -13,20 +13,24 @@ namespace Infra.Wpf.Business
 
         private DbSet<TEntity> _set;
 
-        public RemoveBusiness(Logger logger = null) : base(logger)
+        private DbContext _context;
+
+        public RemoveBusiness(Logger logger, bool logOnException) : base(logger, logOnException)
         {
         }
 
-        public void Config(DbSet<TEntity> set, TEntity entity)
+        public void Config(DbContext context, DbSet<TEntity> set, TEntity entity)
         {
+            _context = context;
             _entity = entity;
             _set = set;
 
             OnExecute = () => RemoveExecute();
         }
 
-        public void Config(DbSet<TEntity> set, object id)
+        public void Config(DbContext context, DbSet<TEntity> set, object id)
         {
+            _context = context;
             _set = set;
             _entity = _set.Find(id);
 
@@ -39,6 +43,14 @@ namespace Infra.Wpf.Business
 
             Result.Data = true;
             Result.Message = new BusinessMessage("ثبت اطلاعات", "اطلاعات با موفقیت حذف شد.", Controls.MessageType.Information);
+
+            LogInfo = new LogInfo()
+            {
+                CallSite = typeof(TEntity).Name + ".RemoveBusiness",
+                LogType = LogType.Delete,
+                UserId = 1,
+                Entry = _context?.Entry(_entity)
+            };
 
             return true;
         }

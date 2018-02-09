@@ -21,6 +21,7 @@
     <DockPanel>
         <ctl:Billboard DockPanel.Dock="Top" FlowDirection="RightToLeft" FontSize="16"/>
         <Button Content="Person" Command="{Binding PersonListViewCommand}" DockPanel.Dock="Top"/>
+        <Button Content="Test" DockPanel.Dock="Top" Click="Button_Click"/>
         <Frame NavigationUIVisibility="Hidden"/>
     </DockPanel>
 </Window>

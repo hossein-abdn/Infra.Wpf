@@ -18,7 +18,7 @@ namespace Infra.Wpf.Business
 
         private CancellationToken _cancellationToken;
 
-        public GetCountAsyncBusiness()
+        public GetCountAsyncBusiness(Logger logger) : base(logger)
         {
         }
 
