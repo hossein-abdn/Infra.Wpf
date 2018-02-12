@@ -4,6 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using Infra.Wpf.Common.Helpers;
 
 namespace Infra.Wpf.Business
 {
@@ -29,14 +32,20 @@ namespace Infra.Wpf.Business
 
         private bool UpdateExecute()
         {
-            var entry = _context.Entry(_entity);
-            if (entry.State == EntityState.Detached)
+            PropertyInfo prop = null;
+            foreach (var item in typeof(TEntity).GetProperties())
             {
-                _set.Attach(_entity);
-                entry = _context.Entry(_entity);
+                if (item.GetCustomAttribute<KeyAttribute>() != null)
+                {
+                    prop = item;
+                    break;
+                }
             }
-            entry.State = EntityState.Modified;
+            var orginalModel = _set.First(DynamicLinq.ConvertToExpression<TEntity>(prop.Name + "=" + prop.GetValue(_entity), null));
+            var entry = _context.Entry(orginalModel);
 
+            entry.CurrentValues.SetValues(_entity);
+            entry.State = EntityState.Modified;
             Result.Data = true;
             Result.Message = new BusinessMessage("ثبت اطلاعات", "اطلاعات با موفقیت به روزرسانی شد.", Controls.MessageType.Information);
 
@@ -45,7 +54,7 @@ namespace Infra.Wpf.Business
                 CallSite = typeof(TEntity).Name + ".UpdateBusiness",
                 LogType = LogType.Update,
                 UserId = 1,
-                Entry = _context?.Entry(_entity)
+                Entry = entry
             };
 
             return true;

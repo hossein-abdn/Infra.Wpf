@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
@@ -75,11 +76,8 @@ namespace Infra.Wpf.Repository
             {
                 if (Logger != null)
                 {
-                    foreach (var item in Logger.LogList)
-                    {
-                        if (item.LogType == LogType.Delete)
-                            GenerateLogMessage(item);
-                    }
+                    foreach (var item in Logger.LogList.Where(x => x.LogType == LogType.Delete || x.LogType == LogType.Update))
+                        GenerateLogMessage(item);
                 }
 
                 result.Data = Context.SaveChanges();
@@ -87,12 +85,8 @@ namespace Infra.Wpf.Repository
 
                 if (Logger != null)
                 {
-                    foreach (var item in Logger.LogList)
-                    {
-                        if (item.LogType == LogType.Add || item.LogType == LogType.Update)
-                            GenerateLogMessage(item);
-                    }
-
+                    foreach (var item in Logger.LogList.Where(x => x.LogType == LogType.Add))
+                        GenerateLogMessage(item);
                     Logger.LogPendingList();
                 }
 
@@ -127,7 +121,7 @@ namespace Infra.Wpf.Repository
 
             if (logInfo.LogType == LogType.Add)
             {
-                message.Append(logInfo.Entry.Entity.GetType().Name + ": ");
+                message.Append(ObjectContext.GetObjectType(logInfo.Entry.Entity.GetType()).Name + ": ");
 
                 foreach (var prop in logInfo.Entry.CurrentValues.PropertyNames)
                 {
@@ -142,9 +136,10 @@ namespace Infra.Wpf.Repository
             }
             else if (logInfo.LogType == LogType.Update)
             {
-                message.Append(logInfo.Entry.Entity.GetType().Name + ": ");
 
-                var objectStateEntry = ((IObjectContextAdapter) this).ObjectContext.ObjectStateManager.GetObjectStateEntry(logInfo.Entry.Entity);
+                message.Append(ObjectContext.GetObjectType(logInfo.Entry.Entity.GetType()).Name + ": ");
+
+                var objectStateEntry = ((IObjectContextAdapter) this.Context).ObjectContext.ObjectStateManager.GetObjectStateEntry(logInfo.Entry.Entity);
                 if (objectStateEntry.EntityKey.EntityKeyValues.Count() > 0)
                 {
                     message.Append(objectStateEntry.EntityKey.EntityKeyValues[0].Key + "=");
@@ -155,8 +150,17 @@ namespace Infra.Wpf.Repository
                 {
                     var originalValue = logInfo.Entry.OriginalValues[prop];
                     var currentValue = logInfo.Entry.CurrentValues[prop];
-                    message.AppendFormat("{0}->{1}", originalValue?.ToString() ?? "Null", currentValue?.ToString() ?? "Null");
+
+                    if (!object.Equals(originalValue, currentValue))
+                    {
+                        message.AppendFormat("{0}={1}->{2}", prop, originalValue?.ToString() ?? "Null", currentValue?.ToString() ?? "Null");
+                        message.Append(", ");
+                    }
                 }
+                if (message.Length > 0)
+                    message = message.Remove(message.Length - 2, 2);
+
+                logInfo.Message = message.ToString();
             }
             else if (logInfo.LogType == LogType.Delete)
             {

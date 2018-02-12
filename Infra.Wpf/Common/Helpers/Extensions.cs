@@ -24,8 +24,14 @@ namespace Infra.Wpf.Common.Helpers
 
         public static T Copy<T>(this T @this)
         {
-            MethodInfo method = @this.GetType().GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
-            return (T) method.Invoke(@this, null);
+            var sourceType = @this.GetType();
+            var sourceProperties = sourceType.GetProperties();
+            var copyInstance = Activator.CreateInstance(sourceType);
+
+            foreach (var property in sourceProperties)
+                property.SetValue(copyInstance, property.GetValue(@this));
+
+            return (T) copyInstance;
         }
 
         public static T DeepCopy<T>(this T item)
