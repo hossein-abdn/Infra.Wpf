@@ -36,6 +36,10 @@
       <HintPath>..\packages\AutoMapper.6.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BCrypt.Net-Next, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.2.1.2\lib\net452\BCrypt.Net-Next.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="C1.WPF.4, Version=4.0.20172.566, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
     <Reference Include="C1.WPF.DataGrid.4, Version=4.0.20172.566, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
     <Reference Include="C1.WPF.DataGrid.Filters.4, Version=4.0.20172.566, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL" />
@@ -359,6 +363,12 @@
     <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
+    <Compile Include="Security\EncryptText.cs" />
+    <Compile Include="Security\HashPassword.cs" />
+    <Compile Include="Security\Identity.cs" />
+    <Compile Include="Security\Permission.cs" />
+    <Compile Include="Security\Principal.cs" />
+    <Compile Include="Security\Role.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Controls\Resources\Calendar-32.png" />

@@ -2,49 +2,22 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Repository\Repository.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\security\identity.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\updatebusiness.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\security\principal.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\logger.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\security\role.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\loginfo.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\security\permission.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\businessbase.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Security\HashPassword.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\logtypeenum.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\repository\unitofwork.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\removebusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\businessresult.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\repository\irepository.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\getdatetimebusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\findbyidasyncbusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\business\getfirstbusiness.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Common\Helpers\Extensions.cs</string>
+      <string>C:\Users\Hossein\Desktop\Security\EncryptionUtility.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>
