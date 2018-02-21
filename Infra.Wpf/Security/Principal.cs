@@ -9,8 +9,11 @@ namespace Infra.Wpf.Security
 {
     public class Principal : IPrincipal
     {
-        public Principal(Identity identity)
+        public AuthorizeBasedOn AuthorizeBasedOn { get; }
+
+        public Principal(Identity identity, AuthorizeBasedOn authorizeBasedOn = AuthorizeBasedOn.BasedOnRole)
         {
+            AuthorizeBasedOn = authorizeBasedOn;
             this.identity = identity;
         }
 

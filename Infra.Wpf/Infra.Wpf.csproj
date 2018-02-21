@@ -363,6 +363,11 @@
     <Compile Include="Repository\IUnitOfWork.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
+    <Compile Include="Security\Authorize.cs" />
+    <Compile Include="Security\AuthorizeBasedOnEnum.cs" />
+    <Compile Include="Security\AuthorizeBehavior.cs" />
+    <Compile Include="Security\AuthorizeExtension.cs" />
+    <Compile Include="Security\AuthorizeInfo.cs" />
     <Compile Include="Security\EncryptText.cs" />
     <Compile Include="Security\HashPassword.cs" />
     <Compile Include="Security\Identity.cs" />

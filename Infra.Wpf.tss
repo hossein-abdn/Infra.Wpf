@@ -14,10 +14,13 @@
       <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\security\permission.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Security\HashPassword.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\security\hashpassword.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Desktop\Security\EncryptionUtility.cs</string>
+      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Security\EncryptText.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>Infra.Wpf\Infra.Wpf.csproj</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>
