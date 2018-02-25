@@ -48,6 +48,10 @@ namespace Infra.Wpf.Repository
 
         BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null);
 
+        BusinessResult<List<TResult>> Select<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false);
+
+        BusinessResult<Task<List<TResult>>> SelectAsync<TResult>(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false);
+
         BusinessResult<TEntity> GetFirst(string orderBy = null, string include = null);
 
         BusinessResult<TEntity> GetFirst(string predicate, object[] values = null, string orderBy = null, string include = null);

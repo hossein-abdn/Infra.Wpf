@@ -324,5 +324,24 @@ namespace Infra.Wpf.Repository
 
             return GetDateTimeBusiness.Result;
         }
+
+        public BusinessResult<List<TResult>> Select<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            var SelectBusiness = new SelectBusiness<TEntity, TResult>(Logger);
+            
+            SelectBusiness.Config(Set, predicate, selector, orderBy, take, skip, include, distinct);
+            SelectBusiness.Execute();
+
+            return SelectBusiness.Result;
+        }
+
+        public BusinessResult<Task<List<TResult>>> SelectAsync<TResult>(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            var SelectAsyncBusiness = new SelectAsyncBusiness<TEntity, TResult>(Logger);
+            SelectAsyncBusiness.Config(Set, cancellationToken, selector, orderBy, take, skip, include, distinct);
+            SelectAsyncBusiness.Execute();
+
+            return SelectAsyncBusiness.Result;
+        }
     }
 }

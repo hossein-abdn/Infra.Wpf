@@ -215,6 +215,8 @@
     <Compile Include="Business\LogInfo.cs" />
     <Compile Include="Business\LogTypeEnum.cs" />
     <Compile Include="Business\RemoveBusiness.cs" />
+    <Compile Include="Business\SelectAsyncBusiness.cs" />
+    <Compile Include="Business\SelectBusiness.cs" />
     <Compile Include="Business\UpdateBusiness.cs" />
     <Compile Include="Controls\Fields\Common.cs" />
     <Compile Include="Common\Class\RectItem.cs" />

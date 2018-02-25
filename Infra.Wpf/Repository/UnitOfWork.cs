@@ -1,4 +1,5 @@
 ﻿using Infra.Wpf.Business;
+using Infra.Wpf.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -95,7 +96,7 @@ namespace Infra.Wpf.Repository
             catch (Exception ex)
             {
                 result.Exception = ex;
-                Logger?.Log(ex, this.GetType().FullName, 0);
+                Logger?.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity).Id);
                 Logger?.LogList?.Clear();
                 result.Message = new BusinessMessage("خطا", "در سامانه خطایی رخ داده است.");
                 return result;

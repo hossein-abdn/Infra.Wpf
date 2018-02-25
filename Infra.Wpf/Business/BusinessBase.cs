@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Infra.Wpf.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Infra.Wpf.Business
@@ -10,7 +12,7 @@ namespace Infra.Wpf.Business
     {
         #region Properties
 
-        private Logger logger { get; set; }
+        protected Logger Logger { get; set; }
 
         private bool logOnException { get; set; }
 
@@ -33,7 +35,7 @@ namespace Infra.Wpf.Business
         public BusinessBase(Logger logger = null, bool logOnException = true)
         {
             Result = new BusinessResult();
-            this.logger = logger;
+            this.Logger = logger;
             ThrowException = false;
             this.logOnException = logOnException;
             OnBeforeExecute = () => true;
@@ -74,9 +76,9 @@ namespace Infra.Wpf.Business
                 if (OnExecute != null)
                 {
                     Result.IsOnExecute = OnExecute();
-                    if (logger != null && logOnException == false && LogInfo != null)
+                    if (Logger != null && logOnException == false && LogInfo != null)
                     {
-                        logger.LogList.Add(LogInfo);
+                        Logger.LogList.Add(LogInfo);
                         LogInfo = null;
                     }
 
@@ -89,9 +91,9 @@ namespace Infra.Wpf.Business
             }
             catch (Exception ex)
             {
-                if (logger != null)
+                if (Logger != null)
                 {
-                    logger.Log(ex, this.GetType().FullName, 0);
+                    Logger.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity).Id);
                     LogInfo = null;
                 }
 

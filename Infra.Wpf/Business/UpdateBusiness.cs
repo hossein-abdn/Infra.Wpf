@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Infra.Wpf.Common.Helpers;
+using System.Threading;
+using Infra.Wpf.Security;
 
 namespace Infra.Wpf.Business
 {
@@ -53,7 +55,7 @@ namespace Infra.Wpf.Business
             {
                 CallSite = typeof(TEntity).Name + ".UpdateBusiness",
                 LogType = LogType.Update,
-                UserId = 1,
+                UserId = (Thread.CurrentPrincipal.Identity as Identity).Id,
                 Entry = entry
             };
 

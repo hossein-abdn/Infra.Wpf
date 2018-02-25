@@ -36,7 +36,7 @@ namespace Infra.Wpf.Controls
             else
             {
                 Image image = (Image)Template.FindName("image", this);
-                image.Margin = new Thickness(0, 0, 5, 0);
+                image.Margin = new Thickness(0, 0, 7, 0);
                 if (MouseOverImage == null)
                     MouseOverImage = Image;
             }

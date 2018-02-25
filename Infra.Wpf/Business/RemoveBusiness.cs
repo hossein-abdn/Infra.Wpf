@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Infra.Wpf.Security;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Infra.Wpf.Business
@@ -48,7 +50,7 @@ namespace Infra.Wpf.Business
             {
                 CallSite = typeof(TEntity).Name + ".RemoveBusiness",
                 LogType = LogType.Delete,
-                UserId = 1,
+                UserId = (Thread.CurrentPrincipal.Identity as Identity).Id,
                 Entry = _context?.Entry(_entity)
             };
 
