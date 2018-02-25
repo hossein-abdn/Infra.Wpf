@@ -10,13 +10,13 @@ namespace Infra.Wpf.Business
     {
         public List<ILogInfo> LogList { get; set; }
 
-        public Logger(string connectionStringName)
+        public Logger(string connectionString)
         {
             LogList = new List<ILogInfo>();
-            ConfigLogger(connectionStringName);
+            ConfigLogger(connectionString);
         }
 
-        private void ConfigLogger(string connectionStringName)
+        private void ConfigLogger(string connectionString)
         {
             if (LogManager.Configuration != null)
                 return;
@@ -29,7 +29,7 @@ namespace Infra.Wpf.Business
             config.Variables["callsite"] = "";
             config.Variables["logtype"] = "";
 
-            dbTarget.ConnectionStringName = connectionStringName;
+            dbTarget.ConnectionString = connectionString;
             dbTarget.CommandText = @"insert into dbo.Logs ([CallSite],[Level],[Type],[Message],[Exception],[PersianDate],[UserId]) values (@callSite,@level,@logtype,@message,@exception,@persiandate,@userid)";
             dbTarget.Parameters.Add(new DatabaseParameterInfo("@callSite", "${var:callsite"));
             dbTarget.Parameters.Add(new DatabaseParameterInfo("@level", "${level}"));
