@@ -8,6 +8,10 @@
         xmlns:ctl="http://Infra.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
+    
     <Grid FlowDirection="RightToLeft" FocusManager.FocusedElement="{Binding ElementName=field4}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -15,9 +19,7 @@
         </Grid.RowDefinitions>
         <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ColumnMargin="20" RowMargin="10" >
             <ctl:EditViewPanel.EditFields>
-                <ctl:TextField Title="شماره" Name="field1"/>
-                <ctl:BoolField  Title="نام" Name="field2"/>
-                <ctl:NumericField FilterField="عدد" Name="field4"/>
+                <ctl:TextField Text="{Binding Model.Name}"/>
             </ctl:EditViewPanel.EditFields>
         </ctl:EditViewPanel>
     </Grid>

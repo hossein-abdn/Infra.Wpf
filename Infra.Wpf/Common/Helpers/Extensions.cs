@@ -118,7 +118,7 @@ namespace Infra.Wpf.Common.Helpers
 
         public static int? GetMaxLength(this Type obj, string propertyName)
         {
-            var attrib = obj.GetProperty(propertyName)?.GetCustomAttributes(typeof(MaxLengthAttribute), false);
+            var attrib = obj?.GetProperty(propertyName)?.GetCustomAttributes(typeof(MaxLengthAttribute), false);
             if (attrib != null && attrib.Count() > 0)
                 return ((MaxLengthAttribute) attrib[0]).Length;
 
@@ -127,6 +127,15 @@ namespace Infra.Wpf.Common.Helpers
                 return ((StringLengthAttribute) attrib[0]).MaximumLength;
 
             return null;
+        }
+
+        public static bool IsRequired(this PropertyInfo obj, string propertyName)
+        {
+            var attrib = obj?.GetCustomAttributes(typeof(RequiredAttribute), false);
+            if (attrib != null && attrib.Count() > 0)
+                return true;
+
+            return false;
         }
     }
 }

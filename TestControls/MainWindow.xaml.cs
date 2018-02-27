@@ -24,10 +24,5 @@ namespace TestControls
         {
             InitializeComponent();
         }
-
-        private void txt_KeyDown(object sender, KeyEventArgs e)
-        {
-            int a = 1;
-        }
     }
 }

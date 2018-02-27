@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Infra.Wpf.Common.Helpers;
 
 namespace Infra.Wpf.Controls
 {
@@ -103,15 +104,22 @@ namespace Infra.Wpf.Controls
                 var type = DataContext?.GetType().GetProperty("Model")?.PropertyType;
                 if (type != null)
                 {
-                    var propInfo = type?.GetProperty(bindEx.ResolvedSourcePropertyName);
+                    var propInfo = type.GetProperty(bindEx.ResolvedSourcePropertyName);
                     var attrib = propInfo?.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    var isRequired = propInfo.IsRequired(bindEx.ResolvedSourcePropertyName);
                     if (attrib != null && attrib.Count() > 0)
-                        return ((DisplayAttribute) attrib[0]).Name;
+                    {
+                        var result = ((DisplayAttribute) attrib[0]).Name;
+                        if (isRequired)
+                            result = "* " + result;
+
+                        return result;
+                    }
                 }
                 else
                 {
                     var displayText = bindEx.ResolvedSourcePropertyName;
-                    if (string.IsNullOrEmpty(displayText))
+                    if (!string.IsNullOrEmpty(displayText))
                         return displayText;
                 }
             }
