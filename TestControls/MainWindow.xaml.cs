@@ -25,15 +25,9 @@ namespace TestControls
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void txt_KeyDown(object sender, KeyEventArgs e)
         {
-            IEnumerable<Role> roles = new List<Role>() { new Role { Name = "admin1", RoleId = 1 }, new Role { Name = "admin", RoleId = 2 } };
-            IEnumerable<Permission> permission = new List<Permission>() { new Permission { PermissionId = 1, Url = "TestControls.MainWindow.Test1" } };
-            Identity i = new Identity("hossein", 1, roles, permission);
-            Principal p = new Principal(i, AuthorizeBasedOn.BaseOnPermission);
-            AppDomain.CurrentDomain.SetThreadPrincipal(p);
-
-            AuthorizeBehavior.AuthorizeAgain();
+            int a = 1;
         }
     }
 }

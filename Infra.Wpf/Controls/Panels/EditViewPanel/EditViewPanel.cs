@@ -1,18 +1,24 @@
 ﻿using Infra.Wpf.Mvvm;
 using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace Infra.Wpf.Controls
 {
     [ContentProperty("EditFields")]
-    public partial class EditViewPanel : UserControl
+    public class EditViewPanel : Control
     {
         #region Property
 
@@ -51,7 +57,7 @@ namespace Infra.Wpf.Controls
             set { SetValue(RowMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty RowMarginProperty = FieldGridWrapPanel.RowMarginProperty.AddOwner(typeof(EditViewPanel),new PropertyMetadata(RowMarginChanged));
+        public static readonly DependencyProperty RowMarginProperty = FieldGridWrapPanel.RowMarginProperty.AddOwner(typeof(EditViewPanel), new PropertyMetadata(RowMarginChanged));
 
         public Visibility VisibleTopButton
         {
@@ -62,16 +68,46 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty VisibleTopButtonProperty =
             DependencyProperty.Register("VisibleTopButton", typeof(Visibility), typeof(EditViewPanel), new PropertyMetadata(Visibility.Collapsed));
 
+        private FieldGridWrapPanel editpanel { get; set; }
+
+        private Button cancel1 { get; set; }
+
+        private Button cancel2 { get; set; }
+
+        private Button submit1 { get; set; }
+
+        private Button submit2 { get; set; }
         #endregion
 
         #region Method
+
+        static EditViewPanel()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(EditViewPanel), new FrameworkPropertyMetadata(typeof(EditViewPanel)));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            editpanel = Template.FindName("editpanel", this) as FieldGridWrapPanel;
+            submit1 = Template.FindName("Submit1", this) as Button;
+            submit2 = Template.FindName("Submit2", this) as Button;
+            cancel1 = Template.FindName("Cancel1", this) as Button;
+            cancel2 = Template.FindName("Cancel2", this) as Button;
+
+            RowMarginChanged(this, new DependencyPropertyChangedEventArgs(RowMarginProperty, null, this.GetValue(RowMarginProperty)));
+
+            base.OnApplyTemplate();
+        }
 
         public EditViewPanel()
         {
             EditFields = new FieldCollection();
             CancelCommand = new RelayCommand(CancelExecute);
 
-            InitializeComponent();
+            this.Loaded += mainpanel_Loaded;
+            this.KeyDown += mainpanel_KeyDown;
+
+            this.IsTabStop = false;
         }
 
         private void mainpanel_Loaded(object sender, RoutedEventArgs e)
@@ -123,13 +159,17 @@ namespace Infra.Wpf.Controls
         private static void RowMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var @this = ((EditViewPanel) d);
-            var margin = @this.Submit2.Margin;
-            @this.Submit1.Margin = new Thickness(margin.Left, margin.Top , margin.Right, margin.Bottom + (double) e.NewValue);
-            @this.Submit2.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
 
-            margin = @this.Cancel2.Margin;
-            @this.Cancel1.Margin = new Thickness(margin.Left, margin.Top , margin.Right, margin.Bottom + (double) e.NewValue);
-            @this.Cancel2.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
+            if (@this.submit1 == null)
+                return;
+
+            var margin = @this.submit2.Margin;
+            @this.submit1.Margin = new Thickness(margin.Left, margin.Top, margin.Right, margin.Bottom + (double) e.NewValue);
+            @this.submit2.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
+
+            margin = @this.cancel2.Margin;
+            @this.cancel1.Margin = new Thickness(margin.Left, margin.Top, margin.Right, margin.Bottom + (double) e.NewValue);
+            @this.cancel2.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
         }
 
         private void mainpanel_KeyDown(object sender, KeyEventArgs e)

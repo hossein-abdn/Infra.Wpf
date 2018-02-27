@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Infra.Wpf.Controls
 {
@@ -46,6 +47,9 @@ namespace Infra.Wpf.Controls
         private void LookupField_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             DisplayName = GetDisplayName();
+
+            if (IsFocused == true)
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)

@@ -4,16 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestControls"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:ctl="http://Infra.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
-    <Grid>
+    <Grid FlowDirection="RightToLeft" FocusManager.FocusedElement="{Binding ElementName=field4}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <Button Content="Fill" Click="Button_Click"/>
-        <Button Grid.Row="1" Name="Test" Content="Test" ctl:Authorize.AuthorizeInfo="{ctl:Authorize Roles='admin',ParentType=local:MainWindow}" />
+        <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ColumnMargin="20" RowMargin="10" >
+            <ctl:EditViewPanel.EditFields>
+                <ctl:TextField Title="شماره" Name="field1"/>
+                <ctl:BoolField  Title="نام" Name="field2"/>
+                <ctl:NumericField FilterField="عدد" Name="field4"/>
+            </ctl:EditViewPanel.EditFields>
+        </ctl:EditViewPanel>
     </Grid>
 </Window>

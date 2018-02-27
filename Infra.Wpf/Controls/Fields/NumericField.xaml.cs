@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Infra.Wpf.Controls
 {
@@ -154,6 +155,9 @@ namespace Infra.Wpf.Controls
         {
             defaultOperator = Operator;
             DisplayName = GetDisplayName();
+
+            if (IsFocused == true)
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         public NumericField()

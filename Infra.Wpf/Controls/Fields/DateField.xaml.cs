@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Infra.Wpf.Controls
 {
@@ -153,6 +154,9 @@ namespace Infra.Wpf.Controls
                 suggestbtn.HorizontalAlignment = HorizontalAlignment.Left;
 
             DisplayName = GetDisplayName();
+
+            if (IsFocused == true)
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         public DateField()

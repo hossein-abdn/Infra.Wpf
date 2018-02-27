@@ -200,11 +200,21 @@ namespace Infra.Wpf.Controls
             popup.KeyDown += Popup_KeyDown;
             popup.Opened += Popup_Opened;
             popup.Closed += Popup_Closed;
+            KeyDown += MultiSelect_KeyDown;
             SelectedItems = new ObservableCollection<object>();
             SelectedIndices = new ObservableCollection<int>();
             CloseCommand = new RelayCommand<MultiSelectItem>(CloseCommandExecute);
             foreach (var item in Items)
                 OnItemsChanged(Items, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, itemContainers.Count));
+        }
+
+        private void MultiSelect_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (IsOpen == false && (e.Key == Key.Space || e.Key == Key.Enter))
+            {
+                IsOpen = true;
+                searchBox.Focus();
+            }
         }
 
         private void Popup_Closed(object sender, EventArgs e)
