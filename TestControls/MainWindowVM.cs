@@ -22,7 +22,7 @@ namespace TestControls
 
         private void Submit()
         {
-            Focus(nameof(Model.CreateDate));
+            FocusByPropertyName(nameof(Model.CreateDate));
             var t = FocusManager.GetFocusedElement((DependencyObject)View);
         }
     }

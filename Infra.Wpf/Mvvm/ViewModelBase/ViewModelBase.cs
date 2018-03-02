@@ -60,7 +60,30 @@ namespace Infra.Wpf.Mvvm
             return WPFMessageBox.Show(message, caption, button, icon, defaultResult, owner);
         }
 
-        public void Focus(string propName)
+        public void FocusByName(string name, bool isDropdownOpen = false)
+        {
+            var view = View as FrameworkElement;
+
+            if (view != null)
+            {
+                var obj = view.FindName(name) as UIElement;
+                if (obj != null)
+                {
+                    obj?.Focus();
+                    obj?.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+                    if (obj is TextBox)
+                        (obj as TextBox).SelectAll();
+                    if (obj is ComboBox && isDropdownOpen)
+                        (obj as ComboBox).IsDropDownOpen = true;
+                    if (obj is MultiSelect && isDropdownOpen)
+                        (obj as MultiSelect).IsOpen = true;
+                    if (obj is PasswordBox)
+                        (obj as PasswordBox).SelectAll();
+                }
+            }
+        }
+
+        public void FocusByPropertyName(string propName, bool isDropdownOpen = false)
         {
             var view = View as UIElement;
             if (view != null)
@@ -72,9 +95,9 @@ namespace Infra.Wpf.Mvvm
                     obj?.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                     if (obj is TextBox)
                         (obj as TextBox).SelectAll();
-                    if (obj is ComboBox)
+                    if (obj is ComboBox && isDropdownOpen)
                         (obj as ComboBox).IsDropDownOpen = true;
-                    if (obj is MultiSelect)
+                    if (obj is MultiSelect && isDropdownOpen)
                         (obj as MultiSelect).IsOpen = true;
                 }
             }
