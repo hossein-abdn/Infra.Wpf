@@ -7,6 +7,10 @@ using System.Windows;
 using Infra.Wpf.Controls;
 using System.Collections.ObjectModel;
 using Infra.Wpf.Repository;
+using System.Windows.Data;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Input;
 
 namespace Infra.Wpf.Mvvm
 {
@@ -54,6 +58,90 @@ namespace Infra.Wpf.Mvvm
             MsgIcon icon = MsgIcon.None, MsgResult defaultResult = MsgResult.None, Window owner = null)
         {
             return WPFMessageBox.Show(message, caption, button, icon, defaultResult, owner);
+        }
+
+        public void Focus(string propName)
+        {
+            var view = View as UIElement;
+            if (view != null)
+            {
+                var obj = FindObject(view, propName);
+                if (obj != null)
+                {
+                    obj?.Focus();
+                    obj?.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+                    if (obj is TextBox)
+                        (obj as TextBox).SelectAll();
+                    if (obj is ComboBox)
+                        (obj as ComboBox).IsDropDownOpen = true;
+                    if (obj is MultiSelect)
+                        (obj as MultiSelect).IsOpen = true;
+                }
+            }
+        }
+
+        private UIElement FindObject(DependencyObject element, string propName)
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            {
+                var item = VisualTreeHelper.GetChild(element, i);
+                if (item is UIElement)
+                {
+                    var bindEx = GetBindingExpression(item as UIElement, propName);
+                    if (bindEx != null)
+                        return (UIElement) item;
+                }
+
+                if (item is DependencyObject)
+                {
+                    var result = FindObject(item as DependencyObject, propName);
+                    if (result != null)
+                        return result;
+                }
+            }
+
+            return null;
+        }
+
+        private BindingExpression GetBindingExpression(UIElement element, string propName)
+        {
+            if (element == null)
+                return null;
+
+            DependencyProperty prop = null;
+
+            if (element is TextBox)
+                prop = TextBox.TextProperty;
+            else if (element is TextField)
+                prop = TextField.TextProperty;
+            else if (element is ComboBox)
+                prop = ComboBox.SelectedItemProperty;
+            else if (element is RadioButton)
+                prop = RadioButton.IsCheckedProperty;
+            else if (element is PersianDatePicker)
+                prop = PersianDatePicker.SelectedDateProperty;
+            else if (element is NumericBox)
+                prop = NumericBox.ValueProperty;
+            else if (element is NumericField)
+                prop = NumericField.ValueProperty;
+            else if (element is MultiSelect)
+                prop = MultiSelect.SelectedItemsProperty;
+            else if (element is Lookup)
+                prop = Lookup.SelectedItemsProperty;
+            else if (element is DateField)
+                prop = DateField.SelectedDateProperty;
+            else if (element is CheckBox)
+                prop = CheckBox.IsCheckedProperty;
+            else if (element is BoolField)
+                prop = BoolField.IsCheckedProperty;
+            else
+                return null;
+
+            var bindEx = BindingOperations.GetBindingExpression(element, prop);
+            if (bindEx != null && bindEx.ResolvedSourcePropertyName == propName)
+                return bindEx;
+            else
+                return null;
         }
     }
 

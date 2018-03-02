@@ -38,6 +38,7 @@ namespace Infra.Wpf.Controls
         {
             Loaded += LookupField_Loaded;
             SelectionChanged += LookupField_SelectionChanged;
+            Focusable = true;
         }
 
         private void LookupField_SelectionChanged(object sender, SelectionChangedEventArgs e)

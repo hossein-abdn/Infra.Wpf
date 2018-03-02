@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Infra.Wpf.Common.Helpers
@@ -136,6 +137,24 @@ namespace Infra.Wpf.Common.Helpers
                 return true;
 
             return false;
+        }
+
+        public static T FindObject<T>(this DependencyObject current) where T : DependencyObject
+        {
+            foreach (var item in LogicalTreeHelper.GetChildren(current))
+            {
+                if (item.GetType() == typeof(T))
+                    return (T) item;
+
+                if (item is DependencyObject)
+                {
+                    var result = FindObject<T>((DependencyObject) item);
+                    if (result != null)
+                        return result;
+                }
+            }
+
+            return null;
         }
     }
 }

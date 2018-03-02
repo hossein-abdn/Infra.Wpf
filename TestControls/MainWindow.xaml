@@ -7,20 +7,18 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:ctl="http://Infra.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300">
-    <Window.DataContext>
-        <local:ViewModel/>
-    </Window.DataContext>
-    
-    <Grid FlowDirection="RightToLeft" FocusManager.FocusedElement="{Binding ElementName=field4}">
+        Title="MainWindow" Height="300" Width="300"
+        Loaded="Window_Loaded">
+
+    <Grid FlowDirection="RightToLeft" >
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ColumnMargin="20" RowMargin="10" >
-            <ctl:EditViewPanel.EditFields>
-                <ctl:TextField Text="{Binding Model.Name}"/>
-            </ctl:EditViewPanel.EditFields>
-        </ctl:EditViewPanel>
+
+        <Button Click="Button_Click" Content="ok" Command="{Binding SubmitCommand}" />
+        <ctl:PersianDatePicker x:Name="field1" Grid.Row="1" SelectedDate="{Binding Model.CreateDate}" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}" />
+        <ctl:CustomTextBox Grid.Row="2"/>
     </Grid>
 </Window>

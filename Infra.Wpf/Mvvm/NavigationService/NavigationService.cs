@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Infra.Wpf.Common.Helpers;
 
 namespace Infra.Wpf.Mvvm
 {
@@ -14,32 +15,14 @@ namespace Infra.Wpf.Mvvm
 
         public NavigationService()
         {
-            NavigationFrame = FindObject<Frame>(Application.Current.MainWindow);
-            Billboard = FindObject<Billboard>(Application.Current.MainWindow);
+            NavigationFrame = Application.Current.MainWindow.FindObject<Frame>();
+            Billboard = Application.Current.MainWindow.FindObject<Billboard>();
         }
 
         public NavigationService(Frame navigationFrame, Billboard billboard = null)
         {
             NavigationFrame = navigationFrame;
             Billboard = billboard;
-        }
-
-        private T FindObject<T>(DependencyObject current) where T : DependencyObject
-        {
-            foreach (var item in LogicalTreeHelper.GetChildren(current))
-            {
-                if (item.GetType() == typeof(T))
-                    return (T) item;
-
-                if (item is DependencyObject)
-                {
-                    var result = FindObject<T>((DependencyObject) item);
-                    if (result != null)
-                        return result;
-                }
-            }
-
-            return null;
         }
 
         public void NavigateTo(Uri uri)

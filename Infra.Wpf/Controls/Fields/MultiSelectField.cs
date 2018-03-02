@@ -94,6 +94,7 @@ namespace Infra.Wpf.Controls
         {
             Loaded += MultiSelectField_Loaded;
             SelectionChanged += MultiSelectField_SelectionChanged;
+            Focusable = true;
         }
 
         private void MultiSelectField_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -134,6 +135,12 @@ namespace Infra.Wpf.Controls
                             result = "* " + result;
 
                         return result;
+                    }
+                    else
+                    {
+                        var displayText = bindEx.ResolvedSourcePropertyName;
+                        if (!string.IsNullOrEmpty(displayText))
+                            return displayText;
                     }
                 }
                 else

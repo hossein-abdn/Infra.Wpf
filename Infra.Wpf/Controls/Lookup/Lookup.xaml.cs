@@ -45,7 +45,7 @@ namespace Infra.Wpf.Controls
             get
             {
                 if (SelectedItems != null)
-                    return ((List<object>) SelectedItems).FirstOrDefault();
+                    return (SelectedItems.OfType<object>()).FirstOrDefault();
 
                 return null;
             }
@@ -181,6 +181,9 @@ namespace Infra.Wpf.Controls
 
             if (string.IsNullOrEmpty(CodeColumn))
                 CodeColumn = IdColumn;
+
+            if (IsFocused == true)
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         public void Clear()

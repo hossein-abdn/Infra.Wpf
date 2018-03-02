@@ -179,6 +179,9 @@ namespace Infra.Wpf.Controls
         private void datePicker_Loaded(object sender, RoutedEventArgs e)
         {
             this.CoerceValue(PersianDatePicker.PersianSelectedDateProperty);
+
+            if (IsFocused == true)
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         static object CoercePersianSelectedDate(DependencyObject d, object o)

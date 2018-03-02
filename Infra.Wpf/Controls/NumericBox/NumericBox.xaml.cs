@@ -163,6 +163,9 @@ namespace Infra.Wpf.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.CoerceValue(NumericBox.ValueProperty);
+
+            if (IsFocused == true)
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         private static object CoerceValue(DependencyObject d, object baseValue)

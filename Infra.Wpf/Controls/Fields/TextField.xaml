@@ -9,6 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Loaded="searchfield_Loaded"
              Name="searchfield"
+             Focusable="True"
              KeyboardNavigation.TabNavigation="Local">
     <UserControl.Resources>
         <converter:VisibilityToBoolConverter x:Key="converter"/>

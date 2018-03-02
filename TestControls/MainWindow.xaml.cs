@@ -23,6 +23,18 @@ namespace TestControls
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowVM { View = this };
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //field1.Focus();
+            //var t = FocusManager.GetFocusedElement(this);
         }
     }
 }

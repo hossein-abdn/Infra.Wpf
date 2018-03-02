@@ -106,6 +106,7 @@ namespace Infra.Wpf.Controls
             VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
             IsNullable = true;
             UseEnumValue = true;
+            Focusable = true;
 
             Binding bind = new Binding("FilterItem")
             {
@@ -119,6 +120,9 @@ namespace Infra.Wpf.Controls
         private void ComboField_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             DisplayName = GetDisplayName();
+
+            if (IsFocused == true)
+                MoveFocus(new System.Windows.Input.TraversalRequest(System.Windows.Input.FocusNavigationDirection.First));
         }
 
         public void Clear()

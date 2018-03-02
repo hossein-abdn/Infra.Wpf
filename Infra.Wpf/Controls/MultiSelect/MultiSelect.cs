@@ -201,8 +201,6 @@ namespace Infra.Wpf.Controls
             popup.Opened += Popup_Opened;
             popup.Closed += Popup_Closed;
             KeyDown += MultiSelect_KeyDown;
-            SelectedItems = new ObservableCollection<object>();
-            SelectedIndices = new ObservableCollection<int>();
             CloseCommand = new RelayCommand<MultiSelectItem>(CloseCommandExecute);
             foreach (var item in Items)
                 OnItemsChanged(Items, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, itemContainers.Count));
@@ -374,7 +372,7 @@ namespace Infra.Wpf.Controls
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var multiSelect = (MultiSelect) d;
-            multiSelect.contentPresenter.Children.Clear();
+            multiSelect.contentPresenter?.Children.Clear();
             multiSelect.ChangeSource = ChangeSourceEnum.FromSelectedItems;
             multiSelect.SelectedIndices?.Clear();
 
