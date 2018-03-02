@@ -28,13 +28,13 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        private bool _OpertatorVisible;
-        public bool OpertatorVisible
+        private bool _OperatorVisible;
+        public bool OperatorVisible
         {
-            get { return _OpertatorVisible; }
+            get { return _OperatorVisible; }
             set
             {
-                _OpertatorVisible = value;
+                _OperatorVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -147,7 +147,7 @@ namespace Infra.Wpf.Controls
             defaultOperator = Operator;
 
             if (DateFormat == DateFormat.RangeFrom)
-                OpertatorVisible = false;
+                OperatorVisible = false;
 
             if (FlowDirection == FlowDirection.LeftToRight)
                 suggestbtn.HorizontalAlignment = HorizontalAlignment.Right;
@@ -163,7 +163,7 @@ namespace Infra.Wpf.Controls
         public DateField()
         {
             InitializeComponent();
-            OpertatorVisible = true;
+            OperatorVisible = true;
             SuggestionVisible = true;
         }
 

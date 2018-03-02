@@ -157,6 +157,10 @@ namespace Infra.Wpf.Mvvm
                 prop = CheckBox.IsCheckedProperty;
             else if (element is BoolField)
                 prop = BoolField.IsCheckedProperty;
+            else if (element is TimeEditor)
+                prop = TimeEditor.ValueProperty;
+            else if (element is TimeField)
+                prop = TimeField.ValueProperty;
             else
                 return null;
 

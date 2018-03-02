@@ -26,13 +26,13 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        private bool _OpertatorVisible;
-        public bool OpertatorVisible
+        private bool _OperatorVisible;
+        public bool OperatorVisible
         {
-            get { return _OpertatorVisible; }
+            get { return _OperatorVisible; }
             set
             {
-                _OpertatorVisible = value;
+                _OperatorVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -123,7 +123,7 @@ namespace Infra.Wpf.Controls
         {
             InitializeComponent();
 
-            OpertatorVisible = true;
+            OperatorVisible = true;
         }
 
         private static void OnTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

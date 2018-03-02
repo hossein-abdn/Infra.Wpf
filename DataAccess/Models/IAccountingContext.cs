@@ -27,14 +27,21 @@ namespace DataAccess.Models
         System.Data.Entity.DbSet<Label> Labels { get; set; } // Label
         System.Data.Entity.DbSet<Loan> Loans { get; set; } // Loan
         System.Data.Entity.DbSet<LoanLabel> LoanLabels { get; set; } // LoanLabel
+        System.Data.Entity.DbSet<Log> Logs { get; set; } // Logs
         System.Data.Entity.DbSet<Note> Notes { get; set; } // Note
         System.Data.Entity.DbSet<Notification> Notifications { get; set; } // Notification
+        System.Data.Entity.DbSet<Permission> Permissions { get; set; } // Permission
         System.Data.Entity.DbSet<Person> People { get; set; } // Person
+        System.Data.Entity.DbSet<Role> Roles { get; set; } // Role
+        System.Data.Entity.DbSet<RolePermission> RolePermissions { get; set; } // RolePermission
         System.Data.Entity.DbSet<SettleDebtDemand> SettleDebtDemands { get; set; } // SettleDebtDemand
         System.Data.Entity.DbSet<Transaction> Transactions { get; set; } // Transaction
         System.Data.Entity.DbSet<TransactionGroup> TransactionGroups { get; set; } // TransactionGroup
         System.Data.Entity.DbSet<TransactionLabel> TransactionLabels { get; set; } // TransactionLabel
         System.Data.Entity.DbSet<User> Users { get; set; } // User
+        System.Data.Entity.DbSet<UserRole> UserRoles { get; set; } // UserRole
+        System.Data.Entity.DbSet<VUserRole> VUserRoles { get; set; } // V_UserRole
+        System.Data.Entity.DbSet<VUserRolePermission> VUserRolePermissions { get; set; } // V_UserRolePermission
 
         int SaveChanges();
         System.Threading.Tasks.Task<int> SaveChangesAsync();
@@ -48,6 +55,11 @@ namespace DataAccess.Models
         System.Data.Entity.DbSet Set(System.Type entityType);
         System.Data.Entity.DbSet<TEntity> Set<TEntity>() where TEntity : class;
         string ToString();
+
+        // Stored Procedures
+        int SpSetDisplayName(string schema, string table, string column, string displayname);
+        // SpSetDisplayNameAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
+
     }
 
 }

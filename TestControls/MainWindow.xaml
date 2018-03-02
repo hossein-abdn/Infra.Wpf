@@ -17,8 +17,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Click="Button_Click" Content="ok" Command="{Binding SubmitCommand}" />
-        <ctl:PersianDatePicker x:Name="field1" Grid.Row="1" SelectedDate="{Binding Model.CreateDate}" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}" />
-        <ctl:CustomTextBox Grid.Row="2"/>
+        <ctl:SearchPanel RowMargin="5" ColumnMargin="5" SearchCommand="{Binding SubmitCommand}" SearchPhrase="{Binding SearchPhrase,Mode=OneWayToSource}">
+            <ctl:TimeField FilterField="CreateTime" Format="TimeSpan"/>
+        </ctl:SearchPanel>
+
+        <TextBlock Text="{Binding Model.Time}" Grid.Row="1"/>
     </Grid>
 </Window>

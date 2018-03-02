@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Transaction
     {
+
+        ///<summary>
+        /// جدول تراکنش
+        ///</summary>
         [Column(@"TransactionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]

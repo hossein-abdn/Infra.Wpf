@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Label
     {
+
+        ///<summary>
+        /// جدول برچسب
+        ///</summary>
         [Column(@"LabelId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
@@ -30,15 +34,18 @@ namespace DataAccess.Models
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
+        [Display(Name = "عنوان")]
         public string Title { get; set; } // Title (length: 50)
 
         [Required]
         public int UserId { get; set; } // UserId
 
         [Required]
+        [Display(Name = "تاریخ ایجاد")]
         public System.DateTime CreateDate { get; set; } // CreateDate
 
         [Required]
+        [Display(Name = "وضعیت")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

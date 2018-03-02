@@ -130,16 +130,21 @@ namespace Infra.Wpf.Controls
 
                 if (item is DateField)
                 {
-                    ((DateField) item).OpertatorVisible = false;
+                    ((DateField) item).OperatorVisible = false;
                     ((DateField) item).SuggestionVisible = false;
                 }
                 else if (item is NumericField)
                 {
-                    ((NumericField) item).OpertatorVisible = false;
+                    ((NumericField) item).OperatorVisible = false;
                     ((NumericField) item).ShowButtons = true;
                 }
+                else if((item is TimeField))
+                {
+                    ((TimeField) item).OperatorVisible = false;
+                    ((TimeField) item).ShowButtons = true;
+                }
                 else if (item is TextField)
-                    ((TextField) item).OpertatorVisible = false;
+                    ((TextField) item).OperatorVisible = false;
 
                 displayText.HorizontalAlignment = HorizontalAlignment.Right;
                 displayText.VerticalAlignment = VerticalAlignment.Center;

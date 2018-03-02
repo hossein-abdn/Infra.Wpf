@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class DebtDemand
     {
+
+        ///<summary>
+        /// جدول بدهی و طلب
+        ///</summary>
         [Column(@"DebtDemandId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
@@ -30,17 +34,22 @@ namespace DataAccess.Models
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
+        [Display(Name = "عنوان")]
         public string Title { get; set; } // Title (length: 50)
 
         [Required]
+        [Display(Name = "مبلغ")]
         public int Amount { get; set; } // Amount
 
         [Required]
+        [Display(Name = "نوع")]
         public int TypeId { get; set; } // TypeId
 
         [Required]
+        [Display(Name = "تاریخ")]
         public System.DateTime DebtDemandDate { get; set; } // DebtDemandDate
 
+        [Display(Name = "تاریخ سررسید")]
         public System.DateTime? DueDate { get; set; } // DueDate
 
         public int? TransactionId { get; set; } // TransactionId
@@ -50,9 +59,11 @@ namespace DataAccess.Models
         public int? NotificationId { get; set; } // NotificationId
 
         [Required]
+        [Display(Name = "وضعیت پرداخت")]
         public int SettledStatusId { get; set; } // SettledStatusId
 
         [Required]
+        [Display(Name = "مبلغ تسویه شده")]
         public int PaidAmount { get; set; } // PaidAmount
 
         [Required]
@@ -62,9 +73,11 @@ namespace DataAccess.Models
         public int UserId { get; set; } // UserId
 
         [Required]
+        [Display(Name = "وضعیت")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         [Required]
+        [Display(Name = "تاریخ ایجاد")]
         public System.DateTime CreateDate { get; set; } // CreateDate
 
         // Reverse navigation

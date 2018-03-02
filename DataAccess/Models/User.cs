@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class User
     {
+
+        ///<summary>
+        /// جدول کاربران
+        ///</summary>
         [Column(@"UserId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
@@ -34,10 +38,10 @@ namespace DataAccess.Models
         public string UserName { get; set; } // UserName (length: 50)
 
         [Required]
-        [MaxLength(50)]
-        [StringLength(50)]
+        [MaxLength(60)]
+        [StringLength(60)]
         [DataType(DataType.Password)]
-        public string Password { get; set; } // Password (length: 50)
+        public string Password { get; set; } // Password (length: 60)
 
         [Required]
         public System.DateTime CreateDate { get; set; } // CreateDate
@@ -87,6 +91,10 @@ namespace DataAccess.Models
         /// Child TransactionGroups where [TransactionGroup].[UserId] point to this entity (FK_TransactionGroup_User)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<TransactionGroup> TransactionGroups { get; set; } // TransactionGroup.FK_TransactionGroup_User
+        /// <summary>
+        /// Child UserRoles where [UserRole].[UserId] point to this entity (FK_UserRole_User)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<UserRole> UserRoles { get; set; } // UserRole.FK_UserRole_User
 
         public User()
         {
@@ -100,6 +108,7 @@ namespace DataAccess.Models
             People = new System.Collections.Generic.List<Person>();
             Transactions = new System.Collections.Generic.List<Transaction>();
             TransactionGroups = new System.Collections.Generic.List<TransactionGroup>();
+            UserRoles = new System.Collections.Generic.List<UserRole>();
             InitializePartial();
         }
 

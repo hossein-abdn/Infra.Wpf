@@ -18,38 +18,36 @@ namespace DataAccess.Models
 {
     using Mapping;
 
-    // TransactionLabel
+    // V_UserRole
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class TransactionLabel
+    public partial class VUserRole
     {
-
-        ///<summary>
-        /// جدول برچسب های تراکنش
-        ///</summary>
-        [Column(@"TransactionLabelId", Order = 1, TypeName = "int")]
+        [Column(@"UserId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int TransactionLabelId { get; set; } // TransactionLabelId (Primary key)
+        public int UserId { get; set; } // UserId (Primary key)
 
+        [Column(@"UserName", Order = 2, TypeName = "nvarchar")]
         [Required]
-        public int TransactionId { get; set; } // TransactionId
+        [MaxLength(50)]
+        [StringLength(50)]
+        [Key]
+        [DataType(DataType.Text)]
+        public string UserName { get; set; } // UserName (Primary key) (length: 50)
 
+        [Column(@"RoleId", Order = 3, TypeName = "int")]
         [Required]
-        public int LabelId { get; set; } // LabelId
+        [Key]
+        public int RoleId { get; set; } // RoleId (Primary key)
 
-        // Foreign keys
+        [Column(@"RoleTitle", Order = 4, TypeName = "nvarchar")]
+        [Required]
+        [MaxLength(50)]
+        [StringLength(50)]
+        [Key]
+        public string RoleTitle { get; set; } // RoleTitle (Primary key) (length: 50)
 
-        /// <summary>
-        /// Parent Label pointed by [TransactionLabel].([LabelId]) (FK_TransactionLabel_Label)
-        /// </summary>
-        public virtual Label Label { get; set; } // FK_TransactionLabel_Label
-
-        /// <summary>
-        /// Parent Transaction pointed by [TransactionLabel].([TransactionId]) (FK_TransactionLabel_Transaction)
-        /// </summary>
-        public virtual Transaction Transaction { get; set; } // FK_TransactionLabel_Transaction
-
-        public TransactionLabel()
+        public VUserRole()
         {
             InitializePartial();
         }

@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using Infra.Wpf.Common.Helpers;
 using Infra.Wpf.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,25 @@ namespace TestControls
 {
     public class MainWindowVM: ViewModelBase<Person>
     {
-        public RelayCommand SubmitCommand { get; set; }
+        public string SearchPhrase
+        {
+            get { return Get<string>(); }
+            set { Set(value); }
+        }
+
+        public RelayCommand<string> SubmitCommand { get; set; }
 
         public MainWindowVM()
         {
             Model = new Person();
-            SubmitCommand = new RelayCommand(Submit);
+            SubmitCommand = new RelayCommand<string>(Submit);
         }
 
-        private void Submit()
+        private void Submit(string predicate)
         {
-            FocusByPropertyName(nameof(Model.CreateDate));
-            var t = FocusManager.GetFocusedElement((DependencyObject)View);
+            var context = new AccountingContext();
+
+            var result = context.People.Where(predicate).ToList();
         }
     }
 }

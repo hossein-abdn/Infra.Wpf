@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Loan
     {
+
+        ///<summary>
+        /// جدول وام
+        ///</summary>
         [Column(@"LoanId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
@@ -30,38 +34,48 @@ namespace DataAccess.Models
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
+        [Display(Name = "عنوان")]
         public string Title { get; set; } // Title (length: 50)
 
         [Required]
+        [Display(Name = "مبلغ")]
         public int Amount { get; set; } // Amount
 
         public int? TransactionId { get; set; } // TransactionId
 
         [Required]
+        [Display(Name = "تاریخ ایجاد")]
         public System.DateTime CreateDate { get; set; } // CreateDate
 
         [Required]
+        [Display(Name = "تاریخ شروع")]
         public System.DateTime StartDate { get; set; } // StartDate
 
         [Required]
+        [Display(Name = "تعداد پرداخت شده")]
         public int PaidInstallment { get; set; } // PaidInstallment
 
         [Required]
+        [Display(Name = "تعداد باقیمانده")]
         public int RemainInstallment { get; set; } // RemainInstallment
 
         [Required]
+        [Display(Name = "وضعیت تسویه")]
         public int SettleStatusId { get; set; } // SettleStatusId
 
         [Required]
+        [Display(Name = "مبلغ پرداخت شده")]
         public int PaidSettle { get; set; } // PaidSettle
 
         [Required]
+        [Display(Name = "مبلغ باقیمانده")]
         public int RemainSettle { get; set; } // RemainSettle
 
         [Required]
         public int UserId { get; set; } // UserId
 
         [Required]
+        [Display(Name = "وضعیت")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         // Reverse navigation

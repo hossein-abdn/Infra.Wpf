@@ -82,13 +82,25 @@
     <Compile Include="Mapping\LoanMap.cs">
       <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\LogMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mapping\NoteMap.cs">
       <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
     <Compile Include="Mapping\NotificationMap.cs">
       <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\PermissionMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mapping\PersonMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mapping\RoleMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mapping\RolePermissionMap.cs">
       <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
     <Compile Include="Mapping\SettleDebtDemandMap.cs">
@@ -104,6 +116,15 @@
       <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
     <Compile Include="Mapping\UserMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mapping\UserRoleMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mapping\VUserRoleMap.cs">
+      <DependentUpon>HomeAccountingMap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mapping\VUserRolePermissionMap.cs">
       <DependentUpon>HomeAccountingMap.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs">
@@ -141,13 +162,25 @@
     <Compile Include="Models\LoanLabel.cs">
       <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Log.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Note.cs">
       <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Notification.cs">
       <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Permission.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Person.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RolePermission.cs">
       <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SettleDebtDemand.cs">
@@ -163,6 +196,15 @@
       <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRole.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VUserRole.cs">
+      <DependentUpon>HomeAccounting.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VUserRolePermission.cs">
       <DependentUpon>HomeAccounting.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

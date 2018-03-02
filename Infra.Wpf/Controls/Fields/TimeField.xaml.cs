@@ -1,17 +1,25 @@
-﻿using System;
+﻿using Infra.Wpf.Common.Helpers;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using Infra.Wpf.Common.Helpers;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace Infra.Wpf.Controls
 {
-    public partial class NumericField : UserControl, INotifyPropertyChanged, IField
+    public partial class TimeField : UserControl, INotifyPropertyChanged, IField
     {
         #region Properties
 
@@ -60,20 +68,38 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        public long? Value
-        {
-            get { return (long?) GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
-
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(long?), typeof(NumericField), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
-
-        public long MaxValue
+        public TimeSpan? Value
         {
             get
             {
-                return (long) GetValue(MaxValueProperty);
+                return (TimeSpan?) GetValue(ValueProperty);
+            }
+            set
+            {
+                SetValue(ValueProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(TimeSpan?), typeof(TimeField),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
+
+        private TimeEditorFormat _Format;
+        public TimeEditorFormat Format
+        {
+            get { return _Format; }
+            set
+            {
+                _Format = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan MaxValue
+        {
+            get
+            {
+                return (TimeSpan) GetValue(MaxValueProperty);
             }
             set
             {
@@ -82,13 +108,14 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty MaxValueProperty =
-            DependencyProperty.Register("MaxValue", typeof(long), typeof(NumericField), new PropertyMetadata(long.MaxValue));
+            DependencyProperty.Register("MaxValue", typeof(TimeSpan), typeof(TimeField),
+                new PropertyMetadata(new TimeSpan(0, 23, 59, 59)));
 
-        public long MinValue
+        public TimeSpan MinValue
         {
             get
             {
-                return (long) GetValue(MinValueProperty);
+                return (TimeSpan) GetValue(MinValueProperty);
             }
             set
             {
@@ -97,7 +124,8 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty MinValueProperty =
-            DependencyProperty.Register("MinValue", typeof(long), typeof(NumericField), new PropertyMetadata(long.MinValue));
+            DependencyProperty.Register("MinValue", typeof(TimeSpan), typeof(TimeField),
+                new PropertyMetadata(new TimeSpan(0, 0, 0)));
 
         private NumericOperator defaultOperator;
 
@@ -113,30 +141,33 @@ namespace Infra.Wpf.Controls
                 if (string.IsNullOrWhiteSpace(filterText) || string.IsNullOrWhiteSpace(FilterField))
                     return "";
 
-                double field;
-                if (double.TryParse(filterText, out field) == false)
+                TimeSpan field;
+                if (TimeSpan.TryParse(filterText, out field) == false)
                     return "";
 
-                filterText = filterText.Trim();
+                int h = field.Hours;
+                int m = field.Minutes;
+                int s = field.Seconds;
+
                 switch (Operator)
                 {
                     case NumericOperator.Equals:
-                        return $@"{FilterField}=={filterText}";
+                        return $@"{FilterField}==TimeSpan({h},{m},{s})";
                         break;
                     case NumericOperator.NotEquals:
-                        return $@"{FilterField}!={filterText}";
+                        return $@"{FilterField}!=TimeSpan({h},{m},{s})";
                         break;
                     case NumericOperator.GreaterThan:
-                        return $@"{FilterField}>{filterText}";
+                        return $@"{FilterField}>TimeSpan({h},{ m},{ s})";
                         break;
                     case NumericOperator.GreaterThanEqual:
-                        return $@"{FilterField}>={filterText}";
+                        return $@"{FilterField}>=TimeSpan({h},{m},{s})";
                         break;
                     case NumericOperator.LessThan:
-                        return $@"{FilterField}<{filterText}";
+                        return $@"{FilterField}<TimeSpan({h},{m},{s})";
                         break;
                     case NumericOperator.LessThanEqual:
-                        return $@"{FilterField}<={filterText}";
+                        return $@"{FilterField}<=TimeSpan({h},{m},{s})";
                         break;
                     default:
                         return "";
@@ -151,7 +182,15 @@ namespace Infra.Wpf.Controls
 
         #endregion
 
-        #region Methods
+        #region Meghods
+
+        public TimeField()
+        {
+            InitializeComponent();
+
+            OperatorVisible = true;
+            ShowButtons = false;
+        }
 
         private void searchfield_Loaded(object sender, RoutedEventArgs e)
         {
@@ -160,14 +199,6 @@ namespace Infra.Wpf.Controls
 
             if (IsFocused == true)
                 this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
-        }
-
-        public NumericField()
-        {
-            InitializeComponent();
-
-            OperatorVisible = true;
-            ShowButtons = false;
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = null)
@@ -183,7 +214,7 @@ namespace Infra.Wpf.Controls
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as NumericField).SearchPhraseChanged?.Invoke();
+            (d as TimeField).SearchPhraseChanged?.Invoke();
         }
 
         private string GetDisplayName()

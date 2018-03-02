@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Notification
     {
+
+        ///<summary>
+        /// جدول هشدارها
+        ///</summary>
         [Column(@"NotificationId", Order = 1, TypeName = "int")]
         [Required]
         [Key]

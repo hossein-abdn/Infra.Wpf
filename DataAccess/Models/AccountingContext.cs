@@ -18,6 +18,7 @@ namespace DataAccess.Models
 {
     using Mapping;
 
+    using System.Linq;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class AccountingContext : System.Data.Entity.DbContext, IAccountingContext
@@ -29,14 +30,21 @@ namespace DataAccess.Models
         public System.Data.Entity.DbSet<Label> Labels { get; set; } // Label
         public System.Data.Entity.DbSet<Loan> Loans { get; set; } // Loan
         public System.Data.Entity.DbSet<LoanLabel> LoanLabels { get; set; } // LoanLabel
+        public System.Data.Entity.DbSet<Log> Logs { get; set; } // Logs
         public System.Data.Entity.DbSet<Note> Notes { get; set; } // Note
         public System.Data.Entity.DbSet<Notification> Notifications { get; set; } // Notification
+        public System.Data.Entity.DbSet<Permission> Permissions { get; set; } // Permission
         public System.Data.Entity.DbSet<Person> People { get; set; } // Person
+        public System.Data.Entity.DbSet<Role> Roles { get; set; } // Role
+        public System.Data.Entity.DbSet<RolePermission> RolePermissions { get; set; } // RolePermission
         public System.Data.Entity.DbSet<SettleDebtDemand> SettleDebtDemands { get; set; } // SettleDebtDemand
         public System.Data.Entity.DbSet<Transaction> Transactions { get; set; } // Transaction
         public System.Data.Entity.DbSet<TransactionGroup> TransactionGroups { get; set; } // TransactionGroup
         public System.Data.Entity.DbSet<TransactionLabel> TransactionLabels { get; set; } // TransactionLabel
         public System.Data.Entity.DbSet<User> Users { get; set; } // User
+        public System.Data.Entity.DbSet<UserRole> UserRoles { get; set; } // UserRole
+        public System.Data.Entity.DbSet<VUserRole> VUserRoles { get; set; } // V_UserRole
+        public System.Data.Entity.DbSet<VUserRolePermission> VUserRolePermissions { get; set; } // V_UserRolePermission
 
         static AccountingContext()
         {
@@ -98,14 +106,21 @@ namespace DataAccess.Models
             modelBuilder.Configurations.Add(new LabelMap());
             modelBuilder.Configurations.Add(new LoanMap());
             modelBuilder.Configurations.Add(new LoanLabelMap());
+            modelBuilder.Configurations.Add(new LogMap());
             modelBuilder.Configurations.Add(new NoteMap());
             modelBuilder.Configurations.Add(new NotificationMap());
+            modelBuilder.Configurations.Add(new PermissionMap());
             modelBuilder.Configurations.Add(new PersonMap());
+            modelBuilder.Configurations.Add(new RoleMap());
+            modelBuilder.Configurations.Add(new RolePermissionMap());
             modelBuilder.Configurations.Add(new SettleDebtDemandMap());
             modelBuilder.Configurations.Add(new TransactionMap());
             modelBuilder.Configurations.Add(new TransactionGroupMap());
             modelBuilder.Configurations.Add(new TransactionLabelMap());
             modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new UserRoleMap());
+            modelBuilder.Configurations.Add(new VUserRoleMap());
+            modelBuilder.Configurations.Add(new VUserRolePermissionMap());
 
             OnModelCreatingPartial(modelBuilder);
         }
@@ -119,19 +134,53 @@ namespace DataAccess.Models
             modelBuilder.Configurations.Add(new LabelMap(schema));
             modelBuilder.Configurations.Add(new LoanMap(schema));
             modelBuilder.Configurations.Add(new LoanLabelMap(schema));
+            modelBuilder.Configurations.Add(new LogMap(schema));
             modelBuilder.Configurations.Add(new NoteMap(schema));
             modelBuilder.Configurations.Add(new NotificationMap(schema));
+            modelBuilder.Configurations.Add(new PermissionMap(schema));
             modelBuilder.Configurations.Add(new PersonMap(schema));
+            modelBuilder.Configurations.Add(new RoleMap(schema));
+            modelBuilder.Configurations.Add(new RolePermissionMap(schema));
             modelBuilder.Configurations.Add(new SettleDebtDemandMap(schema));
             modelBuilder.Configurations.Add(new TransactionMap(schema));
             modelBuilder.Configurations.Add(new TransactionGroupMap(schema));
             modelBuilder.Configurations.Add(new TransactionLabelMap(schema));
             modelBuilder.Configurations.Add(new UserMap(schema));
+            modelBuilder.Configurations.Add(new UserRoleMap(schema));
+            modelBuilder.Configurations.Add(new VUserRoleMap(schema));
+            modelBuilder.Configurations.Add(new VUserRolePermissionMap(schema));
             return modelBuilder;
         }
 
         partial void InitializePartial();
         partial void OnModelCreatingPartial(System.Data.Entity.DbModelBuilder modelBuilder);
+
+        // Stored Procedures
+        public int SpSetDisplayName(string schema, string table, string column, string displayname)
+        {
+            var schemaParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@schema", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = schema, Size = 30 };
+            if (schemaParam.Value == null)
+                schemaParam.Value = System.DBNull.Value;
+
+            var tableParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@table", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = table, Size = 30 };
+            if (tableParam.Value == null)
+                tableParam.Value = System.DBNull.Value;
+
+            var columnParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@column", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = column, Size = 30 };
+            if (columnParam.Value == null)
+                columnParam.Value = System.DBNull.Value;
+
+            var displaynameParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@displayname", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = displayname, Size = 30 };
+            if (displaynameParam.Value == null)
+                displaynameParam.Value = System.DBNull.Value;
+
+            var procResultParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@procResult", SqlDbType = System.Data.SqlDbType.Int, Direction = System.Data.ParameterDirection.Output };
+
+            Database.ExecuteSqlCommand(System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, "EXEC @procResult = [dbo].[sp_SetDisplayName] @schema, @table, @column, @displayname", schemaParam, tableParam, columnParam, displaynameParam, procResultParam);
+
+            return (int) procResultParam.Value;
+        }
+
     }
 }
 // </auto-generated>

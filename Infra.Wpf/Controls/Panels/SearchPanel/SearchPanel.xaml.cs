@@ -136,7 +136,7 @@ namespace Infra.Wpf.Controls
 
                     DateField item2 = new DateField();
                     item2.DateFormat = DateFormat.RangeTo;
-                    item2.OpertatorVisible = false;
+                    item2.OperatorVisible = false;
                     item2.FilterField = (item as DateField).FilterField;
                     if (!string.IsNullOrWhiteSpace(item.Title))
                         item2.Title = item.Title + appendText2;

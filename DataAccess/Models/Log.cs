@@ -18,39 +18,40 @@ namespace DataAccess.Models
 {
     using Mapping;
 
-    // LoanLabel
+    // Logs
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class LoanLabel
+    public partial class Log
     {
-
-        ///<summary>
-        /// جدول برچسب های وام
-        ///</summary>
-        [Column(@"LoanLabelId", Order = 1, TypeName = "int")]
+        [Column(@"LogId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int LoanLabelId { get; set; } // LoanLabelId (Primary key)
+        public int LogId { get; set; } // LogId (Primary key)
 
-        [Required]
-        public int LoanId { get; set; } // LoanId
+        public string CallSite { get; set; } // CallSite
 
-        [Required]
-        public int LabelId { get; set; } // LabelId
+        [MaxLength(20)]
+        [StringLength(20)]
+        public string Level { get; set; } // Level (length: 20)
 
-        // Foreign keys
+        [MaxLength(20)]
+        [StringLength(20)]
+        public string Type { get; set; } // Type (length: 20)
 
-        /// <summary>
-        /// Parent Label pointed by [LoanLabel].([LabelId]) (FK_LoanLabel_Label)
-        /// </summary>
-        public virtual Label Label { get; set; } // FK_LoanLabel_Label
+        public string Message { get; set; } // Message
 
-        /// <summary>
-        /// Parent Loan pointed by [LoanLabel].([LoanId]) (FK_LoanLabel_Loan)
-        /// </summary>
-        public virtual Loan Loan { get; set; } // FK_LoanLabel_Loan
+        public string Exception { get; set; } // Exception
 
-        public LoanLabel()
+        [MaxLength(50)]
+        [StringLength(50)]
+        public string PersianDate { get; set; } // PersianDate (length: 50)
+
+        public int? UserId { get; set; } // UserId
+
+        public System.DateTime? CreateDate { get; set; } // CreateDate
+
+        public Log()
         {
+            CreateDate = System.DateTime.Now;
             InitializePartial();
         }
 

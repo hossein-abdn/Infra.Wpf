@@ -18,39 +18,37 @@ namespace DataAccess.Models
 {
     using Mapping;
 
-    // SettleDebtDemand
+    // Permission
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class SettleDebtDemand
+    public partial class Permission
     {
-
-        ///<summary>
-        /// جدول بازپرداخت بدهی و طلب
-        ///</summary>
-        [Column(@"SettleDebtDemandId", Order = 1, TypeName = "int")]
+        [Column(@"PermmisionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int SettleDebtDemandId { get; set; } // SettleDebtDemandId (Primary key)
+        public int PermmisionId { get; set; } // PermmisionId (Primary key)
 
         [Required]
-        public int TransactionId { get; set; } // TransactionId
+        [MaxLength(50)]
+        [StringLength(50)]
+        [Display(Name = "دسترسی")]
+        public string Title { get; set; } // Title (length: 50)
 
         [Required]
-        public int DebtDemandId { get; set; } // DebtDemandId
+        [MaxLength(100)]
+        [StringLength(100)]
+        [Url]
+        public string Url { get; set; } // Url (length: 100)
 
-        // Foreign keys
-
-        /// <summary>
-        /// Parent DebtDemand pointed by [SettleDebtDemand].([DebtDemandId]) (FK_SettleDebtDemand_DebtDemand)
-        /// </summary>
-        public virtual DebtDemand DebtDemand { get; set; } // FK_SettleDebtDemand_DebtDemand
+        // Reverse navigation
 
         /// <summary>
-        /// Parent Transaction pointed by [SettleDebtDemand].([TransactionId]) (FK_SettleDebtDemand_Transaction)
+        /// Child RolePermissions where [RolePermission].[PermissionId] point to this entity (FK_RolePermission_Permission)
         /// </summary>
-        public virtual Transaction Transaction { get; set; } // FK_SettleDebtDemand_Transaction
+        public virtual System.Collections.Generic.ICollection<RolePermission> RolePermissions { get; set; } // RolePermission.FK_RolePermission_Permission
 
-        public SettleDebtDemand()
+        public Permission()
         {
+            RolePermissions = new System.Collections.Generic.List<RolePermission>();
             InitializePartial();
         }
 

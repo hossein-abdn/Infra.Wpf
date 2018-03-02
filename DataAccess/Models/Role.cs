@@ -18,39 +18,36 @@ namespace DataAccess.Models
 {
     using Mapping;
 
-    // SettleDebtDemand
+    // Role
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class SettleDebtDemand
+    public partial class Role
     {
-
-        ///<summary>
-        /// جدول بازپرداخت بدهی و طلب
-        ///</summary>
-        [Column(@"SettleDebtDemandId", Order = 1, TypeName = "int")]
+        [Column(@"RoleId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int SettleDebtDemandId { get; set; } // SettleDebtDemandId (Primary key)
+        public int RoleId { get; set; } // RoleId (Primary key)
 
         [Required]
-        public int TransactionId { get; set; } // TransactionId
+        [MaxLength(50)]
+        [StringLength(50)]
+        [Display(Name = "نقش")]
+        public string Title { get; set; } // Title (length: 50)
 
-        [Required]
-        public int DebtDemandId { get; set; } // DebtDemandId
-
-        // Foreign keys
-
-        /// <summary>
-        /// Parent DebtDemand pointed by [SettleDebtDemand].([DebtDemandId]) (FK_SettleDebtDemand_DebtDemand)
-        /// </summary>
-        public virtual DebtDemand DebtDemand { get; set; } // FK_SettleDebtDemand_DebtDemand
+        // Reverse navigation
 
         /// <summary>
-        /// Parent Transaction pointed by [SettleDebtDemand].([TransactionId]) (FK_SettleDebtDemand_Transaction)
+        /// Child RolePermissions where [RolePermission].[RoleId] point to this entity (FK_RolePermission_Role)
         /// </summary>
-        public virtual Transaction Transaction { get; set; } // FK_SettleDebtDemand_Transaction
+        public virtual System.Collections.Generic.ICollection<RolePermission> RolePermissions { get; set; } // RolePermission.FK_RolePermission_Role
+        /// <summary>
+        /// Child UserRoles where [UserRole].[RoleId] point to this entity (FK_UserRole_Role)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<UserRole> UserRoles { get; set; } // UserRole.FK_UserRole_Role
 
-        public SettleDebtDemand()
+        public Role()
         {
+            RolePermissions = new System.Collections.Generic.List<RolePermission>();
+            UserRoles = new System.Collections.Generic.List<UserRole>();
             InitializePartial();
         }
 

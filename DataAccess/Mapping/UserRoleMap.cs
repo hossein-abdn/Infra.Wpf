@@ -18,28 +18,25 @@ namespace DataAccess.Mapping
 {
     using Models;
 
-    // Person
+    // UserRole
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class PersonMap : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Person>
+    public partial class UserRoleMap : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<UserRole>
     {
-        public PersonMap()
+        public UserRoleMap()
             : this("dbo")
         {
         }
 
-        public PersonMap(string schema)
+        public UserRoleMap(string schema)
         {
-            ToTable("Person", schema);
-            Property(x => x.PersonId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(x => x.Name).HasColumnName(@"Name").HasColumnType("nvarchar");
-            Property(x => x.OrderItem).HasColumnName(@"OrderItem").HasColumnType("int").IsOptional();
+            ToTable("UserRole", schema);
+            Property(x => x.UserRoleId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("int");
-            Property(x => x.CreateDate).HasColumnName(@"CreateDate").HasColumnType("datetime");
-            Property(x => x.RecordStatusId).HasColumnName(@"RecordStatusId").HasColumnType("int");
-            Property(x => x.CreateTime).HasColumnName(@"CreateTime").HasColumnType("time").IsOptional();
+            Property(x => x.RoleId).HasColumnName(@"RoleId").HasColumnType("int");
 
             // Foreign keys
-            HasRequired(a => a.User).WithMany(b => b.People).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false); // FK_Person_User
+            HasRequired(a => a.Role).WithMany(b => b.UserRoles).HasForeignKey(c => c.RoleId).WillCascadeOnDelete(false); // FK_UserRole_Role
+            HasRequired(a => a.User).WithMany(b => b.UserRoles).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false); // FK_UserRole_User
             InitializePartial();
         }
         partial void InitializePartial();

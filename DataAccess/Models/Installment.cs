@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Installment
     {
+
+        ///<summary>
+        /// جدول اقساط وام
+        ///</summary>
         [Column(@"InstallmentId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
@@ -33,20 +37,25 @@ namespace DataAccess.Models
         public int? TransactionId { get; set; } // TransactionId
 
         [Required]
+        [Display(Name = "مبلغ")]
         public int Amount { get; set; } // Amount
 
         [Required]
+        [Display(Name = "وضعیت پرداخت")]
         public int SettleStatusId { get; set; } // SettleStatusId
 
         public int? NotificationId { get; set; } // NotificationId
 
         [Required]
+        [Display(Name = "تاریخ قسط")]
         public System.DateTime DueDate { get; set; } // DueDate
 
         [Required]
+        [Display(Name = "تاریخ ایجاد")]
         public System.DateTime CreateDate { get; set; } // CreateDate
 
         [Required]
+        [Display(Name = "وضعیت")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
         [Required]

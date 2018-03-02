@@ -18,38 +18,34 @@ namespace DataAccess.Models
 {
     using Mapping;
 
-    // SettleDebtDemand
+    // UserRole
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class SettleDebtDemand
+    public partial class UserRole
     {
-
-        ///<summary>
-        /// جدول بازپرداخت بدهی و طلب
-        ///</summary>
-        [Column(@"SettleDebtDemandId", Order = 1, TypeName = "int")]
+        [Column(@"UserRoleId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int SettleDebtDemandId { get; set; } // SettleDebtDemandId (Primary key)
+        public int UserRoleId { get; set; } // UserRoleId (Primary key)
 
         [Required]
-        public int TransactionId { get; set; } // TransactionId
+        public int UserId { get; set; } // UserId
 
         [Required]
-        public int DebtDemandId { get; set; } // DebtDemandId
+        public int RoleId { get; set; } // RoleId
 
         // Foreign keys
 
         /// <summary>
-        /// Parent DebtDemand pointed by [SettleDebtDemand].([DebtDemandId]) (FK_SettleDebtDemand_DebtDemand)
+        /// Parent Role pointed by [UserRole].([RoleId]) (FK_UserRole_Role)
         /// </summary>
-        public virtual DebtDemand DebtDemand { get; set; } // FK_SettleDebtDemand_DebtDemand
+        public virtual Role Role { get; set; } // FK_UserRole_Role
 
         /// <summary>
-        /// Parent Transaction pointed by [SettleDebtDemand].([TransactionId]) (FK_SettleDebtDemand_Transaction)
+        /// Parent User pointed by [UserRole].([UserId]) (FK_UserRole_User)
         /// </summary>
-        public virtual Transaction Transaction { get; set; } // FK_SettleDebtDemand_Transaction
+        public virtual User User { get; set; } // FK_UserRole_User
 
-        public SettleDebtDemand()
+        public UserRole()
         {
             InitializePartial();
         }

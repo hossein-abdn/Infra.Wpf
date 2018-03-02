@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class TransactionGroup
     {
+
+        ///<summary>
+        /// جدول گروه های تراکنش
+        ///</summary>
         [Column(@"TransactionGruopId", Order = 1, TypeName = "int")]
         [Required]
         [Key]

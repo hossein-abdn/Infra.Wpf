@@ -18,38 +18,34 @@ namespace DataAccess.Models
 {
     using Mapping;
 
-    // SettleDebtDemand
+    // RolePermission
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class SettleDebtDemand
+    public partial class RolePermission
     {
-
-        ///<summary>
-        /// جدول بازپرداخت بدهی و طلب
-        ///</summary>
-        [Column(@"SettleDebtDemandId", Order = 1, TypeName = "int")]
+        [Column(@"RolePermissionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int SettleDebtDemandId { get; set; } // SettleDebtDemandId (Primary key)
+        public int RolePermissionId { get; set; } // RolePermissionId (Primary key)
 
         [Required]
-        public int TransactionId { get; set; } // TransactionId
+        public int RoleId { get; set; } // RoleId
 
         [Required]
-        public int DebtDemandId { get; set; } // DebtDemandId
+        public int PermissionId { get; set; } // PermissionId
 
         // Foreign keys
 
         /// <summary>
-        /// Parent DebtDemand pointed by [SettleDebtDemand].([DebtDemandId]) (FK_SettleDebtDemand_DebtDemand)
+        /// Parent Permission pointed by [RolePermission].([PermissionId]) (FK_RolePermission_Permission)
         /// </summary>
-        public virtual DebtDemand DebtDemand { get; set; } // FK_SettleDebtDemand_DebtDemand
+        public virtual Permission Permission { get; set; } // FK_RolePermission_Permission
 
         /// <summary>
-        /// Parent Transaction pointed by [SettleDebtDemand].([TransactionId]) (FK_SettleDebtDemand_Transaction)
+        /// Parent Role pointed by [RolePermission].([RoleId]) (FK_RolePermission_Role)
         /// </summary>
-        public virtual Transaction Transaction { get; set; } // FK_SettleDebtDemand_Transaction
+        public virtual Role Role { get; set; } // FK_RolePermission_Role
 
-        public SettleDebtDemand()
+        public RolePermission()
         {
             InitializePartial();
         }

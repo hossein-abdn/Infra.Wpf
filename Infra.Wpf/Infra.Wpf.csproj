@@ -127,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Fields\TimeField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Lookup\Lookup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -261,6 +265,9 @@
     <Compile Include="Controls\CustomTextBox\CustomTextBox.cs" />
     <Compile Include="Controls\CustomTextBox\CustomTextBoxFormatEnum.cs" />
     <Compile Include="Controls\CustomTextBox\LanguageEnum.cs" />
+    <Compile Include="Controls\Fields\TimeField.xaml.cs">
+      <DependentUpon>TimeField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Panels\EditViewPanel\EditViewPanel.cs" />
     <Compile Include="Controls\Panels\GridWrapPanel\GridWrapColumn.cs" />
     <Compile Include="Controls\Panels\GridWrapPanel\GridWrapRow.cs" />

@@ -22,6 +22,10 @@ namespace DataAccess.Models
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
     public partial class Person
     {
+
+        ///<summary>
+        /// جدول اشخاص
+        ///</summary>
         [Column(@"PersonId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
@@ -40,26 +44,24 @@ namespace DataAccess.Models
         public int UserId { get; set; } // UserId
 
         [Required]
-        [Display(Name = "تاریخ")]
+        [Display(Name = "تاریخ ایجاد")]
         public System.DateTime CreateDate { get; set; } // CreateDate
 
         [Required]
         [Display(Name = "وضعیت")]
         public int RecordStatusId { get; set; } // RecordStatusId
 
+        public System.TimeSpan? CreateTime { get; set; } // CreateTime
+
         // Reverse navigation
 
         /// <summary>
         /// Child DebtDemands where [DebtDemand].[PersonId] point to this entity (FK_DebtDemand_Person)
         /// </summary>
-        
-        [Display(AutoGenerateField =false)]
         public virtual System.Collections.Generic.ICollection<DebtDemand> DebtDemands { get; set; } // DebtDemand.FK_DebtDemand_Person
         /// <summary>
         /// Child Transactions where [Transaction].[PersonId] point to this entity (FK_Transaction_Person)
         /// </summary>
-        
-        [Display(AutoGenerateField =false)]
         public virtual System.Collections.Generic.ICollection<Transaction> Transactions { get; set; } // Transaction.FK_Transaction_Person
 
         // Foreign keys
