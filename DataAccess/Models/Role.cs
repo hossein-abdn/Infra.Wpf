@@ -20,18 +20,18 @@ namespace DataAccess.Models
 
     // Role
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Role
+    public partial class Role : Infra.Wpf.Repository.ModelBase<Role>
     {
         [Column(@"RoleId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int RoleId { get; set; } // RoleId (Primary key)
+        public int RoleId { get { return Get<int>(); } set { Set(value); } } // RoleId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Display(Name = "نقش")]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         // Reverse navigation
 

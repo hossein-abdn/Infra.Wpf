@@ -20,34 +20,34 @@ namespace DataAccess.Models
 
     // Logs
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Log
+    public partial class Log : Infra.Wpf.Repository.ModelBase<Log>
     {
         [Column(@"LogId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int LogId { get; set; } // LogId (Primary key)
+        public int LogId { get { return Get<int>(); } set { Set(value); } } // LogId (Primary key)
 
-        public string CallSite { get; set; } // CallSite
-
-        [MaxLength(20)]
-        [StringLength(20)]
-        public string Level { get; set; } // Level (length: 20)
+        public string CallSite { get { return Get<string>(); } set { Set(value); } } // CallSite
 
         [MaxLength(20)]
         [StringLength(20)]
-        public string Type { get; set; } // Type (length: 20)
+        public string Level { get { return Get<string>(); } set { Set(value); } } // Level (length: 20)
 
-        public string Message { get; set; } // Message
+        [MaxLength(20)]
+        [StringLength(20)]
+        public string Type { get { return Get<string>(); } set { Set(value); } } // Type (length: 20)
 
-        public string Exception { get; set; } // Exception
+        public string Message { get { return Get<string>(); } set { Set(value); } } // Message
+
+        public string Exception { get { return Get<string>(); } set { Set(value); } } // Exception
 
         [MaxLength(50)]
         [StringLength(50)]
-        public string PersianDate { get; set; } // PersianDate (length: 50)
+        public string PersianDate { get { return Get<string>(); } set { Set(value); } } // PersianDate (length: 50)
 
-        public int? UserId { get; set; } // UserId
+        public int? UserId { get { return Get<int?>(); } set { Set(value); } } // UserId
 
-        public System.DateTime? CreateDate { get; set; } // CreateDate
+        public System.DateTime? CreateDate { get { return Get<System.DateTime?>(); } set { Set(value); } } // CreateDate
 
         public Log()
         {

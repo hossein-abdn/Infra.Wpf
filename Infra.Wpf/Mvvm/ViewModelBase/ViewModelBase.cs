@@ -16,7 +16,7 @@ namespace Infra.Wpf.Mvvm
 {
     public class ViewModelBase : INotifyPropertyChanged, IViewModelBase
     {
-        protected Dictionary<string, object> members = new Dictionary<string, object>();
+        private Dictionary<string, object> members = new Dictionary<string, object>();
 
         public NavigationService NavigationService { get; set; }
 
@@ -39,13 +39,13 @@ namespace Infra.Wpf.Mvvm
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        public void Set<T>(T value, [CallerMemberName]String prop = null)
+        protected void Set<T>(T value, [CallerMemberName]string prop = null)
         {
             members[prop] = value;
             OnPropertyChanged(prop);
         }
 
-        public T Get<T>([CallerMemberName]String prop = null)
+        protected T Get<T>([CallerMemberName]string prop = null)
         {
             object val;
             if (members.TryGetValue(prop, out val))

@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // TransactionGroup
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class TransactionGroup
+    public partial class TransactionGroup : Infra.Wpf.Repository.ModelBase<TransactionGroup>
     {
 
         ///<summary>
@@ -29,26 +29,26 @@ namespace DataAccess.Models
         [Column(@"TransactionGruopId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int TransactionGruopId { get; set; } // TransactionGruopId (Primary key)
+        public int TransactionGruopId { get { return Get<int>(); } set { Set(value); } } // TransactionGruopId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
-        public int TypeId { get; set; } // TypeId
+        public int TypeId { get { return Get<int>(); } set { Set(value); } } // TypeId
 
-        public int? ParentId { get; set; } // ParentId
-
-        [Required]
-        public int UserId { get; set; } // UserId
+        public int? ParentId { get { return Get<int?>(); } set { Set(value); } } // ParentId
 
         [Required]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
+
+        [Required]
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

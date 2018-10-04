@@ -24,6 +24,7 @@
                             Visibility="{Binding OperatorVisible, ElementName=searchfield,Converter={StaticResource converter}}"
                             SelectedItem="{Binding Operator,ElementName=searchfield}"/>
         <local:NumericBox Grid.Column="1"  ShowButtons="{Binding ShowButtons,ElementName=searchfield}" Value="{Binding Value,ElementName=searchfield}" 
-                          MinValue="{Binding MinValue,ElementName=searchfield}" MaxValue="{Binding MaxValue,ElementName=searchfield}"/>
+                          MinValue="{Binding MinValue,ElementName=searchfield}" MaxValue="{Binding MaxValue,ElementName=searchfield}" Background="{Binding Background,ElementName=searchfield}"/>
+        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="1" CornerRadius="3" SnapsToDevicePixels="True" Grid.Column="1"/>
     </Grid>
 </UserControl>

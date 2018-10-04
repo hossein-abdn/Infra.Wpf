@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // DebtDemand
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class DebtDemand
+    public partial class DebtDemand : Infra.Wpf.Repository.ModelBase<DebtDemand>
     {
 
         ///<summary>
@@ -29,56 +29,56 @@ namespace DataAccess.Models
         [Column(@"DebtDemandId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int DebtDemandId { get; set; } // DebtDemandId (Primary key)
+        public int DebtDemandId { get { return Get<int>(); } set { Set(value); } } // DebtDemandId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Display(Name = "عنوان")]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
         [Display(Name = "مبلغ")]
-        public int Amount { get; set; } // Amount
+        public int Amount { get { return Get<int>(); } set { Set(value); } } // Amount
 
         [Required]
         [Display(Name = "نوع")]
-        public int TypeId { get; set; } // TypeId
+        public int TypeId { get { return Get<int>(); } set { Set(value); } } // TypeId
 
         [Required]
         [Display(Name = "تاریخ")]
-        public System.DateTime DebtDemandDate { get; set; } // DebtDemandDate
+        public System.DateTime DebtDemandDate { get { return Get<System.DateTime>(); } set { Set(value); } } // DebtDemandDate
 
         [Display(Name = "تاریخ سررسید")]
-        public System.DateTime? DueDate { get; set; } // DueDate
+        public System.DateTime? DueDate { get { return Get<System.DateTime?>(); } set { Set(value); } } // DueDate
 
-        public int? TransactionId { get; set; } // TransactionId
+        public int? TransactionId { get { return Get<int?>(); } set { Set(value); } } // TransactionId
 
-        public int? PersonId { get; set; } // PersonId
+        public int? PersonId { get { return Get<int?>(); } set { Set(value); } } // PersonId
 
-        public int? NotificationId { get; set; } // NotificationId
+        public int? NotificationId { get { return Get<int?>(); } set { Set(value); } } // NotificationId
 
         [Required]
         [Display(Name = "وضعیت پرداخت")]
-        public int SettledStatusId { get; set; } // SettledStatusId
+        public int SettledStatusId { get { return Get<int>(); } set { Set(value); } } // SettledStatusId
 
         [Required]
         [Display(Name = "مبلغ تسویه شده")]
-        public int PaidAmount { get; set; } // PaidAmount
+        public int PaidAmount { get { return Get<int>(); } set { Set(value); } } // PaidAmount
 
         [Required]
-        public int UnpaidAmount { get; set; } // UnpaidAmount
+        public int UnpaidAmount { get { return Get<int>(); } set { Set(value); } } // UnpaidAmount
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
         [Display(Name = "وضعیت")]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         [Required]
         [Display(Name = "تاریخ ایجاد")]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         // Reverse navigation
 

@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // Label
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Label
+    public partial class Label : Infra.Wpf.Repository.ModelBase<Label>
     {
 
         ///<summary>
@@ -29,24 +29,24 @@ namespace DataAccess.Models
         [Column(@"LabelId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int LabelId { get; set; } // LabelId (Primary key)
+        public int LabelId { get { return Get<int>(); } set { Set(value); } } // LabelId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Display(Name = "عنوان")]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
         [Display(Name = "تاریخ ایجاد")]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
         [Display(Name = "وضعیت")]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

@@ -20,18 +20,18 @@ namespace DataAccess.Models
 
     // RolePermission
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class RolePermission
+    public partial class RolePermission : Infra.Wpf.Repository.ModelBase<RolePermission>
     {
         [Column(@"RolePermissionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int RolePermissionId { get; set; } // RolePermissionId (Primary key)
+        public int RolePermissionId { get { return Get<int>(); } set { Set(value); } } // RolePermissionId (Primary key)
 
         [Required]
-        public int RoleId { get; set; } // RoleId
+        public int RoleId { get { return Get<int>(); } set { Set(value); } } // RoleId
 
         [Required]
-        public int PermissionId { get; set; } // PermissionId
+        public int PermissionId { get { return Get<int>(); } set { Set(value); } } // PermissionId
 
         // Foreign keys
 

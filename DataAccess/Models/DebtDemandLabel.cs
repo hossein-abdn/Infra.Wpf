@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // DebtDemandLabel
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class DebtDemandLabel
+    public partial class DebtDemandLabel : Infra.Wpf.Repository.ModelBase<DebtDemandLabel>
     {
 
         ///<summary>
@@ -29,13 +29,13 @@ namespace DataAccess.Models
         [Column(@"DebtDemandLabelId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int DebtDemandLabelId { get; set; } // DebtDemandLabelId (Primary key)
+        public int DebtDemandLabelId { get { return Get<int>(); } set { Set(value); } } // DebtDemandLabelId (Primary key)
 
         [Required]
-        public int DebtDemandId { get; set; } // DebtDemandId
+        public int DebtDemandId { get { return Get<int>(); } set { Set(value); } } // DebtDemandId
 
         [Required]
-        public int LabelId { get; set; } // LabelId
+        public int LabelId { get { return Get<int>(); } set { Set(value); } } // LabelId
 
         // Foreign keys
 

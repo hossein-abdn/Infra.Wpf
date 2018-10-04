@@ -1,21 +1,13 @@
 ﻿using Infra.Wpf.Common.Helpers;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Infra.Wpf.Controls
 {
@@ -80,8 +72,7 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(TimeSpan?), typeof(TimeField),
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(TimeSpan?), typeof(TimeField),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
 
         private TimeEditorFormat _Format;
@@ -107,8 +98,7 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        public static readonly DependencyProperty MaxValueProperty =
-            DependencyProperty.Register("MaxValue", typeof(TimeSpan), typeof(TimeField),
+        public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(TimeSpan), typeof(TimeField),
                 new PropertyMetadata(new TimeSpan(0, 23, 59, 59)));
 
         public TimeSpan MinValue
@@ -123,11 +113,12 @@ namespace Infra.Wpf.Controls
             }
         }
 
-        public static readonly DependencyProperty MinValueProperty =
-            DependencyProperty.Register("MinValue", typeof(TimeSpan), typeof(TimeField),
+        public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(TimeSpan), typeof(TimeField),
                 new PropertyMetadata(new TimeSpan(0, 0, 0)));
 
         private NumericOperator defaultOperator;
+
+        private bool isSetDefaultOperator;
 
         public string Title { get; set; }
 
@@ -176,6 +167,8 @@ namespace Infra.Wpf.Controls
             }
         }
 
+        public Type ModelType { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event SearchPhraseChangedEventHandler SearchPhraseChanged;
@@ -195,6 +188,7 @@ namespace Infra.Wpf.Controls
         private void searchfield_Loaded(object sender, RoutedEventArgs e)
         {
             defaultOperator = Operator;
+            isSetDefaultOperator = true;
             DisplayName = GetDisplayName();
 
             if (IsFocused == true)
@@ -209,7 +203,8 @@ namespace Infra.Wpf.Controls
         public void Clear()
         {
             Value = null;
-            Operator = defaultOperator;
+            if (isSetDefaultOperator)
+                Operator = defaultOperator;
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -222,42 +217,39 @@ namespace Infra.Wpf.Controls
             BindingExpression bindEx = BindingOperations.GetBindingExpression(this, ValueProperty);
             if (bindEx != null && !string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
             {
-                var type = DataContext?.GetType().GetProperty("Model")?.PropertyType;
-                if (type != null)
+                if (ModelType != null)
                 {
-                    var propInfo = type.GetProperty(bindEx.ResolvedSourcePropertyName);
+                    var propInfo = ModelType.GetProperty(bindEx.ResolvedSourcePropertyName);
                     var attrib = propInfo?.GetCustomAttributes(typeof(DisplayAttribute), false);
-                    var isRequired = propInfo.IsRequired(bindEx.ResolvedSourcePropertyName);
-                    if (attrib != null && attrib.Count() > 0)
-                    {
-                        var result = ((DisplayAttribute) attrib[0]).Name;
-                        if (isRequired)
-                            result = "* " + result;
+                    var isRequired = propInfo.IsRequired();
+                    var result = string.Empty;
 
-                        return result;
-                    }
+                    if (attrib != null && attrib.Count() > 0)
+                        result = ((DisplayAttribute) attrib[0]).Name;
+                    else
+                        result = bindEx.ResolvedSourcePropertyName;
+
+                    if (!string.IsNullOrEmpty(result) && isRequired)
+                        result = "* " + result;
+
+                    return result;
                 }
                 else
                 {
-                    var displayText = bindEx.ResolvedSourcePropertyName;
-                    if (!string.IsNullOrEmpty(displayText))
-                        return displayText;
+                    var result = bindEx.ResolvedSourcePropertyName;
+                    if (!string.IsNullOrEmpty(result))
+                        return result;
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(FilterField))
             {
-                var type = DataContext?.GetType().GetProperty("ItemsSource")?.PropertyType;
-
-                if (type != null && type.IsGenericType)
+                var propInfo = ModelType?.GetProperty(FilterField);
+                if (propInfo != null)
                 {
-                    var propInfo = type.GenericTypeArguments[0].GetProperty(FilterField);
-                    if (propInfo != null)
-                    {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
-                        if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayAttribute) attrib[0]).Name;
-                    }
+                    var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    if (attrib != null && attrib.Count() > 0)
+                        return ((DisplayAttribute) attrib[0]).Name;
                 }
 
                 return FilterField;

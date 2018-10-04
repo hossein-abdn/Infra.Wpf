@@ -25,16 +25,8 @@ namespace Infra.Wpf.Controls
                 else
                 {
                     Binding newBinding = base.CopyBinding(Binding);
-
-                    string key = ((List<CheckBoxViewModel>) (newBinding.Source))?.FirstOrDefault().Key;
-                    var keyInfo = row.DataItem.GetType().GetProperty(key);
-                    var rowId = keyInfo?.GetValue(row.DataItem);
-
-                    if (keyInfo != null)
-                    {
-                        newBinding.Source = ((List<CheckBoxViewModel>) (newBinding.Source))?.Where(x => keyInfo.GetValue(x.Item).Equals(rowId)).FirstOrDefault();
-                        checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
-                    }
+                    newBinding.Source = ((List<CheckBoxViewModel>) (newBinding.Source))?.Where(x => x.Item.Equals(row.DataItem)).FirstOrDefault();
+                    checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
                 }
             }
             checkBox.HorizontalAlignment = base.HorizontalAlignment;
@@ -54,16 +46,8 @@ namespace Infra.Wpf.Controls
                 checkBox.FlowDirection = FlowDirection.LeftToRight;
 
                 Binding newBinding = base.CopyBinding(Binding);
-
-                string key = ((List<CheckBoxViewModel>) (newBinding.Source))?.FirstOrDefault().Key;
-                var keyInfo = row.DataItem.GetType().GetProperty(key);
-                var rowId = keyInfo?.GetValue(row.DataItem);
-
-                if (keyInfo != null)
-                {
-                    newBinding.Source = ((List<CheckBoxViewModel>) (newBinding.Source))?.Where(x => keyInfo.GetValue(x.Item).Equals(rowId)).FirstOrDefault();
-                    checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
-                }
+                newBinding.Source = ((List<CheckBoxViewModel>) (newBinding.Source))?.Where(x => x.Item.Equals(row.DataItem)).FirstOrDefault();
+                checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
 
                 return checkBox;
             }

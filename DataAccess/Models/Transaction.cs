@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // Transaction
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Transaction
+    public partial class Transaction : Infra.Wpf.Repository.ModelBase<Transaction>
     {
 
         ///<summary>
@@ -29,41 +29,41 @@ namespace DataAccess.Models
         [Column(@"TransactionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int TransactionId { get; set; } // TransactionId (Primary key)
+        public int TransactionId { get { return Get<int>(); } set { Set(value); } } // TransactionId (Primary key)
 
         [Required]
-        public int Amount { get; set; } // Amount
+        public int Amount { get { return Get<int>(); } set { Set(value); } } // Amount
 
         [Required]
-        public System.DateTime TransactionDate { get; set; } // TransactionDate
+        public System.DateTime TransactionDate { get { return Get<System.DateTime>(); } set { Set(value); } } // TransactionDate
 
         [MaxLength(100)]
         [StringLength(100)]
-        public string Description { get; set; } // Description (length: 100)
+        public string Description { get { return Get<string>(); } set { Set(value); } } // Description (length: 100)
 
         [Required]
-        public int AccountId { get; set; } // AccountId
+        public int AccountId { get { return Get<int>(); } set { Set(value); } } // AccountId
 
         [Required]
-        public int TypeId { get; set; } // TypeId
+        public int TypeId { get { return Get<int>(); } set { Set(value); } } // TypeId
 
-        public int? TransferTransactionId { get; set; } // TransferTransactionId
-
-        [Required]
-        public int TransactionGroupId { get; set; } // TransactionGroupId
-
-        public int? TransactionGroupParentId { get; set; } // TransactionGroupParentId
-
-        public int? PersonId { get; set; } // PersonId
+        public int? TransferTransactionId { get { return Get<int?>(); } set { Set(value); } } // TransferTransactionId
 
         [Required]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public int TransactionGroupId { get { return Get<int>(); } set { Set(value); } } // TransactionGroupId
+
+        public int? TransactionGroupParentId { get { return Get<int?>(); } set { Set(value); } } // TransactionGroupParentId
+
+        public int? PersonId { get { return Get<int?>(); } set { Set(value); } } // PersonId
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
+
+        [Required]
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

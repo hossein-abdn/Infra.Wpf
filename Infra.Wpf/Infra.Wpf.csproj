@@ -52,6 +52,10 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.7.5.1\lib\net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
@@ -78,7 +82,15 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -131,10 +143,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Lookup\Lookup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\Lookup\LookupWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -166,10 +174,6 @@
     <Page Include="Controls\Resources\RowStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Fields\BoolField.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Fields\DateField.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -218,7 +222,9 @@
     <Compile Include="Business\SelectAsyncBusiness.cs" />
     <Compile Include="Business\SelectBusiness.cs" />
     <Compile Include="Business\UpdateBusiness.cs" />
+    <Compile Include="Common\Converters\DefaultValueConverter.cs" />
     <Compile Include="Common\Helpers\ConnectionStringHelper.cs" />
+    <Compile Include="Controls\Fields\BoolField.cs" />
     <Compile Include="Controls\Fields\Common.cs" />
     <Compile Include="Common\Class\RectItem.cs" />
     <Compile Include="Common\Helpers\AttachImage.cs" />
@@ -268,14 +274,12 @@
     <Compile Include="Controls\Fields\TimeField.xaml.cs">
       <DependentUpon>TimeField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Lookup\Lookup.cs" />
     <Compile Include="Controls\Panels\EditViewPanel\EditViewPanel.cs" />
     <Compile Include="Controls\Panels\GridWrapPanel\GridWrapColumn.cs" />
     <Compile Include="Controls\Panels\GridWrapPanel\GridWrapRow.cs" />
     <Compile Include="Controls\Panels\GridWrapPanel\GridWrapPanel.cs" />
     <Compile Include="Controls\ImageButton\ImageButton.cs" />
-    <Compile Include="Controls\Lookup\Lookup.xaml.cs">
-      <DependentUpon>Lookup.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Lookup\LookupSelectionModeEnum.cs" />
     <Compile Include="Controls\Lookup\LookupWindow.xaml.cs">
       <DependentUpon>LookupWindow.xaml</DependentUpon>
@@ -295,9 +299,6 @@
     <Compile Include="Common\PersianDate\PersianDayOfWeekEnum.cs" />
     <Compile Include="Common\PersianDate\PersianMonthEnum.cs" />
     <Compile Include="Common\PersianDate\PersianToDateConverter.cs" />
-    <Compile Include="Controls\Fields\BoolField.xaml.cs">
-      <DependentUpon>BoolField.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Fields\ComboField.cs" />
     <Compile Include="Controls\Fields\DateFormatEnum.cs" />
     <Compile Include="Controls\Fields\DateField.xaml.cs">
@@ -365,6 +366,7 @@
     <AppDesigner Include="Properties\" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IUnitOfWork.cs" />
+    <Compile Include="Repository\ModelBase.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Security\Authorize.cs" />

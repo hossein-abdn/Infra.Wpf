@@ -53,6 +53,8 @@
         static bool NullableShortHand = true;
         bool UseDataAnnotations = false;
         bool UseDataAnnotationsSchema = false;
+        //Edit By Hossein
+        bool UseNotifyProperty = false;
         bool MakeClassesPartial = true;
         bool MakeClassesInternal = false;
         bool MakeDbContextInterfacePartial = false;
@@ -629,7 +631,8 @@
                         PrependSchemaName = false;
 
                     var reader = new SqlServerSchemaReader(conn, factory, IncludeQueryTraceOn9481Flag) { Outer = this };
-                    var tables = reader.ReadSchema(SchemaFilterExclude, SchemaFilterInclude, TableFilterExclude, TableFilterInclude, ColumnFilterExclude, TableFilter, UsePascalCase, PrependSchemaName, IncludeComments, IncludeViews, IncludeExtendedPropertyComments, TableRename, UpdateColumn, UsePrivateSetterForComputedColumns, IncludeSynonyms, UseDataAnnotations, UseDataAnnotationsSchema, IsSqlCe, ColumnNameToDataAnnotation, IncludeConnectionSettingComments);
+                    //Edit By Hossein
+                    var tables = reader.ReadSchema(SchemaFilterExclude, SchemaFilterInclude, TableFilterExclude, TableFilterInclude, ColumnFilterExclude, TableFilter, UsePascalCase, PrependSchemaName, IncludeComments, IncludeViews, IncludeExtendedPropertyComments, TableRename, UpdateColumn, UsePrivateSetterForComputedColumns, IncludeSynonyms, UseDataAnnotations, UseDataAnnotationsSchema, IsSqlCe, ColumnNameToDataAnnotation, IncludeConnectionSettingComments, UseNotifyProperty);
                     var fkList = reader.ReadForeignKeys(TableRename, ForeignKeyFilter);
                     reader.IdentifyForeignKeys(fkList, tables);
 
@@ -843,6 +846,8 @@
             public bool IsMaxLength;
             public bool Hidden;
             public bool IsForeignKey;
+            //Edit by Hossein
+            public bool UseNotifyProperty;
 
             public string Config;
             public List<string> ConfigFk = new List<string>();
@@ -901,7 +906,12 @@
                         inlineComments += ". " + ExtendedProperty;
                 }
                 var initialization = UsePropertyInitializers ? ((this.Default == string.Empty)?"" : string.Format(" = {0};", this.Default)) : "";
-                Entity = string.Format("public {0}{1} {2} {{ get; {3}set; }}{4}{5}", (OverrideModifier ? "override " : ""), WrapIfNullable(PropertyType, this), NameHumanCase, usePrivateSetterForComputedColumns && IsComputed() ? "private " : string.Empty, initialization, inlineComments);
+                
+                //Edit by Hossein
+                if(UseNotifyProperty)
+                    Entity = string.Format("public {0}{1} {2} {{ get {{ return Get<{1}>(); }} {3}set {{ Set(value); }} }}{4}{5}", (OverrideModifier ? "override " : ""), WrapIfNullable(PropertyType, this), NameHumanCase, usePrivateSetterForComputedColumns && IsComputed() ? "private " : string.Empty, initialization, inlineComments);
+                else
+                    Entity = string.Format("public {0}{1} {2} {{ get; {3}set; }}{4}{5}", (OverrideModifier ? "override " : ""), WrapIfNullable(PropertyType, this), NameHumanCase, usePrivateSetterForComputedColumns && IsComputed() ? "private " : string.Empty, initialization, inlineComments);
             }
 
             private string WrapIfNullable(string propType, Column col)
@@ -1502,7 +1512,8 @@
             }
 
             public GeneratedTextTransformation Outer;
-            public abstract Tables ReadSchema(Regex schemaFilterExclude, Regex schemaFilterInclude, Regex tableFilterExclude, Regex tableFilterInclude, Regex columnFilterExclude, Func<Table, bool> tableFilter, bool usePascalCase, bool prependSchemaName, CommentsStyle includeComments, bool includeViews, CommentsStyle includeExtendedPropertyComments, Func<string, string, bool, string> tableRename, Func<Column, Table, Column> updateColumn, bool usePrivateSetterForComputedColumns, bool includeSynonyms, bool dataAnnotations, bool dataAnnotationsSchema, bool isSqlCe, Dictionary<string, string> columnNameToDataAnnotation, bool includeConnectionSettingComments);
+            //Edit By Hossein
+            public abstract Tables ReadSchema(Regex schemaFilterExclude, Regex schemaFilterInclude, Regex tableFilterExclude, Regex tableFilterInclude, Regex columnFilterExclude, Func<Table, bool> tableFilter, bool usePascalCase, bool prependSchemaName, CommentsStyle includeComments, bool includeViews, CommentsStyle includeExtendedPropertyComments, Func<string, string, bool, string> tableRename, Func<Column, Table, Column> updateColumn, bool usePrivateSetterForComputedColumns, bool includeSynonyms, bool dataAnnotations, bool dataAnnotationsSchema, bool isSqlCe, Dictionary<string, string> columnNameToDataAnnotation, bool includeConnectionSettingComments, bool useNotifyProperty);
             public abstract List<StoredProcedure> ReadStoredProcs(Regex SchemaFilterExclude, Regex storedProcedureFilterExclude, bool usePascalCase, bool prependSchemaName , Func<StoredProcedure, string> StoredProcedureRename, bool includeTableValuedFunctions, bool includeConnectionSettingComments);
             public abstract List<ForeignKey> ReadForeignKeys(Func<string, string, bool, string> tableRename, Func<ForeignKey, ForeignKey> foreignKeyFilter);
             public abstract void ProcessForeignKeys(List<ForeignKey> fkList, Tables tables, bool usePascalCase, bool prependSchemaName, string collectionInterfaceType, string collectionType, bool checkForFkNameClashes, CommentsStyle includeComments, Func<string, ForeignKey, string, Relationship, short, string> ForeignKeyName, bool dataAnnotationsSchema, Func<IList<ForeignKey>, Table, Table, bool, ForeignKey> foreignKeyProcessing, Func<Table, Table, string, string[]> foreignKeyAnnotationsProcessing);
@@ -2159,7 +2170,8 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
                 return SqlDatabaseEngineEdition == "Azure";
             }
 
-            public override Tables ReadSchema(Regex schemaFilterExclude, Regex schemaFilterInclude, Regex tableFilterExclude, Regex tableFilterInclude, Regex columnFilterExclude, Func<Table, bool> tableFilter, bool usePascalCase, bool prependSchemaName, CommentsStyle includeComments, bool includeViews, CommentsStyle includeExtendedPropertyComments, Func<string, string, bool, string> tableRename, Func<Column, Table, Column> updateColumn, bool usePrivateSetterForComputedColumns, bool includeSynonyms, bool dataAnnotations, bool dataAnnotationsSchema, bool isSqlCe, Dictionary<string, string> columnNameToDataAnnotation, bool includeConnectionSettingComments)
+            //Edit By Hossein
+            public override Tables ReadSchema(Regex schemaFilterExclude, Regex schemaFilterInclude, Regex tableFilterExclude, Regex tableFilterInclude, Regex columnFilterExclude, Func<Table, bool> tableFilter, bool usePascalCase, bool prependSchemaName, CommentsStyle includeComments, bool includeViews, CommentsStyle includeExtendedPropertyComments, Func<string, string, bool, string> tableRename, Func<Column, Table, Column> updateColumn, bool usePrivateSetterForComputedColumns, bool includeSynonyms, bool dataAnnotations, bool dataAnnotationsSchema, bool isSqlCe, Dictionary<string, string> columnNameToDataAnnotation, bool includeConnectionSettingComments, bool useNotifyProperty)
             {
                 var result = new Tables();
                 if(Cmd == null)
@@ -2236,7 +2248,8 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
                             }
                         }
 
-                        var col = CreateColumn(rdr, rxClean, table, usePascalCase, columnFilterExclude);
+                        //Edit by Hossein
+                        var col = CreateColumn(rdr, rxClean, table, usePascalCase, columnFilterExclude, useNotifyProperty);
                         if(col != null)
                             table.Columns.Add(col);
                     }
@@ -2819,7 +2832,8 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
                 }
             }
 
-            private static Column CreateColumn(IDataRecord rdr, Regex rxClean, Table table, bool usePascalCase, Regex columnFilterExclude)
+            //Edit by Hossein
+            private static Column CreateColumn(IDataRecord rdr, Regex rxClean, Table table, bool usePascalCase, Regex columnFilterExclude, bool useNotifyProperty)
             {
                 if(rdr == null)
                     throw new ArgumentNullException("rdr");
@@ -2845,7 +2859,9 @@ SELECT  SERVERPROPERTY('Edition') AS Edition,
                     IsPrimaryKey = rdr["PrimaryKey"].ToString().Trim().ToLower() == "true",
                     PrimaryKeyOrdinal = (int)rdr["PrimaryKeyOrdinal"],
                     IsForeignKey = rdr["IsForeignKey"].ToString().Trim().ToLower() == "true",
-                    ParentTable = table
+                    ParentTable = table,
+                    //Edit By Hossein
+                    UseNotifyProperty = useNotifyProperty
                 };
 
                 if (col.MaxLength == -1 && (col.SqlPropertyType.EndsWith("varchar", StringComparison.InvariantCultureIgnoreCase) || col.SqlPropertyType.EndsWith("varbinary", StringComparison.InvariantCultureIgnoreCase)))

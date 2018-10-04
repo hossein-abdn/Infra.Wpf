@@ -46,36 +46,39 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
+    <Grid>
+        <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3">
+            <DockPanel>
+                <Button Style="{StaticResource openCalendarButtonStyle}" x:Name="openCalendarButton" IsTabStop="False"
+                        HorizontalAlignment="Right" Click="Button_Click" DockPanel.Dock="Right" Width="20"/>
 
-    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3">
-        <DockPanel>
-            <Button Style="{StaticResource openCalendarButtonStyle}" x:Name="openCalendarButton" IsTabStop="False"
-                    HorizontalAlignment="Right" Click="Button_Click" DockPanel.Dock="Right" Width="20"/>
+                <Border Width="1" BorderBrush="Gray" BorderThickness="1" Margin="0,2,2,2" DockPanel.Dock="Right"/>
 
-            <Border Width="1" BorderBrush="Gray" BorderThickness="1" Margin="0,2,2,2" DockPanel.Dock="Right"/>
+                <Popup x:Name="persianCalnedarPopup" 
+                       PlacementTarget="{Binding ElementName=openCalendarButton}"
+                       StaysOpen="False" Opened="persianCalnedarPopup_Opened"
+                       PopupAnimation="Slide" AllowsTransparency="True" VerticalOffset="5">
+                    <Grid Background="White">
+                        <local:PersianCalendar x:Name="persianCalendar" FontSize="{Binding CalendarFontSize,ElementName=datePicker}"
+                                               PersianSelectedDate="{Binding PersianSelectedDate,ElementName=datePicker, Mode=TwoWay}"
+                                               DisplayDate="{Binding DisplayDate,ElementName=datePicker, Mode=TwoWay}"
+                                               DisplayDateStart="{Binding DisplayDateStart,ElementName=datePicker,Mode=TwoWay}"
+                                               DisplayDateEnd="{Binding DisplayDateEnd,ElementName=datePicker,Mode=TwoWay}"/>
+                    </Grid>
+                </Popup>
 
-            <Popup x:Name="persianCalnedarPopup" 
-                   PlacementTarget="{Binding ElementName=openCalendarButton}"
-                   StaysOpen="False" Opened="persianCalnedarPopup_Opened"
-                   PopupAnimation="Slide" AllowsTransparency="True" VerticalOffset="5">
-                <Grid Background="White">
-                    <local:PersianCalendar x:Name="persianCalendar" FontSize="{Binding CalendarFontSize,ElementName=datePicker}"
-                                           PersianSelectedDate="{Binding PersianSelectedDate,ElementName=datePicker, Mode=TwoWay}"
-                                           DisplayDate="{Binding DisplayDate,ElementName=datePicker, Mode=TwoWay}"
-                                           DisplayDateStart="{Binding DisplayDateStart,ElementName=datePicker,Mode=TwoWay}"
-                                           DisplayDateEnd="{Binding DisplayDateEnd,ElementName=datePicker,Mode=TwoWay}"/>
-                </Grid>
-            </Popup>
-
-            <c1:C1MaskedTextBox x:Name="dateTextBox" Margin="2" Background="Transparent" BorderBrush="Transparent"  
-                                FlowDirection="LeftToRight" Mask="0000/00/00" DockPanel.Dock="Right"
-                                VerticalAlignment="Center" VerticalContentAlignment="Center" 
-                                HorizontalContentAlignment="Center" Padding="0" Text="{Binding Text,ElementName=datePicker,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                KeyDown="dateTextBox_KeyDown" 
-                                PreviewKeyDown="dateTextBox_PreviewKeyDown"
-                                GotKeyboardFocus="dateTextBox_GotKeyboardFocus"
-                                PreviewMouseLeftButtonDown="dateTextBox_PreviewMouseLeftButtonDown"
-                                LostFocus="dateTextBox_LostFocus" Style="{DynamicResource MaskedTextBoxStyle}"/>
-        </DockPanel>
-    </Border>
+                <c1:C1MaskedTextBox x:Name="dateTextBox" Margin="2" Background="Transparent" BorderBrush="Transparent"  
+                                    FlowDirection="LeftToRight" Mask="0000/00/00" DockPanel.Dock="Right"
+                                    VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                                    HorizontalContentAlignment="Center" Padding="0" Text="{Binding Text,ElementName=datePicker,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                    KeyDown="dateTextBox_KeyDown" 
+                                    PreviewKeyDown="dateTextBox_PreviewKeyDown"
+                                    GotKeyboardFocus="dateTextBox_GotKeyboardFocus"
+                                    PreviewMouseLeftButtonDown="dateTextBox_PreviewMouseLeftButtonDown"
+                                    LostFocus="dateTextBox_LostFocus" Style="{DynamicResource MaskedTextBoxStyle}"
+                                    Foreground="{Binding Foreground,ElementName=datePicker}"/>
+            </DockPanel>
+        </Border>
+        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="1" CornerRadius="3" SnapsToDevicePixels="True"/>
+    </Grid>
 </UserControl>

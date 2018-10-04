@@ -1,20 +1,36 @@
-﻿using System.ComponentModel;
+﻿using Infra.Wpf.Common.Helpers;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Infra.Wpf.Common.Helpers;
-using System;
 
 namespace Infra.Wpf.Controls
 {
-    public class LookupField : Lookup, IField
+    public class BoolField : CustomCheckBox, INotifyPropertyChanged, IField
     {
         #region Properties
+
         public string Title { get; set; }
 
         public string FilterField { get; set; }
+
+        public string SearchPhrase
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(IsChecked.ToString()))
+                    return "";
+
+                return $@"{FilterField}=={IsChecked.ToString()}";
+            }
+        }
 
         private string _DisplayName;
         public string DisplayName
@@ -29,25 +45,22 @@ namespace Infra.Wpf.Controls
 
         public Type ModelType { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public event SearchPhraseChangedEventHandler SearchPhraseChanged;
 
         #endregion
 
         #region Methods
 
-        public LookupField()
+        public BoolField()
         {
-            Loaded += LookupField_Loaded;
-            SelectionChanged += LookupField_SelectionChanged;
-            Focusable = true;
+            Loaded += BoolField_Loaded;
+            Checked += BoolField_Change;
+            Unchecked += BoolField_Change;
         }
 
-        private void LookupField_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SearchPhraseChanged?.Invoke();
-        }
-
-        private void LookupField_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void BoolField_Loaded(object sender, RoutedEventArgs e)
         {
             DisplayName = GetDisplayName();
 
@@ -55,48 +68,27 @@ namespace Infra.Wpf.Controls
                 this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
-        public string SearchPhrase
+        public void OnPropertyChanged([CallerMemberName]string prop = null)
         {
-            get
-            {
-                if (SelectedItems == null)
-                    return null;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
 
-                string query = "";
-                foreach (var item in SelectedItems)
-                {
-                    string id = item?.GetType()?.GetProperty(IdColumn)?.GetValue(item)?.ToString();
-                    if (string.IsNullOrEmpty(id))
-                        return null;
-                    query = query + $@"{FilterField}=={id.Trim()}" + " OR ";
-                }
+        public void Clear()
+        {
+            if (IsThreeState == true)
+                IsChecked = null;
+            else
+                IsChecked = false;
+        }
 
-                if (!string.IsNullOrEmpty(query))
-                {
-                    query = query.Substring(0, query.Length - 4);
-                    return query;
-                }
-
-                return null;
-            }
+        private void BoolField_Change(object sender, RoutedEventArgs e)
+        {
+            SearchPhraseChanged?.Invoke();
         }
 
         private string GetDisplayName()
         {
-            BindingExpression bindEx = null;
-            if (SelectionMode == LookupSelectionMode.Single)
-            {
-                bindEx = BindingOperations.GetBindingExpression(this, SelectedItemProperty);
-                if (bindEx == null || string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
-                    bindEx = BindingOperations.GetBindingExpression(this, SelectedIdProperty);
-            }
-            else
-            {
-                bindEx = BindingOperations.GetBindingExpression(this, SelectedItemsProperty);
-                if (bindEx == null || string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
-                    bindEx = BindingOperations.GetBindingExpression(this, SelectedIdsProperty);
-            }
-
+            BindingExpression bindEx = BindingOperations.GetBindingExpression(this, IsCheckedProperty);
             if (bindEx != null && !string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
             {
                 if (ModelType != null)

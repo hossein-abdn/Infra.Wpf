@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // Notification
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Notification
+    public partial class Notification : Infra.Wpf.Repository.ModelBase<Notification>
     {
 
         ///<summary>
@@ -29,27 +29,27 @@ namespace DataAccess.Models
         [Column(@"NotificationId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int NotificationId { get; set; } // NotificationId (Primary key)
+        public int NotificationId { get { return Get<int>(); } set { Set(value); } } // NotificationId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
-        public System.DateTime NotificationDate { get; set; } // NotificationDate
+        public System.DateTime NotificationDate { get { return Get<System.DateTime>(); } set { Set(value); } } // NotificationDate
 
         [Required]
-        public int StatusId { get; set; } // StatusId
+        public int StatusId { get { return Get<int>(); } set { Set(value); } } // StatusId
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

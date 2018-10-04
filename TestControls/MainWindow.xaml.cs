@@ -1,7 +1,11 @@
-﻿using Infra.Wpf.Security;
+﻿using DataAccess.Models;
+using Infra.Wpf.Security;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +16,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Infra.Wpf.Common.Helpers;
+using System.Windows.Controls.Primitives;
 
 namespace TestControls
 {
@@ -20,6 +26,8 @@ namespace TestControls
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<Infra.Wpf.Controls.CheckBoxViewModel> MultiSelectVM { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,12 +37,7 @@ namespace TestControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //field1.Focus();
-            //var t = FocusManager.GetFocusedElement(this);
+            var t = ((MainWindowVM) DataContext).Model;
         }
     }
 }

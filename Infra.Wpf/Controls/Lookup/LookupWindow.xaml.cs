@@ -28,9 +28,10 @@ namespace Infra.Wpf.Controls
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            searchpanel.SearchCommand?.Execute(null);
             if (SelectionMode == LookupSelectionMode.Single)
                 stackpanel.Visibility = Visibility.Collapsed;
+            if (searchpanel.SearchCommand == null || searchpanel.SearchFields.Count == 0)
+                searchpanel.Visibility = Visibility.Collapsed;
         }
 
         protected override void OnClosing(CancelEventArgs e)

@@ -1,4 +1,6 @@
-﻿namespace Infra.Wpf.Controls
+﻿using System;
+
+namespace Infra.Wpf.Controls
 {
     public interface IField
     {
@@ -9,6 +11,8 @@
         string FilterField { get; set; }
 
         string DisplayName { get; set; }
+
+        Type ModelType { get; set; }
 
         void Clear();
 

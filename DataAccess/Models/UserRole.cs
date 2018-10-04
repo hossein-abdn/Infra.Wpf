@@ -20,18 +20,18 @@ namespace DataAccess.Models
 
     // UserRole
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class UserRole
+    public partial class UserRole : Infra.Wpf.Repository.ModelBase<UserRole>
     {
         [Column(@"UserRoleId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int UserRoleId { get; set; } // UserRoleId (Primary key)
+        public int UserRoleId { get { return Get<int>(); } set { Set(value); } } // UserRoleId (Primary key)
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
-        public int RoleId { get; set; } // RoleId
+        public int RoleId { get { return Get<int>(); } set { Set(value); } } // RoleId
 
         // Foreign keys
 

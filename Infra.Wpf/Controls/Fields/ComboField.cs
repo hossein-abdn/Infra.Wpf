@@ -92,7 +92,9 @@ namespace Infra.Wpf.Controls
         public string TargetColumn { get; set; }
 
         public bool UseEnumValue { get; set; }
-        
+
+        public Type ModelType { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event SearchPhraseChangedEventHandler SearchPhraseChanged;
@@ -140,42 +142,39 @@ namespace Infra.Wpf.Controls
             BindingExpression bindEx = BindingOperations.GetBindingExpression(this, SelectedItemProperty);
             if (bindEx != null && !string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
             {
-                var type = DataContext?.GetType().GetProperty("Model")?.PropertyType;
-                if (type != null)
+                if (ModelType != null)
                 {
-                    var propInfo = type.GetProperty(bindEx.ResolvedSourcePropertyName);
+                    var propInfo = ModelType.GetProperty(bindEx.ResolvedSourcePropertyName);
                     var attrib = propInfo?.GetCustomAttributes(typeof(DisplayAttribute), false);
-                    var isRequired = propInfo.IsRequired(bindEx.ResolvedSourcePropertyName);
-                    if (attrib != null && attrib.Count() > 0)
-                    {
-                        var result = ((DisplayAttribute) attrib[0]).Name;
-                        if (isRequired)
-                            result = "* " + result;
+                    var isRequired = propInfo.IsRequired();
+                    var result = string.Empty;
 
-                        return result;
-                    }
+                    if (attrib != null && attrib.Count() > 0)
+                        result = ((DisplayAttribute) attrib[0]).Name;
+                    else
+                        result = bindEx.ResolvedSourcePropertyName;
+
+                    if (!string.IsNullOrEmpty(result) && isRequired)
+                        result = "* " + result;
+
+                    return result;
                 }
                 else
                 {
-                    var displayText = bindEx.ResolvedSourcePropertyName;
-                    if (!string.IsNullOrEmpty(displayText))
-                        return displayText;
+                    var result = bindEx.ResolvedSourcePropertyName;
+                    if (!string.IsNullOrEmpty(result))
+                        return result;
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(FilterField))
             {
-                var type = DataContext?.GetType().GetProperty("ItemsSource")?.PropertyType;
-
-                if (type != null && type.IsGenericType)
+                var propInfo = ModelType?.GetProperty(FilterField);
+                if (propInfo != null)
                 {
-                    var propInfo = type.GenericTypeArguments[0].GetProperty(FilterField);
-                    if (propInfo != null)
-                    {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
-                        if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayAttribute) attrib[0]).Name;
-                    }
+                    var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    if (attrib != null && attrib.Count() > 0)
+                        return ((DisplayAttribute) attrib[0]).Name;
                 }
 
                 return FilterField;

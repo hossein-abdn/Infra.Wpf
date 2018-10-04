@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // TransactionLabel
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class TransactionLabel
+    public partial class TransactionLabel : Infra.Wpf.Repository.ModelBase<TransactionLabel>
     {
 
         ///<summary>
@@ -29,13 +29,13 @@ namespace DataAccess.Models
         [Column(@"TransactionLabelId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int TransactionLabelId { get; set; } // TransactionLabelId (Primary key)
+        public int TransactionLabelId { get { return Get<int>(); } set { Set(value); } } // TransactionLabelId (Primary key)
 
         [Required]
-        public int TransactionId { get; set; } // TransactionId
+        public int TransactionId { get { return Get<int>(); } set { Set(value); } } // TransactionId
 
         [Required]
-        public int LabelId { get; set; } // LabelId
+        public int LabelId { get { return Get<int>(); } set { Set(value); } } // LabelId
 
         // Foreign keys
 

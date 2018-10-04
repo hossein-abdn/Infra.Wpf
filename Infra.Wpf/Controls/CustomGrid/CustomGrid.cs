@@ -166,7 +166,6 @@ namespace Infra.Wpf.Controls
             foreach (var item in ButtonColumns)
                 this.Columns.Add(item);
             OrderButtonColumns();
-
             this.FrozenBottomRowsCount = 1;
             this.CanUserAddRows = false;
             this.CanUserEditRows = true;

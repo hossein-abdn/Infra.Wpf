@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
     xmlns:local="clr-namespace:Infra.Wpf.Controls"
+    xmlns:converter="clr-namespace:Infra.Wpf.Converters"
     xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml">
 
     <!--_________________________________________WPFMessageBox_________________________________________-->
@@ -148,12 +149,16 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="checkBoxBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <Grid x:Name="markGrid" FlowDirection="LeftToRight">
-                                <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="{StaticResource OptionMark.Static.Glyph}" Margin="1" Opacity="0" Stretch="None"/>
-                                <Rectangle x:Name="indeterminateMark" Fill="{StaticResource OptionMark.Static.Glyph}" Margin="2" Opacity="0"/>
-                            </Grid>
-                        </Border>
+
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="1">
+                            <Border x:Name="checkBoxBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <Grid x:Name="markGrid" FlowDirection="LeftToRight">
+                                    <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="{StaticResource OptionMark.Static.Glyph}" Margin="1" Opacity="0" Stretch="None"/>
+                                    <Rectangle x:Name="indeterminateMark" Fill="{StaticResource OptionMark.Static.Glyph}" Margin="2" Opacity="0"/>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="{TemplateBinding BorderThickness}"/>
+                        </Grid>
                         <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -453,6 +458,7 @@
                     </Style>
                 </Button.Style>
             </Button>
+            <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="True" Grid.ColumnSpan="3"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
@@ -500,6 +506,7 @@
             <Border x:Name="border" Background="{StaticResource TextBox.Static.Background}" Margin="{TemplateBinding BorderThickness}">
                 <TextBox x:Name="PART_EditableTextBox" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}" Margin="{TemplateBinding Padding}" Style="{StaticResource ComboBoxEditableTextBox}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Border>
+            <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="True" Grid.ColumnSpan="2"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="false">
@@ -571,9 +578,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CustomTextBox}">
-                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                    </Border>
+                    <Grid>
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="True"/>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" TargetName="border" Value="0.56"/>
@@ -834,6 +844,7 @@
                                 </Grid>
                             </ToggleButton>
                         </Border>
+                        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="True"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
@@ -849,7 +860,7 @@
     </Style>
 
     <!--_________________________________________EditViewPanel_________________________________________-->
-    
+
     <Style TargetType="{x:Type local:EditViewPanel}">
         <Setter Property="Template">
             <Setter.Value>
@@ -877,7 +888,7 @@
                                 </Button>
                             </StackPanel>
 
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Padding="5">
                                 <Grid>
                                     <local:FieldGridWrapPanel x:Name="editpanel" Stretch="{Binding Stretch,RelativeSource={RelativeSource TemplatedParent}}" 
                                                               RowMargin="{Binding RowMargin,RelativeSource={RelativeSource TemplatedParent}}" ColumnMargin="{Binding ColumnMargin,RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -899,6 +910,116 @@
                                 </Button>
                             </StackPanel>
                         </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--_________________________________________Lookup_________________________________________-->
+    <LinearGradientBrush x:Key="Lookup_Background" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#FFF0F0F0" Offset="0.0"/>
+        <GradientStop Color="#FFE5E5E5" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <Style TargetType="{x:Type local:Lookup}">
+        <Setter Property="Background" Value="{StaticResource Lookup_Background}"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Lookup}">
+                    <Grid>
+                        <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="openWindow" Command="{Binding OpenWindowCommand,RelativeSource={RelativeSource TemplatedParent}}" TabIndex="1">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Margin" Value="3"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Image x:Name="comboImage" Source="/Infra.Wpf;component/Controls/Resources/Add-24.png" Height="16"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="comboImage" Property="Source" Value="/Infra.Wpf;component/Controls/Resources/AddOver-24.png"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <local:CustomTextBox x:Name="textbox_PART" Text="{Binding Code,RelativeSource={RelativeSource TemplatedParent}}" Grid.Column="1" MinWidth="20"  VerticalContentAlignment="Center" 
+                                                     HorizontalContentAlignment="Center" Margin="0,3" TabIndex="0"/>
+
+                                <ToggleButton IsChecked="{Binding IsDropDown,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Grid.Column="2">
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsOpen,ElementName=popup}" Value="true">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsItemSelected,RelativeSource={RelativeSource TemplatedParent} }" Value="false">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ToggleButton">
+                                                        <Grid Background="Transparent">
+                                                            <TextBlock Text="{Binding Value,RelativeSource={RelativeSource AncestorType=local:Lookup}}" Foreground="{Binding Foreground,RelativeSource={RelativeSource AncestorType=local:Lookup}}" 
+                                                                       Grid.Column="2" VerticalAlignment="Center" Margin="5,0" TextTrimming="CharacterEllipsis"/>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                                <Button Grid.Column="3" Command="{Binding ClearCommand,RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Margin" Value="0,0,3,0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Image x:Name="comboImage" Source="/Infra.Wpf;component/Controls/Resources/DeleteCombo-24.png" Height="10"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="comboImage" Property="Source" Value="/Infra.Wpf;component/Controls/Resources/DeleteComboOver-24.png"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsItemSelected, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Popup x:Name="popup" HorizontalAlignment="Right" Width="{Binding ActualWidth,RelativeSource={RelativeSource TemplatedParent}}" Height="100" VerticalOffset="5" Placement="Bottom" PopupAnimation="Slide" 
+                                       AllowsTransparency="True" IsOpen="{Binding IsDropDown,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" StaysOpen="False" Grid.ColumnSpan="4">
+                                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Background="White">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <TextBlock Text="{Binding Details,RelativeSource={RelativeSource TemplatedParent}}" Margin="5,0"/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+
+                        </Border>
+                        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="1" CornerRadius="3" SnapsToDevicePixels="True"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

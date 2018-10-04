@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // SettleDebtDemand
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class SettleDebtDemand
+    public partial class SettleDebtDemand : Infra.Wpf.Repository.ModelBase<SettleDebtDemand>
     {
 
         ///<summary>
@@ -29,13 +29,13 @@ namespace DataAccess.Models
         [Column(@"SettleDebtDemandId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int SettleDebtDemandId { get; set; } // SettleDebtDemandId (Primary key)
+        public int SettleDebtDemandId { get { return Get<int>(); } set { Set(value); } } // SettleDebtDemandId (Primary key)
 
         [Required]
-        public int TransactionId { get; set; } // TransactionId
+        public int TransactionId { get { return Get<int>(); } set { Set(value); } } // TransactionId
 
         [Required]
-        public int DebtDemandId { get; set; } // DebtDemandId
+        public int DebtDemandId { get { return Get<int>(); } set { Set(value); } } // DebtDemandId
 
         // Foreign keys
 

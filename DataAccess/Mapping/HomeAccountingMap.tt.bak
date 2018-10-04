@@ -23,8 +23,6 @@
     GenerateSeparateFiles = true;
     MakeClassesInternal = false;
     MakeClassesPartial = true;
-    //Edit By Hossein
-    UseNotifyProperty = true;
     MakeDbContextInterfacePartial = false;
     UseMappingTables = true; // If true, mapping will be used and no mapping tables will be generated. If false, all tables will be generated.
     UsePascalCase = true;    // This will rename the generated C# tables & properties to use PascalCase. If false table & property names will be left alone.
@@ -351,10 +349,6 @@
             t.Columns.Any(x => !x.IsPrimaryKey && !x.IsNullable && x.NameHumanCase.Equals("UserId", StringComparison.InvariantCultureIgnoreCase) && x.PropertyType == "long"));
         return r.ToString();
         */
-        
-        //Edit By Hossein
-        if(UseNotifyProperty)
-            return " : Infra.Wpf.Repository.ModelBase<" + t.NameHumanCaseWithSuffix + ">";
 
         return "";
     };

@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // Account
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Account
+    public partial class Account : Infra.Wpf.Repository.ModelBase<Account>
     {
 
         ///<summary>
@@ -29,31 +29,31 @@ namespace DataAccess.Models
         [Column(@"AccountId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int AccountId { get; set; } // AccountId (Primary key)
+        public int AccountId { get { return Get<int>(); } set { Set(value); } } // AccountId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Display(Name = "عنوان")]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
         [Display(Name = "موجودی اولیه")]
-        public int InitialBalance { get; set; } // InitialBalance
+        public int InitialBalance { get { return Get<int>(); } set { Set(value); } } // InitialBalance
 
         [Display(Name = "موجودی")]
-        public int? Balance { get; set; } // Balance
+        public int? Balance { get { return Get<int?>(); } set { Set(value); } } // Balance
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
         [Display(Name = "تاریخ ایجاد")]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
         [Display(Name = "وضعیت")]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

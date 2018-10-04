@@ -5,6 +5,5 @@ namespace Infra.Wpf.Controls
 {
     public class FieldCollection : ObservableCollection<IField>, IList
     {
-
     }
 }

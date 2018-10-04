@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // Loan
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Loan
+    public partial class Loan : Infra.Wpf.Repository.ModelBase<Loan>
     {
 
         ///<summary>
@@ -29,54 +29,54 @@ namespace DataAccess.Models
         [Column(@"LoanId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int LoanId { get; set; } // LoanId (Primary key)
+        public int LoanId { get { return Get<int>(); } set { Set(value); } } // LoanId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Display(Name = "عنوان")]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
         [Display(Name = "مبلغ")]
-        public int Amount { get; set; } // Amount
+        public int Amount { get { return Get<int>(); } set { Set(value); } } // Amount
 
-        public int? TransactionId { get; set; } // TransactionId
+        public int? TransactionId { get { return Get<int?>(); } set { Set(value); } } // TransactionId
 
         [Required]
         [Display(Name = "تاریخ ایجاد")]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
         [Display(Name = "تاریخ شروع")]
-        public System.DateTime StartDate { get; set; } // StartDate
+        public System.DateTime StartDate { get { return Get<System.DateTime>(); } set { Set(value); } } // StartDate
 
         [Required]
         [Display(Name = "تعداد پرداخت شده")]
-        public int PaidInstallment { get; set; } // PaidInstallment
+        public int PaidInstallment { get { return Get<int>(); } set { Set(value); } } // PaidInstallment
 
         [Required]
         [Display(Name = "تعداد باقیمانده")]
-        public int RemainInstallment { get; set; } // RemainInstallment
+        public int RemainInstallment { get { return Get<int>(); } set { Set(value); } } // RemainInstallment
 
         [Required]
         [Display(Name = "وضعیت تسویه")]
-        public int SettleStatusId { get; set; } // SettleStatusId
+        public int SettleStatusId { get { return Get<int>(); } set { Set(value); } } // SettleStatusId
 
         [Required]
         [Display(Name = "مبلغ پرداخت شده")]
-        public int PaidSettle { get; set; } // PaidSettle
+        public int PaidSettle { get { return Get<int>(); } set { Set(value); } } // PaidSettle
 
         [Required]
         [Display(Name = "مبلغ باقیمانده")]
-        public int RemainSettle { get; set; } // RemainSettle
+        public int RemainSettle { get { return Get<int>(); } set { Set(value); } } // RemainSettle
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
         [Display(Name = "وضعیت")]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

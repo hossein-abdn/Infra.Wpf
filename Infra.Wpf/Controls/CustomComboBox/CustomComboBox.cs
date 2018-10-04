@@ -84,11 +84,16 @@ namespace Infra.Wpf.Controls
         {
             base.OnApplyTemplate();
 
-            SearchElement = (TextBox) Template.FindName("Search_PART", this);
-            SearchElement.TextChanged += SearchTextBox_TextChanged;
-            SearchElement.PreviewKeyDown += SearchElement_KeyDown;
+            if (IsEditable == false)
+            {
+                SearchElement = (TextBox) Template.FindName("Search_PART", this);
+                SearchElement.TextChanged += SearchTextBox_TextChanged;
+                SearchElement.PreviewKeyDown += SearchElement_KeyDown;
 
-            PreviewKeyDown += CustomComboBox_PreviewKeyDown;
+                PreviewKeyDown += CustomComboBox_PreviewKeyDown;
+            }
+
+            SetValidationStyle();
         }
 
         private void SearchElement_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -163,7 +168,10 @@ namespace Infra.Wpf.Controls
 
             var customComboBox = (CustomComboBox) d;
             customComboBox.ItemsSource = customComboBox.CreateEnumDispalyItems();
-            customComboBox.ItemTemplate = customComboBox.CreateItemTemplate();
+            if (customComboBox.IsEditable == false)
+                customComboBox.ItemTemplate = customComboBox.CreateItemTemplate();
+            else
+                customComboBox.DisplayMemberPath = "DisplayName";
 
             IValueConverter converter = new CustomConverter((v, t, p, c) =>
             {
@@ -204,6 +212,58 @@ namespace Infra.Wpf.Controls
         private void CustomComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             EnumTypeChanged(this, new DependencyPropertyChangedEventArgs(EnumTypeProperty, null, EnumType));
+        }
+
+        private void SetValidationStyle()
+        {
+            var style = new Style();
+
+            if (Style != null)
+            {
+                style.BasedOn = Style.BasedOn;
+                style.Resources = Style.Resources;
+                style.TargetType = Style.TargetType;
+
+                if (Style.Setters != null)
+                {
+                    foreach (var item in Style.Setters)
+                        style.Setters.Add(item);
+                }
+
+                if (Style.Triggers != null)
+                {
+                    foreach (var item in Style.Triggers)
+                        style.Triggers.Add(item);
+                }
+            }
+
+            var trigger = new Trigger()
+            {
+                Property = Validation.HasErrorProperty,
+                Value = true
+            };
+
+            var bind = new Binding("(Validation.Errors)[0].ErrorContent")
+            {
+                RelativeSource = new RelativeSource(RelativeSourceMode.Self)
+            };
+
+            trigger.Setters.Add(new Setter(ToolTipProperty, bind));
+            style.Triggers.Add(trigger);
+            Style = style;
+
+            Validation.SetErrorTemplate(this, new ControlTemplate());
+
+            var validationBorder = (Border) GetTemplateChild("validationBorder");
+
+            var borderBind = new Binding("(Validation.HasError)")
+            {
+                Source = this,
+                Converter = new Converters.VisibilityToBoolConverter(),
+                Mode = BindingMode.OneWay
+            };
+
+            BindingOperations.SetBinding(validationBorder, Border.VisibilityProperty, borderBind);
         }
 
         protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)

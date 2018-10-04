@@ -20,24 +20,24 @@ namespace DataAccess.Models
 
     // Permission
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Permission
+    public partial class Permission : Infra.Wpf.Repository.ModelBase<Permission>
     {
         [Column(@"PermmisionId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int PermmisionId { get; set; } // PermmisionId (Primary key)
+        public int PermmisionId { get { return Get<int>(); } set { Set(value); } } // PermmisionId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Display(Name = "دسترسی")]
-        public string Title { get; set; } // Title (length: 50)
+        public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
         [MaxLength(100)]
         [StringLength(100)]
         [Url]
-        public string Url { get; set; } // Url (length: 100)
+        public string Url { get { return Get<string>(); } set { Set(value); } } // Url (length: 100)
 
         // Reverse navigation
 

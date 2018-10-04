@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using Infra.Wpf.Common.Helpers;
+using System.Windows.Media;
+using System;
 
 namespace Infra.Wpf.Controls
 {
@@ -101,6 +102,8 @@ namespace Infra.Wpf.Controls
 
         private NumericOperator defaultOperator;
 
+        private bool isSetDefaultOperator;
+
         public string Title { get; set; }
 
         public string FilterField { get; set; }
@@ -145,6 +148,8 @@ namespace Infra.Wpf.Controls
             }
         }
 
+        public Type ModelType { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event SearchPhraseChangedEventHandler SearchPhraseChanged;
@@ -156,10 +161,13 @@ namespace Infra.Wpf.Controls
         private void searchfield_Loaded(object sender, RoutedEventArgs e)
         {
             defaultOperator = Operator;
+            isSetDefaultOperator = true;
             DisplayName = GetDisplayName();
 
             if (IsFocused == true)
                 this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+
+            SetValidationStyle();
         }
 
         public NumericField()
@@ -170,6 +178,50 @@ namespace Infra.Wpf.Controls
             ShowButtons = false;
         }
 
+        private void SetValidationStyle()
+        {
+            var style = new Style();
+
+            if (Style != null)
+            {
+                style.BasedOn = Style.BasedOn;
+                style.Resources = Style.Resources;
+                style.TargetType = Style.TargetType;
+
+                foreach (var item in Style.Setters)
+                    style.Setters.Add(item);
+
+                foreach (var item in Style.Triggers)
+                    style.Triggers.Add(item);
+            }
+
+            var trigger = new Trigger()
+            {
+                Property = Validation.HasErrorProperty,
+                Value = true
+            };
+
+            var bind = new Binding("(Validation.Errors)[0].ErrorContent")
+            {
+                RelativeSource = new RelativeSource(RelativeSourceMode.Self)
+            };
+
+            trigger.Setters.Add(new Setter(ToolTipProperty, bind));
+            style.Triggers.Add(trigger);
+            Style = style;
+
+            Validation.SetErrorTemplate(this, new ControlTemplate());
+
+            var borderBind = new Binding("(Validation.HasError)")
+            {
+                Source = this,
+                Converter = new Converters.VisibilityToBoolConverter(),
+                Mode = BindingMode.OneWay
+            };
+
+            BindingOperations.SetBinding(validationBorder, Border.VisibilityProperty, borderBind);
+        }
+
         public void OnPropertyChanged([CallerMemberName]string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
@@ -178,7 +230,8 @@ namespace Infra.Wpf.Controls
         public void Clear()
         {
             Value = null;
-            Operator = defaultOperator;
+            if (isSetDefaultOperator)
+                Operator = defaultOperator;
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -191,42 +244,39 @@ namespace Infra.Wpf.Controls
             BindingExpression bindEx = BindingOperations.GetBindingExpression(this, ValueProperty);
             if (bindEx != null && !string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
             {
-                var type = DataContext?.GetType().GetProperty("Model")?.PropertyType;
-                if (type != null)
+                if (ModelType != null)
                 {
-                    var propInfo = type.GetProperty(bindEx.ResolvedSourcePropertyName);
+                    var propInfo = ModelType.GetProperty(bindEx.ResolvedSourcePropertyName);
                     var attrib = propInfo?.GetCustomAttributes(typeof(DisplayAttribute), false);
-                    var isRequired = propInfo.IsRequired(bindEx.ResolvedSourcePropertyName);
-                    if (attrib != null && attrib.Count() > 0)
-                    {
-                        var result = ((DisplayAttribute) attrib[0]).Name;
-                        if (isRequired)
-                            result = "* " + result;
+                    var isRequired = propInfo.IsRequired();
+                    var result = string.Empty;
 
-                        return result;
-                    }
+                    if (attrib != null && attrib.Count() > 0)
+                        result = ((DisplayAttribute) attrib[0]).Name;
+                    else
+                        result = bindEx.ResolvedSourcePropertyName;
+
+                    if (!string.IsNullOrEmpty(result) && isRequired)
+                        result = "* " + result;
+
+                    return result;
                 }
                 else
                 {
-                    var displayText = bindEx.ResolvedSourcePropertyName;
-                    if (!string.IsNullOrEmpty(displayText))
-                        return displayText;
+                    var result = bindEx.ResolvedSourcePropertyName;
+                    if (!string.IsNullOrEmpty(result))
+                        return result;
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(FilterField))
             {
-                var type = DataContext?.GetType().GetProperty("ItemsSource")?.PropertyType;
-
-                if (type != null && type.IsGenericType)
+                var propInfo = ModelType?.GetProperty(FilterField);
+                if (propInfo != null)
                 {
-                    var propInfo = type.GenericTypeArguments[0].GetProperty(FilterField);
-                    if (propInfo != null)
-                    {
-                        var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
-                        if (attrib != null && attrib.Count() > 0)
-                            return ((DisplayAttribute) attrib[0]).Name;
-                    }
+                    var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    if (attrib != null && attrib.Count() > 0)
+                        return ((DisplayAttribute) attrib[0]).Name;
                 }
 
                 return FilterField;

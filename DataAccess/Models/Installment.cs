@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // Installment
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class Installment
+    public partial class Installment : Infra.Wpf.Repository.ModelBase<Installment>
     {
 
         ///<summary>
@@ -29,37 +29,37 @@ namespace DataAccess.Models
         [Column(@"InstallmentId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int InstallmentId { get; set; } // InstallmentId (Primary key)
+        public int InstallmentId { get { return Get<int>(); } set { Set(value); } } // InstallmentId (Primary key)
 
         [Required]
-        public int LoanId { get; set; } // LoanId
+        public int LoanId { get { return Get<int>(); } set { Set(value); } } // LoanId
 
-        public int? TransactionId { get; set; } // TransactionId
+        public int? TransactionId { get { return Get<int?>(); } set { Set(value); } } // TransactionId
 
         [Required]
         [Display(Name = "مبلغ")]
-        public int Amount { get; set; } // Amount
+        public int Amount { get { return Get<int>(); } set { Set(value); } } // Amount
 
         [Required]
         [Display(Name = "وضعیت پرداخت")]
-        public int SettleStatusId { get; set; } // SettleStatusId
+        public int SettleStatusId { get { return Get<int>(); } set { Set(value); } } // SettleStatusId
 
-        public int? NotificationId { get; set; } // NotificationId
+        public int? NotificationId { get { return Get<int?>(); } set { Set(value); } } // NotificationId
 
         [Required]
         [Display(Name = "تاریخ قسط")]
-        public System.DateTime DueDate { get; set; } // DueDate
+        public System.DateTime DueDate { get { return Get<System.DateTime>(); } set { Set(value); } } // DueDate
 
         [Required]
         [Display(Name = "تاریخ ایجاد")]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
         [Display(Name = "وضعیت")]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         [Required]
-        public int UserId { get; set; } // UserId
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         // Foreign keys
 

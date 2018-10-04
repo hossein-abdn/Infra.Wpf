@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // User
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class User
+    public partial class User : Infra.Wpf.Repository.ModelBase<User>
     {
 
         ///<summary>
@@ -29,25 +29,26 @@ namespace DataAccess.Models
         [Column(@"UserId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int UserId { get; set; } // UserId (Primary key)
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [DataType(DataType.Text)]
-        public string UserName { get; set; } // UserName (length: 50)
+        [Display(Name = "نام کاربری")]
+        public string UserName { get { return Get<string>(); } set { Set(value); } } // UserName (length: 50)
 
         [Required]
         [MaxLength(60)]
         [StringLength(60)]
         [DataType(DataType.Password)]
-        public string Password { get; set; } // Password (length: 60)
+        public string Password { get { return Get<string>(); } set { Set(value); } } // Password (length: 60)
 
         [Required]
-        public System.DateTime CreateDate { get; set; } // CreateDate
+        public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
-        public int RecordStatusId { get; set; } // RecordStatusId
+        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

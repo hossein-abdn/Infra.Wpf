@@ -4,23 +4,61 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestControls"
+        xmlns:model ="clr-namespace:DataAccess.Models;assembly=DataAccess"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:enums="clr-namespace:DataAccess.Enums;assembly=DataAccess"
         xmlns:ctl="http://Infra.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300"
-        Loaded="Window_Loaded">
+        Title="MainWindow" Height="400" 
+        Width="400"
+        FontFamily="IRANSans">
+    <Window.DataContext>
+        <local:MainWindowVM/>
+    </Window.DataContext>
+    <Window.Resources>
+        <ctl:VisibilityToBoolConverter x:Key="converter"/>
+    </Window.Resources>
 
-    <Grid FlowDirection="RightToLeft" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+        <GroupBox Grid.Column="1">
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Setter Property="FlowDirection" Value="RightToLeft"/>
+                    <Setter Property="Header" Value="{Binding ViewTitle}"/>
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Padding" Value="5"/>
+                </Style>
+            </GroupBox.Style>
+            
+            <ctl:EditViewPanel FontSize="12" FontWeight="Normal" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10" ModelType="{x:Type model:Person}">
+                <ctl:EditViewPanel.EditFields>
+                    <ctl:NumericField Value="{Binding Model.OrderItem}"/>
+                    <ctl:TextField Name="textField" Text="{Binding Model.Name}"/>
+                    <ctl:NumericField Value="{Binding Model.UserId}"/>
+                    <ctl:DateField x:Name="datefield" SelectedDate="{Binding Model.CreateDate}"/>
+                    <ctl:ComboField EnumType="{x:Type enums:RecordStatus}" SelectedItem="{Binding Model.RecordStatusId}" IsEditable="False" Foreground="Red"/>
+                    <ctl:BoolField IsChecked="{Binding Model.Marage}"/>
+                    <ctl:LookupField Name="lookup" ItemsSource="{Binding UserList}" SearchCommand="{Binding SearchCommand}" IdColumn="UserId" ValueColumn="UserName" Columns="UserId,UserName" SelectedId="{Binding Model.UserId}" Foreground="Green">
+                        <ctl:LookupField.SearchFields>
+                            <ctl:TextField FilterField="UserName" Operator="StartsWith"/>
+                        </ctl:LookupField.SearchFields>
+                    </ctl:LookupField>
+                    <ctl:MultiSelectField x:Name="multi" ItemsSource="{Binding UserList1}" DisplayMemberPath="UserName" SelectedItems="{Binding Model.UserList}" HorizontalContentAlignment="Center" Foreground="Red"/>
+                </ctl:EditViewPanel.EditFields>
+            </ctl:EditViewPanel>
+        </GroupBox>
 
-        <ctl:SearchPanel RowMargin="5" ColumnMargin="5" SearchCommand="{Binding SubmitCommand}" SearchPhrase="{Binding SearchPhrase,Mode=OneWayToSource}">
-            <ctl:TimeField FilterField="CreateTime" Format="TimeSpan"/>
-        </ctl:SearchPanel>
-
-        <TextBlock Text="{Binding Model.Time}" Grid.Row="1"/>
+        <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Content="click" Click="Button_Click"/>
     </Grid>
 </Window>

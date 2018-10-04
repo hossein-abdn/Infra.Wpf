@@ -20,14 +20,14 @@ namespace DataAccess.Models
 
     // V_UserRolePermission
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class VUserRolePermission
+    public partial class VUserRolePermission : Infra.Wpf.Repository.ModelBase<VUserRolePermission>
     {
         [Column(@"PermissionTitle", Order = 1, TypeName = "nvarchar")]
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Key]
-        public string PermissionTitle { get; set; } // PermissionTitle (Primary key) (length: 50)
+        public string PermissionTitle { get { return Get<string>(); } set { Set(value); } } // PermissionTitle (Primary key) (length: 50)
 
         [Column(@"Url", Order = 2, TypeName = "nvarchar")]
         [Required]
@@ -35,24 +35,24 @@ namespace DataAccess.Models
         [StringLength(100)]
         [Key]
         [Url]
-        public string Url { get; set; } // Url (Primary key) (length: 100)
+        public string Url { get { return Get<string>(); } set { Set(value); } } // Url (Primary key) (length: 100)
 
         [Column(@"RoleId", Order = 3, TypeName = "int")]
         [Required]
         [Key]
-        public int RoleId { get; set; } // RoleId (Primary key)
+        public int RoleId { get { return Get<int>(); } set { Set(value); } } // RoleId (Primary key)
 
         [Column(@"RoleTitle", Order = 4, TypeName = "nvarchar")]
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
         [Key]
-        public string RoleTitle { get; set; } // RoleTitle (Primary key) (length: 50)
+        public string RoleTitle { get { return Get<string>(); } set { Set(value); } } // RoleTitle (Primary key) (length: 50)
 
         [Column(@"UserId", Order = 5, TypeName = "int")]
         [Required]
         [Key]
-        public int UserId { get; set; } // UserId (Primary key)
+        public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId (Primary key)
 
         [Column(@"UserName", Order = 6, TypeName = "nvarchar")]
         [Required]
@@ -60,12 +60,12 @@ namespace DataAccess.Models
         [StringLength(50)]
         [Key]
         [DataType(DataType.Text)]
-        public string UserName { get; set; } // UserName (Primary key) (length: 50)
+        public string UserName { get { return Get<string>(); } set { Set(value); } } // UserName (Primary key) (length: 50)
 
         [Column(@"PermmisionId", Order = 7, TypeName = "int")]
         [Required]
         [Key]
-        public int PermmisionId { get; set; } // PermmisionId (Primary key)
+        public int PermmisionId { get { return Get<int>(); } set { Set(value); } } // PermmisionId (Primary key)
 
         public VUserRolePermission()
         {

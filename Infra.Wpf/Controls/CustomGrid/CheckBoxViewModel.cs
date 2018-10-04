@@ -9,15 +9,13 @@ namespace Infra.Wpf.Controls
 {
     public class CheckBoxViewModel : ViewModelBase
     {
-        public string Key { get; set; }
-
         public object Item
         {
             get { return Get<object>(); }
             set { Set(value); }
         }
 
-        public bool Selected
+        public bool IsSelected
         {
             get { return Get<bool>(); }
             set { Set(value); }

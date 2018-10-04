@@ -117,20 +117,23 @@ namespace Infra.Wpf.Common.Helpers
             return duplicate;
         }
 
-        public static int? GetMaxLength(this Type obj, string propertyName)
+        public static int? GetMaxLength(this PropertyInfo obj)
         {
-            var attrib = obj?.GetProperty(propertyName)?.GetCustomAttributes(typeof(MaxLengthAttribute), false);
+            if (obj.PropertyType != typeof(string))
+                return null;
+
+            var attrib = obj?.GetCustomAttributes(typeof(MaxLengthAttribute), false);
             if (attrib != null && attrib.Count() > 0)
                 return ((MaxLengthAttribute) attrib[0]).Length;
 
-            attrib = obj.GetProperty(propertyName)?.GetCustomAttributes(typeof(StringLengthAttribute), false);
+            attrib = obj?.GetCustomAttributes(typeof(StringLengthAttribute), false);
             if (attrib != null && attrib.Count() > 0)
                 return ((StringLengthAttribute) attrib[0]).MaximumLength;
 
             return null;
         }
 
-        public static bool IsRequired(this PropertyInfo obj, string propertyName)
+        public static bool IsRequired(this PropertyInfo obj)
         {
             var attrib = obj?.GetCustomAttributes(typeof(RequiredAttribute), false);
             if (attrib != null && attrib.Count() > 0)

@@ -68,6 +68,8 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty VisibleTopButtonProperty =
             DependencyProperty.Register("VisibleTopButton", typeof(Visibility), typeof(EditViewPanel), new PropertyMetadata(Visibility.Collapsed));
 
+        public Type ModelType { get; set; }
+
         private FieldGridWrapPanel editpanel { get; set; }
 
         private Button cancel1 { get; set; }
@@ -117,6 +119,7 @@ namespace Infra.Wpf.Controls
             for (int i = 0; i < EditFields.Count; i++)
             {
                 var item = EditFields[i];
+                item.ModelType = this.ModelType;
 
                 TextBlock displayText = new TextBlock();
 

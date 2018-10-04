@@ -2,25 +2,50 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Themes\Generic.xaml</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel1.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel.xaml</string>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\EditViewPanel\EditViewPanel.xaml.cs</string>
-    </ArrayOfString>
-    <ArrayOfString>
       <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\MainWindow.xaml</string>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\TestControls\MainWindow.xaml.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindow.xaml.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\testcontrols\mainwindowvm.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Panels\FieldGridWrapPanel\FieldGridWrapPanel.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\models\user.cs</string>
     </ArrayOfString>
     <ArrayOfString>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Fields\TextField.xaml</string>
-      <string>C:\Users\Hossein\Documents\Visual Studio 2015\Projects\Infra.Wpf\Infra.Wpf\Controls\Fields\TextField.xaml.cs</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\dataaccess\models\person.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\panels\editviewpanel\editviewpanel.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\themes\generic.xaml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\lookup\lookup.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\fields\multiselectfield.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\customcheckbox\customcheckbox.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\multiselect\multiselect.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\fields\combofield.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\fields\datefield.xaml</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\fields\datefield.xaml.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\fields\numericfield.xaml</string>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\fields\numericfield.xaml.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\customcombobox\customcombobox.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\hossein\documents\visual studio 2015\projects\infra.wpf\infra.wpf\controls\customcombobox\comboitem.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>

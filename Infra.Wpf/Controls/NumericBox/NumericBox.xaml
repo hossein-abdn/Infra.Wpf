@@ -25,52 +25,56 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Padding="2">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Padding="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="txtNumericEditor" Margin="0,0,3,0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                     BorderBrush="Transparent" FlowDirection="LeftToRight" MouseWheel="txtNumericEditor_MouseWheel"
-                     GotKeyboardFocus="txtNumericEditor_GotKeyboardFocus" PreviewMouseLeftButtonDown="txtNumericEditor_PreviewMouseLeftButtonDown"
-                     KeyDown="txtNumericEditor_KeyDown" PreviewKeyDown="txtNumericEditor_PreviewKeyDown"/>
+                <TextBox x:Name="txtNumericEditor" Margin="0,0,3,0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                         BorderBrush="Transparent" FlowDirection="LeftToRight" MouseWheel="txtNumericEditor_MouseWheel"
+                         GotKeyboardFocus="txtNumericEditor_GotKeyboardFocus" PreviewMouseLeftButtonDown="txtNumericEditor_PreviewMouseLeftButtonDown"
+                         KeyDown="txtNumericEditor_KeyDown" PreviewKeyDown="txtNumericEditor_PreviewKeyDown"
+                         Foreground="{Binding Foreground,ElementName=numericEditor}" Background="{Binding Background,ElementName=numericEditor}"/>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <RepeatButton x:Name="btnIncrease" Width="20" IsTabStop="False" Margin="0,0,0,0.5"
-                              Visibility="{Binding ShowButtons,ElementName=numericEditor,Converter={StaticResource visibilityConverter}}"
-                              Interval="{Binding Interval,ElementName=numericEditor}" Delay="{Binding Delay,ElementName=numericEditor}" 
-                              Click="btnIncrease_Click">
-                    <Image Height="4">
-                        <Image.Source>
-                            <DrawingImage>
-                                <DrawingImage.Drawing>
-                                    <GeometryDrawing Brush="Black" Geometry="M 1,0 L 0,1 L 2,1"/>
-                                </DrawingImage.Drawing>
-                            </DrawingImage>
-                        </Image.Source>
-                    </Image>
-                </RepeatButton>
-                <RepeatButton x:Name="btnDecrease" Grid.Row="1" Width="20" IsTabStop="False" Margin="0,0.5,0,0"
-                              Visibility="{Binding ShowButtons,ElementName=numericEditor,Converter={StaticResource visibilityConverter}}"
-                              Interval="{Binding Interval,ElementName=numericEditor}" Delay="{Binding Delay,ElementName=numericEditor}"
-                              Click="btnDecrease_Click">
-                    <Image Height="4">
-                        <Image.Source>
-                            <DrawingImage>
-                                <DrawingImage.Drawing>
-                                    <GeometryDrawing Brush="Black" Geometry="M 1,1 L 2,0 L 0,0"/>
-                                </DrawingImage.Drawing>
-                            </DrawingImage>
-                        </Image.Source>
-                    </Image>
-                </RepeatButton>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <RepeatButton x:Name="btnIncrease" Width="20" IsTabStop="False" Margin="0,0,0,0.5"
+                                  Visibility="{Binding ShowButtons,ElementName=numericEditor,Converter={StaticResource visibilityConverter}}"
+                                  Interval="{Binding Interval,ElementName=numericEditor}" Delay="{Binding Delay,ElementName=numericEditor}" 
+                                  Click="btnIncrease_Click">
+                        <Image Height="4">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <GeometryDrawing Brush="Black" Geometry="M 1,0 L 0,1 L 2,1"/>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                    </RepeatButton>
+                    <RepeatButton x:Name="btnDecrease" Grid.Row="1" Width="20" IsTabStop="False" Margin="0,0.5,0,0"
+                                  Visibility="{Binding ShowButtons,ElementName=numericEditor,Converter={StaticResource visibilityConverter}}"
+                                  Interval="{Binding Interval,ElementName=numericEditor}" Delay="{Binding Delay,ElementName=numericEditor}"
+                                  Click="btnDecrease_Click">
+                        <Image Height="4">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <GeometryDrawing Brush="Black" Geometry="M 1,1 L 2,0 L 0,0"/>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                    </RepeatButton>
+                </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="1" CornerRadius="3" SnapsToDevicePixels="True"/>
+    </Grid>
 </UserControl>

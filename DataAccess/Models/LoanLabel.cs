@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // LoanLabel
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class LoanLabel
+    public partial class LoanLabel : Infra.Wpf.Repository.ModelBase<LoanLabel>
     {
 
         ///<summary>
@@ -29,13 +29,13 @@ namespace DataAccess.Models
         [Column(@"LoanLabelId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int LoanLabelId { get; set; } // LoanLabelId (Primary key)
+        public int LoanLabelId { get { return Get<int>(); } set { Set(value); } } // LoanLabelId (Primary key)
 
         [Required]
-        public int LoanId { get; set; } // LoanId
+        public int LoanId { get { return Get<int>(); } set { Set(value); } } // LoanId
 
         [Required]
-        public int LabelId { get; set; } // LabelId
+        public int LabelId { get { return Get<int>(); } set { Set(value); } } // LabelId
 
         // Foreign keys
 

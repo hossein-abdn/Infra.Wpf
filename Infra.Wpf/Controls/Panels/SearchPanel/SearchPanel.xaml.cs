@@ -72,6 +72,8 @@ namespace Infra.Wpf.Controls
             set { SetValue(IsExpandedProperty, value); }
         }
 
+        public Type ModelType { get; set; }
+
         public static readonly DependencyProperty IsExpandedProperty = Expander.IsExpandedProperty.AddOwner(typeof(SearchPanel));
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -95,6 +97,7 @@ namespace Infra.Wpf.Controls
             for (int i = 0; i < SearchFields.Count; i++)
             {
                 var item = SearchFields[i];
+                item.ModelType = this.ModelType;
 
                 TextBlock displayText = new TextBlock();
 
