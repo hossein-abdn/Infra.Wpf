@@ -120,11 +120,7 @@ namespace Infra.Wpf.Controls
 
         public event EventHandler DropDownClosed;
 
-        private readonly ObservableCollection<object> items;
-        public ObservableCollection<object> Items
-        {
-            get { return items; }
-        }
+        public ObservableCollection<object> Items { get; }
 
         private StackPanel itemPresenter { get; set; }
 
@@ -167,7 +163,7 @@ namespace Infra.Wpf.Controls
         public MultiSelect()
         {
             ChangeSource = ChangeSourceEnum.None;
-            items = new ObservableCollection<object>();
+            Items = new ObservableCollection<object>();
             FilterContentList = new List<string>();
             Loaded += MultiSelect_Loaded;
         }
