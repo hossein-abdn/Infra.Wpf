@@ -12,9 +12,7 @@
         Title="MainWindow" Height="400" 
         Width="400"
         FontFamily="IRANSans">
-    <Window.DataContext>
-        <local:MainWindowVM/>
-    </Window.DataContext>
+    
     <Window.Resources>
         <ctl:VisibilityToBoolConverter x:Key="converter"/>
     </Window.Resources>
@@ -43,18 +41,19 @@
             
             <ctl:EditViewPanel FontSize="12" FontWeight="Normal" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10" ModelType="{x:Type model:Person}">
                 <ctl:EditViewPanel.EditFields>
-                    <ctl:NumericField Value="{Binding Model.OrderItem}"/>
                     <ctl:TextField Name="textField" Text="{Binding Model.Name}"/>
+                    <!--<ctl:NumericField Value="{Binding Model.OrderItem}"/>
                     <ctl:NumericField Value="{Binding Model.UserId}"/>
                     <ctl:DateField x:Name="datefield" SelectedDate="{Binding Model.CreateDate}"/>
-                    <ctl:ComboField EnumType="{x:Type enums:RecordStatus}" SelectedItem="{Binding Model.RecordStatusId}" IsEditable="False" Foreground="Red"/>
-                    <ctl:BoolField IsChecked="{Binding Model.Marage}"/>
-                    <ctl:LookupField Name="lookup" ItemsSource="{Binding UserList}" SearchCommand="{Binding SearchCommand}" IdColumn="UserId" ValueColumn="UserName" Columns="UserId,UserName" SelectedId="{Binding Model.UserId}" Foreground="Green">
+                    <ctl:ComboField EnumType="{x:Type enums:RecordStatus}" SelectedItem="{Binding Model.RecordStatusId}" IsEditable="False" Foreground="Red"/>-->
+                    <!--<ctl:BoolField IsChecked="{Binding Model.Marage}"/>-->
+                    <!--<ctl:LookupField Name="lookup" ItemsSource="{Binding UserList}" SearchCommand="{Binding SearchCommand}" IdColumn="UserId" ValueColumn="UserName" Columns="UserId,UserName" SelectedId="{Binding Model.UserId}" Foreground="Green">
                         <ctl:LookupField.SearchFields>
                             <ctl:TextField FilterField="UserName" Operator="StartsWith"/>
                         </ctl:LookupField.SearchFields>
-                    </ctl:LookupField>
-                    <ctl:MultiSelectField x:Name="multi" ItemsSource="{Binding UserList1}" DisplayMemberPath="UserName" SelectedItems="{Binding Model.UserList}" HorizontalContentAlignment="Center" Foreground="Red"/>
+                    </ctl:LookupField>-->
+                    <ctl:MultiSelectField x:Name="multi"  ItemsSource="{Binding UserList}" DisplayMemberPath="UserName"
+                                          SelectedItems ="{Binding Model.UserList}" HorizontalContentAlignment="Center" Background="Red"/>
                 </ctl:EditViewPanel.EditFields>
             </ctl:EditViewPanel>
         </GroupBox>

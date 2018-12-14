@@ -58,9 +58,9 @@ namespace DataAccess.Models
 
         [NotMapped]
         [Required]
-        public ObservableCollection<object> UserList
+        public List<User> UserList
         {
-            get { return Get<ObservableCollection<object>>(); }
+            get { return Get<List<User>>(); }
             set { Set(value); }
         }
 
@@ -86,6 +86,7 @@ namespace DataAccess.Models
 
         public Person()
         {
+            UserList = new List<User>();
             DebtDemands = new System.Collections.Generic.List<DebtDemand>();
             Transactions = new System.Collections.Generic.List<Transaction>();
             InitializePartial();

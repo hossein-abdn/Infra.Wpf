@@ -21,24 +21,7 @@ namespace TestControls
 
         public RelayCommand<string> SearchCommand { get; set; }
 
-
-        public ObservableCollection<User> UserList
-        {
-            get { return Get<ObservableCollection<User>>(); }
-            set { Set(value); }
-        }
-
-        public ObservableCollection<string> UserList1
-        {
-            get { return Get<ObservableCollection<string>>(); }
-            set { Set(value); }
-        }
-
-        public ObservableCollection<Person> PersonList
-        {
-            get { return Get<ObservableCollection<Person>>(); }
-            set { Set(value); }
-        }
+        public List<User> UserList { get; set; }
 
         AccountingContext context = new AccountingContext();
 
@@ -50,16 +33,14 @@ namespace TestControls
             ViewTitle = "افزودن شخص";
             Model = new Person();
 
-            UserList = new ObservableCollection<User>();
-            UserList = new ObservableCollection<User>(context.Users.ToList());
+            UserList = context.Users.ToList();
 
-            UserList1 = new ObservableCollection<string> { "test1", "test2" };
+            Model.AddRule(x => x.UserList.Count).GreaterThan(0).OverridePropertyName("UserList").WithMessage("حداقل یک کاربر انتخاب کنید.");
         }
 
         private void SubmitExecute()
         {
             var result = Model.Validate();
-
             if (Model.HasErrors)
             {
                 MessageBox.Show(result.Errors[0].ErrorMessage);
@@ -69,10 +50,7 @@ namespace TestControls
 
         private void SearchExecute(string obj)
         {
-            if (string.IsNullOrEmpty(obj))
-                UserList = new ObservableCollection<User>(context.Users.ToList());
-            else
-                UserList = new ObservableCollection<User>(context.Users.Where(obj).ToList());
+
         }
     }
 }

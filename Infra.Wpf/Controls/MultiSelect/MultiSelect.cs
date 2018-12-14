@@ -29,7 +29,7 @@ namespace Infra.Wpf.Controls
 
         public bool IsOpen
         {
-            get { return (bool) GetValue(IsOpenProperty); }
+            get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
         }
 
@@ -38,7 +38,7 @@ namespace Infra.Wpf.Controls
 
         public double MaxDropDownHeight
         {
-            get { return (double) GetValue(MaxDropDownHeightProperty); }
+            get { return (double)GetValue(MaxDropDownHeightProperty); }
             set { SetValue(MaxDropDownHeightProperty, value); }
         }
 
@@ -47,7 +47,7 @@ namespace Infra.Wpf.Controls
 
         public Visibility SearchVisible
         {
-            get { return (Visibility) GetValue(SearchVisibleProperty); }
+            get { return (Visibility)GetValue(SearchVisibleProperty); }
             set { SetValue(SearchVisibleProperty, value); }
         }
 
@@ -56,7 +56,7 @@ namespace Infra.Wpf.Controls
 
         public string SearchText
         {
-            get { return (string) GetValue(SearchTextProperty); }
+            get { return (string)GetValue(SearchTextProperty); }
             set { SetValue(SearchTextProperty, value); }
         }
 
@@ -65,7 +65,7 @@ namespace Infra.Wpf.Controls
 
         public IEnumerable ItemsSource
         {
-            get { return (IEnumerable) GetValue(ItemsSourceProperty); }
+            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
@@ -74,31 +74,31 @@ namespace Infra.Wpf.Controls
 
         public string DisplayMemberPath
         {
-            get { return (string) GetValue(DisplayMemberPathProperty); }
+            get { return (string)GetValue(DisplayMemberPathProperty); }
             set { SetValue(DisplayMemberPathProperty, value); }
         }
 
         public static readonly DependencyProperty DisplayMemberPathProperty =
             DependencyProperty.Register("DisplayMemberPath", typeof(string), typeof(MultiSelect), new PropertyMetadata(null));
 
-        public ObservableCollection<object> SelectedItems
+        public IList SelectedItems
         {
-            get { return (ObservableCollection<object>) GetValue(SelectedItemsProperty); }
+            get { return (IList)GetValue(SelectedItemsProperty); }
             set { SetValue(SelectedItemsProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedItemsProperty =
-            DependencyProperty.Register("SelectedItems", typeof(ObservableCollection<object>), typeof(MultiSelect),
+            DependencyProperty.Register("SelectedItems", typeof(IList), typeof(MultiSelect),
                 new PropertyMetadata(null, OnSelectedItemsChanged, OnSelectedItemsCoerce));
 
-        public ObservableCollection<int> SelectedIndices
+        public IList<int> SelectedIndices
         {
-            get { return (ObservableCollection<int>) GetValue(SelectedIndicesProperty); }
+            get { return (IList<int>)GetValue(SelectedIndicesProperty); }
             set { SetValue(SelectedIndicesProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedIndicesProperty =
-            DependencyProperty.Register("SelectedIndices", typeof(ObservableCollection<int>), typeof(MultiSelect),
+            DependencyProperty.Register("SelectedIndices", typeof(IList<int>), typeof(MultiSelect),
                 new PropertyMetadata(null, OnSelectedIndicesChanged, OnSelectedIndicesCoerce));
 
         public static readonly RoutedEvent SelectionChangedEvent =
@@ -172,11 +172,11 @@ namespace Infra.Wpf.Controls
         {
             itemPresenter = Template.FindName("itemPresenter", this) as StackPanel;
             contentPresenter = Template.FindName("contentPresenter", this) as WrapPanel;
-            selectedItemTemplate = (ControlTemplate) TryFindResource(new ComponentResourceKey(typeof(MultiSelect), "SelectedItemTemplate"));
+            selectedItemTemplate = (ControlTemplate)TryFindResource(new ComponentResourceKey(typeof(MultiSelect), "SelectedItemTemplate"));
             itemContainers = itemPresenter.Children;
-            popup = (Popup) Template.FindName("popup", this);
-            searchBox = (TextBox) Template.FindName("searchBox", this);
-            ToggleButton toggleButton = (ToggleButton) Template.FindName("toggleButton", this);
+            popup = (Popup)Template.FindName("popup", this);
+            searchBox = (TextBox)Template.FindName("searchBox", this);
+            ToggleButton toggleButton = (ToggleButton)Template.FindName("toggleButton", this);
             toggleButton.Click += (sender, e) => searchBox.Focus();
             toggleButton.KeyDown += (sender, e) =>
             {
@@ -184,7 +184,7 @@ namespace Infra.Wpf.Controls
                     popup.IsOpen = true;
             };
 
-            scroll = (ScrollViewer) Template.FindName("scroll", this);
+            scroll = (ScrollViewer)Template.FindName("scroll", this);
 
             base.OnApplyTemplate();
         }
@@ -229,7 +229,7 @@ namespace Infra.Wpf.Controls
 
             Validation.SetErrorTemplate(this, new ControlTemplate());
 
-            var validationBorder = (Border) GetTemplateChild("validationBorder");
+            var validationBorder = (Border)GetTemplateChild("validationBorder");
 
             var borderBind = new Binding("(Validation.HasError)")
             {
@@ -250,6 +250,10 @@ namespace Infra.Wpf.Controls
             popup.Closed += Popup_Closed;
             KeyDown += MultiSelect_KeyDown;
             CloseCommand = new RelayCommand<MultiSelectItem>(CloseCommandExecute);
+            if (SelectedItems == null)
+                SelectedItems = new List<object>();
+            if (SelectedIndices == null)
+                SelectedIndices = new List<int>();
             foreach (var item in Items)
                 OnItemsChanged(Items, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, itemContainers.Count));
             SetValidationStyle();
@@ -298,7 +302,7 @@ namespace Infra.Wpf.Controls
 
         private static void OnSearchTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((MultiSelect) d).Filter();
+            ((MultiSelect)d).Filter();
         }
 
         private void Filter()
@@ -333,6 +337,8 @@ namespace Infra.Wpf.Controls
                 itemContainers.Clear();
                 FilterContentList.Clear();
                 SelectedItems.Clear();
+                if (!(SelectedItems is INotifyCollectionChanged))
+                    OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -344,18 +350,24 @@ namespace Infra.Wpf.Controls
                         if (Items[i].GetType() == typeof(MultiSelectItem))
                         {
                             Binding bind = SetElementBinding(i, true);
-                            ((MultiSelectItem) itemContainers[i]).SetBinding(ContentControl.ContentProperty, bind);
+                            ((MultiSelectItem)itemContainers[i]).SetBinding(ContentControl.ContentProperty, bind);
                         }
                         else
                         {
                             Binding bind = SetElementBinding(i, false);
-                            ((MultiSelectItem) itemContainers[i]).SetBinding(ContentControl.ContentProperty, bind);
+                            ((MultiSelectItem)itemContainers[i]).SetBinding(ContentControl.ContentProperty, bind);
                         }
                     }
                 }
 
                 FilterContentList.RemoveAt(e.OldStartingIndex);
-                SelectedItems.Remove(e.OldItems[0]);
+                int index = SelectedItems.IndexOf(e.OldItems[0]);
+                if (index != -1)
+                {
+                    SelectedItems.Remove(e.OldItems[0]);
+                    if (!(SelectedItems is INotifyCollectionChanged))
+                        OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems[0], index));
+                }
             }
             else if (e.Action == NotifyCollectionChangedAction.Move)
             {
@@ -369,17 +381,17 @@ namespace Infra.Wpf.Controls
 
         private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var multi = (MultiSelect) d;
+            var multi = (MultiSelect)d;
 
             if (e.NewValue == null)
                 multi.Items.Clear();
             else
             {
                 if (e.NewValue is INotifyCollectionChanged)
-                    ((INotifyCollectionChanged) e.NewValue).CollectionChanged += multi.OnItemsSource_CollectionChanged;
+                    ((INotifyCollectionChanged)e.NewValue).CollectionChanged += multi.OnItemsSource_CollectionChanged;
 
                 multi.Items.Clear();
-                foreach (var item in (IEnumerable) e.NewValue)
+                foreach (var item in (IEnumerable)e.NewValue)
                     multi.Items.Add(item);
             }
         }
@@ -400,11 +412,11 @@ namespace Infra.Wpf.Controls
 
         private static object OnSelectedItemsCoerce(DependencyObject d, object baseValue)
         {
-            var multiSelect = (MultiSelect) d;
-            var selectedList = (IList) baseValue;
+            var multiSelect = (MultiSelect)d;
+            var selectedList = (IList)baseValue;
 
             if (selectedList == null)
-                selectedList = new ObservableCollection<object>();
+                selectedList = new List<object>();
 
             for (int i = 0; i < selectedList.Count; i++)
             {
@@ -420,20 +432,25 @@ namespace Infra.Wpf.Controls
 
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var multiSelect = (MultiSelect) d;
+            var multiSelect = (MultiSelect)d;
             multiSelect.contentPresenter?.Children.Clear();
             multiSelect.ChangeSource = ChangeSourceEnum.FromSelectedItems;
             multiSelect.SelectedIndices?.Clear();
+            if (multiSelect.SelectedIndices != null && !(multiSelect.SelectedIndices is INotifyCollectionChanged))
+                multiSelect.OnSelectedIndices_CollectionChanged(d, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-            multiSelect.SelectedItems.CollectionChanged += multiSelect.OnSelectedItems_CollectionChanged;
+            if (multiSelect.SelectedItems is INotifyCollectionChanged)
+                ((INotifyCollectionChanged)multiSelect.SelectedItems).CollectionChanged += multiSelect.OnSelectedItems_CollectionChanged;
 
-            foreach (var item in (IList) e.NewValue)
+            foreach (var item in (IList)e.NewValue)
             {
                 int index = multiSelect.Items.IndexOf(item);
                 multiSelect.contentPresenter.Children.Add(multiSelect.GeneratePanelItem(item));
-                ((MultiSelectItem) multiSelect.itemContainers[index]).IsSelected = true;
+                ((MultiSelectItem)multiSelect.itemContainers[index]).IsSelected = true;
                 multiSelect.ChangeSource = ChangeSourceEnum.FromSelectedItems;
                 multiSelect.SelectedIndices.Add(index);
+                if (!(multiSelect.SelectedIndices is INotifyCollectionChanged))
+                    multiSelect.OnSelectedIndices_CollectionChanged(d, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, index));
             }
 
             multiSelect.ChangeSource = ChangeSourceEnum.None;
@@ -446,14 +463,29 @@ namespace Infra.Wpf.Controls
                 int index = Items.IndexOf(e.NewItems[0]);
                 if (index == -1)
                 {
-                    SelectedItems.Remove(e.NewItems[0]);
+                    if (SelectedItems.IndexOf(e.NewItems[0]) != -1)
+                    {
+                        ChangeSource = ChangeSourceEnum.FromSelectedIndices;
+                        SelectedItems.Remove(e.NewItems[0]);
+                        ChangeSource = ChangeSourceEnum.None;
+                    }
                     return;
                 }
 
-                ((MultiSelectItem) itemContainers[index]).IsSelected = true;
+                if (SelectedItems.Cast<object>().Where(x => x == e.NewItems[0]).Count() > 1)
+                {
+                    ChangeSource = ChangeSourceEnum.FromSelectedIndices;
+                    SelectedItems.Remove(e.NewItems[0]);
+                    ChangeSource = ChangeSourceEnum.None;
+                    return;
+                }
+
+                ((MultiSelectItem)itemContainers[index]).IsSelected = true;
                 contentPresenter.Children.Add(GeneratePanelItem(e.NewItems[0]));
                 ChangeSource = ChangeSourceEnum.FromSelectedItems;
                 SelectedIndices.Add(index);
+                if (!(SelectedIndices is INotifyCollectionChanged))
+                    OnSelectedIndices_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, index));
                 RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], e.NewItems));
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove && ChangeSource != ChangeSourceEnum.FromSelectedIndices)
@@ -462,19 +494,24 @@ namespace Infra.Wpf.Controls
                 if (index == -1)
                     return;
 
-                ((MultiSelectItem) itemContainers[index]).IsSelected = false;
+                ((MultiSelectItem)itemContainers[index]).IsSelected = false;
                 contentPresenter.Children.RemoveAt(e.OldStartingIndex);
                 ChangeSource = ChangeSourceEnum.FromSelectedItems;
+                int indexSelectedIndex = SelectedIndices.IndexOf(index);
                 SelectedIndices.Remove(index);
+                if (!(SelectedIndices is INotifyCollectionChanged))
+                    OnSelectedIndices_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, index, indexSelectedIndex));
                 RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, e.OldItems, new object[0]));
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset && ChangeSource != ChangeSourceEnum.FromSelectedIndices)
             {
                 foreach (var item in itemContainers)
-                    ((MultiSelectItem) item).IsSelected = false;
+                    ((MultiSelectItem)item).IsSelected = false;
                 contentPresenter.Children.Clear();
                 ChangeSource = ChangeSourceEnum.FromSelectedItems;
                 SelectedIndices.Clear();
+                if (!(SelectedIndices is INotifyCollectionChanged))
+                    OnSelectedIndices_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
                 RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], new object[0]));
             }
 
@@ -483,15 +520,15 @@ namespace Infra.Wpf.Controls
 
         private static object OnSelectedIndicesCoerce(DependencyObject d, object baseValue)
         {
-            var multiSelect = (MultiSelect) d;
-            var selectedList = (IList) baseValue;
+            var multiSelect = (MultiSelect)d;
+            var selectedList = (IList)baseValue;
 
             if (selectedList == null)
-                selectedList = new ObservableCollection<int>();
+                selectedList = new List<int>();
 
             for (int i = 0; i < selectedList.Count; i++)
             {
-                if ((int) selectedList[i] < 0 || (int) selectedList[i] >= multiSelect.Items.Count)
+                if ((int)selectedList[i] < 0 || (int)selectedList[i] >= multiSelect.Items.Count)
                 {
                     selectedList.RemoveAt(i);
                     i--;
@@ -503,20 +540,25 @@ namespace Infra.Wpf.Controls
 
         private static void OnSelectedIndicesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var multiSelect = (MultiSelect) d;
+            var multiSelect = (MultiSelect)d;
             multiSelect.contentPresenter.Children.Clear();
             multiSelect.ChangeSource = ChangeSourceEnum.FromSelectedIndices;
             multiSelect.SelectedItems?.Clear();
+            if (multiSelect.SelectedItems != null && !(multiSelect.SelectedItems is INotifyCollectionChanged))
+                multiSelect.OnSelectedItems_CollectionChanged(d, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-            multiSelect.SelectedIndices.CollectionChanged += multiSelect.OnSelectedIndices_CollectionChanged;
+            if (multiSelect.SelectedIndices is INotifyCollectionChanged)
+                ((INotifyCollectionChanged)multiSelect.SelectedIndices).CollectionChanged += multiSelect.OnSelectedIndices_CollectionChanged;
 
-            foreach (int index in (IList) e.NewValue)
+            foreach (int index in (IList)e.NewValue)
             {
                 object item = multiSelect.Items[index];
                 multiSelect.contentPresenter.Children.Add(multiSelect.GeneratePanelItem(item));
-                ((MultiSelectItem) multiSelect.itemContainers[index]).IsSelected = true;
+                ((MultiSelectItem)multiSelect.itemContainers[index]).IsSelected = true;
                 multiSelect.ChangeSource = ChangeSourceEnum.FromSelectedIndices;
                 multiSelect.SelectedItems.Add(item);
+                if (!(multiSelect.SelectedItems is INotifyCollectionChanged))
+                    multiSelect.OnSelectedItems_CollectionChanged(d, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
             }
 
             multiSelect.ChangeSource = ChangeSourceEnum.None;
@@ -526,38 +568,61 @@ namespace Infra.Wpf.Controls
         {
             if (e.Action == NotifyCollectionChangedAction.Add && ChangeSource != ChangeSourceEnum.FromSelectedItems)
             {
-                var index = (int) e.NewItems[0];
+                var index = (int)e.NewItems[0];
                 if (index >= Items.Count || index < 0)
                 {
-                    SelectedIndices.Remove(index);
+                    if (SelectedIndices.IndexOf(index) != -1)
+                    {
+                        ChangeSource = ChangeSourceEnum.FromSelectedItems;
+                        SelectedIndices.Remove(index);
+                        ChangeSource = ChangeSourceEnum.None;
+                    }
                     return;
                 }
 
-                ((MultiSelectItem) itemContainers[index]).IsSelected = true;
+                if (SelectedIndices.Where(x => x == index).Count() > 1)
+                {
+                    ChangeSource = ChangeSourceEnum.FromSelectedItems;
+                    SelectedItems.Remove(index);
+                    ChangeSource = ChangeSourceEnum.None;
+                    return;
+                }
+
+                ((MultiSelectItem)itemContainers[index]).IsSelected = true;
                 contentPresenter.Children.Add(GeneratePanelItem(Items[index]));
                 ChangeSource = ChangeSourceEnum.FromSelectedIndices;
                 SelectedItems.Add(Items[index]);
+                if (!(SelectedItems is INotifyCollectionChanged))
+                    OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Items[index]));
                 RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], new object[1] { Items[index] }));
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove && ChangeSource != ChangeSourceEnum.FromSelectedItems)
             {
-                int index = (int) e.OldItems[0];
+                int index = (int)e.OldItems[0];
                 if (index >= Items.Count || index < 0)
                     return;
 
-                ((MultiSelectItem) itemContainers[index]).IsSelected = false;
+                ((MultiSelectItem)itemContainers[index]).IsSelected = false;
                 contentPresenter.Children.RemoveAt(e.OldStartingIndex);
                 ChangeSource = ChangeSourceEnum.FromSelectedIndices;
-                SelectedItems.RemoveAt(index);
+                var item = SelectedItems[index];
+                var indexSelectedItems = SelectedItems.IndexOf(item);
+                SelectedItems.Remove(item);
+                if (!(SelectedItems is INotifyCollectionChanged))
+                    OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, indexSelectedItems));
+
                 RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[1] { Items[index] }, new object[0]));
             }
             else if (e.Action == NotifyCollectionChangedAction.Reset && ChangeSource != ChangeSourceEnum.FromSelectedItems)
             {
                 foreach (var item in itemContainers)
-                    ((MultiSelectItem) item).IsSelected = false;
+                    ((MultiSelectItem)item).IsSelected = false;
                 contentPresenter.Children.Clear();
                 ChangeSource = ChangeSourceEnum.FromSelectedIndices;
                 SelectedItems.Clear();
+                if (!(SelectedItems is INotifyCollectionChanged))
+                    OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
                 RaiseEvent(new System.Windows.Controls.SelectionChangedEventArgs(SelectionChangedEvent, new object[0], new object[0]));
             }
 
@@ -584,11 +649,20 @@ namespace Infra.Wpf.Controls
 
             newElement.MouseDown += (sender, e) =>
             {
-                var item = ((MultiSelectItem) sender).Item;
-                if (((MultiSelectItem) sender).IsSelected)
+                var item = ((MultiSelectItem)sender).Item;
+                if (((MultiSelectItem)sender).IsSelected)
+                {
+                    var index = SelectedItems.IndexOf(item);
                     SelectedItems.Remove(item);
+                    if (!(SelectedItems is INotifyCollectionChanged))
+                        OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+                }
                 else
+                {
                     SelectedItems.Add(item);
+                    if (!(SelectedItems is INotifyCollectionChanged))
+                        OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
+                }
             };
 
             newElement.MouseEnter += (sender, e) =>
@@ -613,11 +687,20 @@ namespace Infra.Wpf.Controls
             {
                 if (e.Key == Key.Enter || e.Key == Key.Space)
                 {
-                    var item = ((MultiSelectItem) sender).Item;
-                    if (((MultiSelectItem) sender).IsSelected)
+                    var item = ((MultiSelectItem)sender).Item;
+                    if (((MultiSelectItem)sender).IsSelected)
+                    {
+                        var index = SelectedItems.IndexOf(item);
                         SelectedItems.Remove(item);
+                        if (!(SelectedItems is INotifyCollectionChanged))
+                            OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index));
+                    }
                     else
+                    {
                         SelectedItems.Add(item);
+                        if (!(SelectedItems is INotifyCollectionChanged))
+                            OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
+                    }
                 }
             };
 
@@ -634,7 +717,7 @@ namespace Infra.Wpf.Controls
 
                 if (!string.IsNullOrEmpty(DisplayMemberPath))
                 {
-                    memberpath = ((MultiSelectItem) Items[elementIndex]).Content.GetType().GetProperty(DisplayMemberPath)?.Name;
+                    memberpath = ((MultiSelectItem)Items[elementIndex]).Content.GetType().GetProperty(DisplayMemberPath)?.Name;
                     if (string.IsNullOrEmpty(memberpath) == false)
                         memberpath = "." + memberpath;
                 }
@@ -669,14 +752,14 @@ namespace Infra.Wpf.Controls
             {
                 if (item.GetType() == typeof(MultiSelectItem))
                 {
-                    if (((MultiSelectItem) item).Content == null)
+                    if (((MultiSelectItem)item).Content == null)
                         return null;
 
-                    var displayMember = ((MultiSelectItem) item).Content.GetType().GetProperty(DisplayMemberPath);
+                    var displayMember = ((MultiSelectItem)item).Content.GetType().GetProperty(DisplayMemberPath);
                     if (displayMember != null)
-                        return displayMember.GetValue(((MultiSelectItem) item).Content).ToString().ToLower();
+                        return displayMember.GetValue(((MultiSelectItem)item).Content).ToString().ToLower();
                     else
-                        return ((MultiSelectItem) item).Content.ToString().ToLower();
+                        return ((MultiSelectItem)item).Content.ToString().ToLower();
                 }
                 else
                 {
@@ -690,7 +773,7 @@ namespace Infra.Wpf.Controls
             else
             {
                 if (item.GetType() == typeof(MultiSelectItem))
-                    return ((MultiSelectItem) item).Content.ToString().ToLower();
+                    return ((MultiSelectItem)item).Content.ToString().ToLower();
                 else
                     return item.ToString().ToLower();
             }
@@ -698,7 +781,10 @@ namespace Infra.Wpf.Controls
 
         private void CloseCommandExecute(MultiSelectItem obj)
         {
+            var index = SelectedItems.IndexOf(obj.Item);
             SelectedItems.Remove(obj.Item);
+            if (!(SelectedItems is INotifyCollectionChanged))
+                OnSelectedItems_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, obj.Item, index));
         }
 
         #endregion

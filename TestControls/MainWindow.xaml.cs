@@ -30,14 +30,18 @@ namespace TestControls
 
         public MainWindow()
         {
+            var context = new MainWindowVM { View = this };
+            DataContext = context;
             InitializeComponent();
 
-            DataContext = new MainWindowVM { View = this };
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var t = ((MainWindowVM) DataContext).Model;
+            var t = ((MainWindowVM)DataContext);//.Model;
+
+            var result = Validation.GetHasError(multi);
         }
     }
 }
