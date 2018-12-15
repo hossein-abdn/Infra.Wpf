@@ -15,7 +15,7 @@
     d:DesignHeight="30" d:DesignWidth="300"
     x:Name="timeEditor"
     Loaded="UserControl_Loaded">
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,53 +25,56 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Padding="2">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Padding="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-            <c1:C1MaskedTextBox x:Name="txtTimeEditor" Margin="0,0,3,0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                <c1:C1MaskedTextBox x:Name="txtTimeEditor" Margin="0,0,3,0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                                 Style="{StaticResource EditorStyle}" BorderBrush="Transparent" 
                                 Mask="{Binding Mask,ElementName=timeEditor}" FlowDirection="LeftToRight" MouseWheel="txtTimeEditor_MouseWheel"
                                 GotKeyboardFocus="txtTimeEditor_GotKeyboardFocus" PreviewMouseLeftButtonDown="txtTimeEditor_PreviewMouseLeftButtonDown"
                                 KeyDown="txtTimeEditor_KeyDown" PreviewKeyDown="txtTimeEditor_PreviewKeyDown"/>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <RepeatButton x:Name="btnIncrease" Width="20" IsTabStop="False" Margin="0,0,0,0.5"
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <RepeatButton x:Name="btnIncrease" Width="20" IsTabStop="False" Margin="0,0,0,0.5"
                               Visibility="{Binding ShowButtons,ElementName=timeEditor,Converter={StaticResource visibilityConverter}}"
                               Interval="{Binding Interval,ElementName=timeEditor}" Delay="{Binding Delay,ElementName=timeEditor}" 
                               Click="btnIncrease_Click">
-                    <Image Height="4">
-                        <Image.Source>
-                            <DrawingImage>
-                                <DrawingImage.Drawing>
-                                    <GeometryDrawing Brush="Black" Geometry="M 1,0 L 0,1 L 2,1"/>
-                                </DrawingImage.Drawing>
-                            </DrawingImage>
-                        </Image.Source>
-                    </Image>
-                </RepeatButton>
-                <RepeatButton x:Name="btnDecrease" Grid.Row="1" Width="20" IsTabStop="False" Margin="0,0.5,0,0"
+                        <Image Height="4">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <GeometryDrawing Brush="Black" Geometry="M 1,0 L 0,1 L 2,1"/>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                    </RepeatButton>
+                    <RepeatButton x:Name="btnDecrease" Grid.Row="1" Width="20" IsTabStop="False" Margin="0,0.5,0,0"
                               Visibility="{Binding ShowButtons,ElementName=timeEditor,Converter={StaticResource visibilityConverter}}"
                               Interval="{Binding Interval,ElementName=timeEditor}" Delay="{Binding Delay,ElementName=timeEditor}"
                               Click="btnDecrease_Click">
-                    <Image Height="4">
-                        <Image.Source>
-                            <DrawingImage>
-                                <DrawingImage.Drawing>
-                                    <GeometryDrawing Brush="Black" Geometry="M 1,1 L 2,0 L 0,0"/>
-                                </DrawingImage.Drawing>
-                            </DrawingImage>
-                        </Image.Source>
-                    </Image>
-                </RepeatButton>
+                        <Image Height="4">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <GeometryDrawing Brush="Black" Geometry="M 1,1 L 2,0 L 0,0"/>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                    </RepeatButton>
+                </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="1" CornerRadius="3" SnapsToDevicePixels="True"/>
+    </Grid>
 </UserControl>

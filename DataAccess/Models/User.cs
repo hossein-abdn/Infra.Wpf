@@ -35,7 +35,6 @@ namespace DataAccess.Models
         [MaxLength(50)]
         [StringLength(50)]
         [DataType(DataType.Text)]
-        [Display(Name = "نام کاربری")]
         public string UserName { get { return Get<string>(); } set { Set(value); } } // UserName (length: 50)
 
         [Required]
@@ -81,10 +80,6 @@ namespace DataAccess.Models
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Notification> Notifications { get; set; } // Notification.FK_Notification_User
         /// <summary>
-        /// Child People where [Person].[UserId] point to this entity (FK_Person_User)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<Person> People { get; set; } // Person.FK_Person_User
-        /// <summary>
         /// Child Transactions where [Transaction].[UserId] point to this entity (FK_Transaction_User)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Transaction> Transactions { get; set; } // Transaction.FK_Transaction_User
@@ -106,7 +101,6 @@ namespace DataAccess.Models
             Loans = new System.Collections.Generic.List<Loan>();
             Notes = new System.Collections.Generic.List<Note>();
             Notifications = new System.Collections.Generic.List<Notification>();
-            People = new System.Collections.Generic.List<Person>();
             Transactions = new System.Collections.Generic.List<Transaction>();
             TransactionGroups = new System.Collections.Generic.List<TransactionGroup>();
             UserRoles = new System.Collections.Generic.List<UserRole>();

@@ -17,8 +17,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DataAccess.Models
 {
     using Mapping;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
 
     // Person
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
@@ -54,17 +52,8 @@ namespace DataAccess.Models
         public Enums.RecordStatus RecordStatusId { get { return Get<Enums.RecordStatus>(); } set { Set(value); } } // RecordStatusId
 
         [NotMapped]
-        public bool Marage { get { return Get<bool>(); } set { Set(value); } }
-
-        [NotMapped]
         [Required]
-        public List<User> UserList
-        {
-            get { return Get<List<User>>(); }
-            set { Set(value); }
-        }
-
-
+        public System.TimeSpan TimeTest { get { return Get<System.TimeSpan>(); } set { Set(value); } } // TimeTest
 
         // Reverse navigation
 
@@ -77,16 +66,8 @@ namespace DataAccess.Models
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Transaction> Transactions { get; set; } // Transaction.FK_Transaction_Person
 
-        // Foreign keys
-
-        /// <summary>
-        /// Parent User pointed by [Person].([UserId]) (FK_Person_User)
-        /// </summary>
-        public virtual User User { get; set; } // FK_Person_User
-
         public Person()
         {
-            UserList = new List<User>();
             DebtDemands = new System.Collections.Generic.List<DebtDemand>();
             Transactions = new System.Collections.Generic.List<Transaction>();
             InitializePartial();

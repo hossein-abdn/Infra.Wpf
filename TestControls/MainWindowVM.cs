@@ -21,8 +21,6 @@ namespace TestControls
 
         public RelayCommand<string> SearchCommand { get; set; }
 
-        public List<User> UserList { get; set; }
-
         AccountingContext context = new AccountingContext();
 
         public MainWindowVM()
@@ -32,10 +30,6 @@ namespace TestControls
 
             ViewTitle = "افزودن شخص";
             Model = new Person();
-
-            UserList = context.Users.ToList();
-
-            Model.AddRule(x => x.UserList.Count).GreaterThan(0).OverridePropertyName("UserList").WithMessage("حداقل یک کاربر انتخاب کنید.");
         }
 
         private void SubmitExecute()

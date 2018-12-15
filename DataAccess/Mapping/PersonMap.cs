@@ -36,9 +36,6 @@ namespace DataAccess.Mapping
             Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("int");
             Property(x => x.CreateDate).HasColumnName(@"CreateDate").HasColumnType("datetime");
             Property(x => x.RecordStatusId).HasColumnName(@"RecordStatusId").HasColumnType("int");
-
-            // Foreign keys
-            HasRequired(a => a.User).WithMany(b => b.People).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false); // FK_Person_User
             InitializePartial();
         }
         partial void InitializePartial();

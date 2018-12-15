@@ -25,5 +25,6 @@
                             SelectedItem="{Binding Operator,ElementName=searchfield}"/>
         <local:TimeEditor Grid.Column="1"  ShowButtons="{Binding ShowButtons,ElementName=searchfield}" Value="{Binding Value,ElementName=searchfield}" 
                           MinValue="{Binding MinValue,ElementName=searchfield}" MaxValue="{Binding MaxValue,ElementName=searchfield}" Format="{Binding Format,ElementName=searchfield}"/>
+        <Border x:Name="validationBorder" BorderBrush="Red" BorderThickness="1" CornerRadius="3" SnapsToDevicePixels="True" Grid.Column="1"/>
     </Grid>
 </UserControl>

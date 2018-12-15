@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Infra.Wpf.Common.Helpers;
 using System.Windows.Controls.Primitives;
+using System.Globalization;
 
 namespace TestControls
 {
@@ -41,7 +42,8 @@ namespace TestControls
         {
             var t = ((MainWindowVM)DataContext);//.Model;
 
-            var result = Validation.GetHasError(multi);
+            CultureInfo culture = new CultureInfo("fa-IR");
+            var t1 = culture.NumberFormat;
         }
     }
 }

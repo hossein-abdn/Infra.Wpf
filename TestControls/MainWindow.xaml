@@ -1,4 +1,4 @@
-﻿<Window x:Class="TestControls.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,11 +8,12 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:enums="clr-namespace:DataAccess.Enums;assembly=DataAccess"
         xmlns:ctl="http://Infra.Wpf"
+        xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" x:Class="TestControls.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" 
         Width="400"
         FontFamily="IRANSans">
-    
+
     <Window.Resources>
         <ctl:VisibilityToBoolConverter x:Key="converter"/>
     </Window.Resources>
@@ -29,7 +30,7 @@
         </Grid.RowDefinitions>
         <GroupBox Grid.Column="1">
             <GroupBox.Style>
-                <Style TargetType="GroupBox">
+                <Style TargetType="{x:Type GroupBox}">
                     <Setter Property="FlowDirection" Value="RightToLeft"/>
                     <Setter Property="Header" Value="{Binding ViewTitle}"/>
                     <Setter Property="Margin" Value="10"/>
@@ -38,26 +39,19 @@
                     <Setter Property="Padding" Value="5"/>
                 </Style>
             </GroupBox.Style>
-            
+
             <ctl:EditViewPanel FontSize="12" FontWeight="Normal" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10" ModelType="{x:Type model:Person}">
-                <ctl:EditViewPanel.EditFields>
-                    <ctl:TextField Name="textField" Text="{Binding Model.Name}"/>
-                    <!--<ctl:NumericField Value="{Binding Model.OrderItem}"/>
-                    <ctl:NumericField Value="{Binding Model.UserId}"/>
-                    <ctl:DateField x:Name="datefield" SelectedDate="{Binding Model.CreateDate}"/>
-                    <ctl:ComboField EnumType="{x:Type enums:RecordStatus}" SelectedItem="{Binding Model.RecordStatusId}" IsEditable="False" Foreground="Red"/>-->
-                    <!--<ctl:BoolField IsChecked="{Binding Model.Marage}"/>-->
-                    <!--<ctl:LookupField Name="lookup" ItemsSource="{Binding UserList}" SearchCommand="{Binding SearchCommand}" IdColumn="UserId" ValueColumn="UserName" Columns="UserId,UserName" SelectedId="{Binding Model.UserId}" Foreground="Green">
+                <ctl:TextField x:Name="textField" Text="{Binding Model.Name}"/>
+                <!--<ctl:LookupField Name="lookup" ItemsSource="{Binding UserList}" SearchCommand="{Binding SearchCommand}" IdColumn="UserId" ValueColumn="UserName" Columns="UserId,UserName" SelectedId="{Binding Model.UserId}" Foreground="Green">
                         <ctl:LookupField.SearchFields>
                             <ctl:TextField FilterField="UserName" Operator="StartsWith"/>
                         </ctl:LookupField.SearchFields>
                     </ctl:LookupField>-->
-                    <ctl:MultiSelectField x:Name="multi"  ItemsSource="{Binding UserList}" DisplayMemberPath="UserName"
-                                          SelectedItems ="{Binding Model.UserList}" HorizontalContentAlignment="Center" Background="Red"/>
-                </ctl:EditViewPanel.EditFields>
+                <ctl:NumericField Value="{Binding Model.UserId}"/>
             </ctl:EditViewPanel>
         </GroupBox>
 
         <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Content="click" Click="Button_Click"/>
+        <c1:C1NumericBox x:Name="c1" Value="1200" Format="e" HorizontalAlignment="Left" Height="50" Margin="73,131,0,0" VerticalAlignment="Top" Width="184" Grid.Column="1"/>
     </Grid>
 </Window>
