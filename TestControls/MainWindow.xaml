@@ -30,7 +30,12 @@
                     <Setter Property="Padding" Value="5"/>
                 </Style>
             </GroupBox.Style>
-            <ctl:NumericBox x:Name="numeric"  Format="n2" FontWeight="Normal" AllowNull="False"/>
+
+            <ctl:EditViewPanel>
+                <ctl:TextField/>
+                <ctl:TextField/>
+                <ctl:TextField/>
+            </ctl:EditViewPanel>
         </GroupBox>
 
         <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Content="click" Click="Button_Click"/>
