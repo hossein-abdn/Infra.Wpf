@@ -4,11 +4,11 @@ namespace Infra.Wpf.Controls
 {
     public class NumericBoxValueChangedEventArgs : EventArgs
     {
-        public readonly long? OldValue;
+        public readonly double? OldValue;
 
-        public readonly long? NewValue;
+        public readonly double? NewValue;
 
-        public NumericBoxValueChangedEventArgs(long? oldValue, long? newValue) : base()
+        public NumericBoxValueChangedEventArgs(double? oldValue, double? newValue) : base()
         {
             OldValue = oldValue;
             NewValue = newValue;

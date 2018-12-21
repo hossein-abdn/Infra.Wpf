@@ -21,6 +21,12 @@ namespace TestControls
 
         public RelayCommand<string> SearchCommand { get; set; }
 
+        public float Digit
+        {
+            get { return Get<float>(); }
+            set { Set(value); }
+        }
+
         AccountingContext context = new AccountingContext();
 
         public MainWindowVM()
@@ -34,12 +40,7 @@ namespace TestControls
 
         private void SubmitExecute()
         {
-            var result = Model.Validate();
-            if (Model.HasErrors)
-            {
-                MessageBox.Show(result.Errors[0].ErrorMessage);
-                FocusByPropertyName(result.Errors[0].PropertyName);
-            }
+            
         }
 
         private void SearchExecute(string obj)

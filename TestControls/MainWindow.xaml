@@ -14,21 +14,12 @@
         Width="400"
         FontFamily="IRANSans">
 
-    <Window.Resources>
-        <ctl:VisibilityToBoolConverter x:Key="converter"/>
-    </Window.Resources>
-
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Column="1">
+        <GroupBox>
             <GroupBox.Style>
                 <Style TargetType="{x:Type GroupBox}">
                     <Setter Property="FlowDirection" Value="RightToLeft"/>
@@ -39,19 +30,10 @@
                     <Setter Property="Padding" Value="5"/>
                 </Style>
             </GroupBox.Style>
-
-            <ctl:EditViewPanel FontSize="12" FontWeight="Normal" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10" ModelType="{x:Type model:Person}">
-                <ctl:TextField x:Name="textField" Text="{Binding Model.Name}"/>
-                <!--<ctl:LookupField Name="lookup" ItemsSource="{Binding UserList}" SearchCommand="{Binding SearchCommand}" IdColumn="UserId" ValueColumn="UserName" Columns="UserId,UserName" SelectedId="{Binding Model.UserId}" Foreground="Green">
-                        <ctl:LookupField.SearchFields>
-                            <ctl:TextField FilterField="UserName" Operator="StartsWith"/>
-                        </ctl:LookupField.SearchFields>
-                    </ctl:LookupField>-->
-                <ctl:NumericField Value="{Binding Model.UserId}"/>
-            </ctl:EditViewPanel>
+            <ctl:NumericBox x:Name="numeric"  Format="n2" FontWeight="Normal" AllowNull="False"/>
         </GroupBox>
 
         <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Content="click" Click="Button_Click"/>
-        <c1:C1NumericBox x:Name="c1" Value="1200" Format="e" HorizontalAlignment="Left" Height="50" Margin="73,131,0,0" VerticalAlignment="Top" Width="184" Grid.Column="1"/>
+        <!--<TextBox Name="txt"/>-->
     </Grid>
 </Window>

@@ -5,6 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Infra.Wpf.Controls
 {
@@ -12,11 +15,11 @@ namespace Infra.Wpf.Controls
     {
         #region Properties
 
-        public long Increment
+        public double Increment
         {
             get
             {
-                return (long) GetValue(IncrementProperty);
+                return (double)GetValue(IncrementProperty);
             }
             set
             {
@@ -25,13 +28,13 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty IncrementProperty =
-            DependencyProperty.Register("Increment", typeof(long), typeof(NumericBox), new PropertyMetadata(1l));
+            DependencyProperty.Register("Increment", typeof(double), typeof(NumericBox), new PropertyMetadata(1d));
 
-        public long MaxValue
+        public double MaxValue
         {
             get
             {
-                return (long) GetValue(MaxValueProperty);
+                return (double)GetValue(MaxValueProperty);
             }
             set
             {
@@ -40,13 +43,13 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty MaxValueProperty =
-            DependencyProperty.Register("MaxValue", typeof(long), typeof(NumericBox), new PropertyMetadata(long.MaxValue));
+            DependencyProperty.Register("MaxValue", typeof(double), typeof(NumericBox), new PropertyMetadata(double.MaxValue));
 
-        public long MinValue
+        public double MinValue
         {
             get
             {
-                return (long) GetValue(MinValueProperty);
+                return (double)GetValue(MinValueProperty);
             }
             set
             {
@@ -55,13 +58,22 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty MinValueProperty =
-            DependencyProperty.Register("MinValue", typeof(long), typeof(NumericBox), new PropertyMetadata(long.MinValue));
+            DependencyProperty.Register("MinValue", typeof(double), typeof(NumericBox), new PropertyMetadata(double.MinValue));
 
-        public long? Value
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(NumericBox), new PropertyMetadata(null, null, TextCoerce));
+
+        public double? Value
         {
             get
             {
-                return (long?) GetValue(ValueProperty);
+                return (double?)GetValue(ValueProperty);
             }
             set
             {
@@ -70,14 +82,14 @@ namespace Infra.Wpf.Controls
         }
 
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(long?), typeof(NumericBox),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ValueChanged, CoerceValue));
+            DependencyProperty.Register("Value", typeof(double?), typeof(NumericBox),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ValueChanged, ValueCoerce));
 
         public bool AllowNull
         {
             get
             {
-                return (bool) GetValue(AllowNullProperty);
+                return (bool)GetValue(AllowNullProperty);
             }
             set
             {
@@ -92,7 +104,7 @@ namespace Infra.Wpf.Controls
         {
             get
             {
-                return (bool) GetValue(ShowButtonsProperty);
+                return (bool)GetValue(ShowButtonsProperty);
             }
             set
             {
@@ -107,7 +119,7 @@ namespace Infra.Wpf.Controls
         {
             get
             {
-                return (int) GetValue(IntervalProperty);
+                return (int)GetValue(IntervalProperty);
             }
             set
             {
@@ -122,7 +134,7 @@ namespace Infra.Wpf.Controls
         {
             get
             {
-                return (int) GetValue(DelayProperty);
+                return (int)GetValue(DelayProperty);
             }
             set
             {
@@ -133,7 +145,22 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty DelayProperty =
             DependencyProperty.Register("Delay", typeof(int), typeof(NumericBox), new PropertyMetadata(300));
 
+        public string Format
+        {
+            get { return (string)GetValue(FormatProperty); }
+            set { SetValue(FormatProperty, value); }
+        }
+
+        public static readonly DependencyProperty FormatProperty =
+            DependencyProperty.Register("Format", typeof(string), typeof(NumericBox), new PropertyMetadata("F0", null, FormatCoerce));
+
         public event EventHandler<NumericBoxValueChangedEventArgs> OnValueChanged;
+
+        private bool changeByTextChanged { get; set; }
+
+        private bool isDeletePressed { get; set; }
+
+        private bool isBacksapcePressed { get; set; }
 
         #endregion
 
@@ -143,20 +170,32 @@ namespace Infra.Wpf.Controls
         {
             InitializeComponent();
 
-            var converter = new CustomConverter((v, t, p, c) => v?.ToString(), (v, t, p, c) =>
+            Func<object, Type, object, CultureInfo, object> convert = (v, t, p, c) =>
             {
-                long number;
-                var result = long.TryParse(v.ToString(), out number);
+                if (v == null)
+                    return "";
+
+                return ((double)v).ToString(Format);
+            };
+
+            Func<object, Type, object, CultureInfo, object> convertBack = (v, t, p, c) =>
+            {
+                double number;
+                var result = double.TryParse(v.ToString(), out number);
                 if (result == true)
                     return number;
+                else
+                    return Value;
+            };
 
-                return null;
-            });
 
-            txtNumericEditor.SetBinding(TextBox.TextProperty, new Binding("Value")
+            var converter = new CustomConverter(convert, convertBack);
+
+            this.SetBinding(NumericBox.TextProperty, new Binding("Value")
             {
                 Source = this,
-                Converter = converter
+                Converter = converter,
+                Mode = BindingMode.TwoWay
             });
         }
 
@@ -179,14 +218,14 @@ namespace Infra.Wpf.Controls
                 style.BasedOn = Style.BasedOn;
                 style.Resources = Style.Resources;
                 style.TargetType = Style.TargetType;
-                
-                if(Style.Setters !=null)
+
+                if (Style.Setters != null)
                 {
                     foreach (var item in Style.Setters)
                         style.Setters.Add(item);
                 }
 
-                if(Style.Triggers != null)
+                if (Style.Triggers != null)
                 {
                     foreach (var item in Style.Triggers)
                         style.Triggers.Add(item);
@@ -220,22 +259,64 @@ namespace Infra.Wpf.Controls
             BindingOperations.SetBinding(validationBorder, Border.VisibilityProperty, borderBind);
         }
 
-        private static object CoerceValue(DependencyObject d, object baseValue)
+        private static object FormatCoerce(DependencyObject d, object baseValue)
+        {
+            string value = (string)baseValue;
+
+            if (string.IsNullOrEmpty(value))
+                return "F0";
+
+            string format = value.Substring(0, 1);
+            if (format.ToLower() != "n" && format.ToLower() != "f")
+                return "F0";
+
+            string digit = "0";
+            if (value.Length > 1)
+            {
+                digit = value.Substring(1, value.Length - 1);
+                try
+                {
+
+                    Convert.ToInt32(digit);
+                }
+                catch
+                {
+                    digit = "0";
+                }
+            }
+
+            return format + digit;
+        }
+
+        private static object TextCoerce(DependencyObject d, object baseValue)
+        {
+            double result;
+            if (double.TryParse(baseValue?.ToString(), out result) == false)
+            {
+                if ((d as NumericBox).AllowNull == true)
+                    return null;
+                else
+                    return "0";
+            }
+            return baseValue;
+        }
+
+        private static object ValueCoerce(DependencyObject d, object baseValue)
         {
             var nb = d as NumericBox;
-            var value = baseValue as long?;
+            var value = baseValue as double?;
 
             if (value.HasValue)
             {
                 if (value.Value < nb.MinValue)
-                    return (long?) nb.MinValue;
+                    return (double?)nb.MinValue;
                 if (value.Value > nb.MaxValue)
-                    return (long?) nb.MaxValue;
+                    return (double?)nb.MaxValue;
             }
             else
             {
                 if (nb.AllowNull == false)
-                    return 0l;
+                    return 0d;
             }
 
             return baseValue;
@@ -244,7 +325,7 @@ namespace Infra.Wpf.Controls
         private static void ValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var nb = d as NumericBox;
-            nb.OnValueChanged?.Invoke(nb, new NumericBoxValueChangedEventArgs((long?) e.OldValue, (long?) e.NewValue));
+            nb.OnValueChanged?.Invoke(nb, new NumericBoxValueChangedEventArgs((double?)e.OldValue, (double?)e.NewValue));
         }
 
         private void btnIncrease_Click(object sender, RoutedEventArgs e)
@@ -310,10 +391,162 @@ namespace Infra.Wpf.Controls
                 btnDecrease_Click(sender, new RoutedEventArgs());
                 return;
             }
-
-            if ((e.Key < Key.D0 || e.Key > Key.D9) && (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) && e.Key != Key.Back && e.Key != Key.Delete &&
-                e.Key != Key.Right && e.Key != Key.Left && e.Key != Key.Enter && e.Key != Key.Tab)
+            else if ((e.Key == Key.Decimal || (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.OemPeriod)) &&
+                    (Format.Substring(1, Format.Length - 1) == "0" || txtNumericEditor.Text.Contains(".")))
                 e.Handled = true;
+            else if ((e.Key == Key.Subtract || (Keyboard.Modifiers == ModifierKeys.None && e.Key == Key.OemMinus)) &&
+                    (txtNumericEditor.SelectionStart != 0 || txtNumericEditor.Text.Contains("-")))
+                e.Handled = true;
+            else if (e.Key == Key.Delete && Keyboard.Modifiers == ModifierKeys.None)
+            {
+                isDeletePressed = true;
+                txtNumericEditor_TextChanged(this, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Create) { Source = txtNumericEditor });
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Back && Keyboard.Modifiers == ModifierKeys.None)
+            {
+                isBacksapcePressed = true;
+                txtNumericEditor_TextChanged(this, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Create) { Source = txtNumericEditor });
+                e.Handled = true;
+            }
+            else if ((e.Key < Key.D0 || e.Key > Key.D9) && (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) &&
+                e.Key != Key.Right && e.Key != Key.Left && e.Key != Key.Enter && e.Key != Key.Tab && e.Key != Key.Home && e.Key != Key.End &&
+                e.Key != Key.Decimal && (e.Key != Key.OemPeriod || (e.Key == Key.OemPeriod && Keyboard.Modifiers != ModifierKeys.None)) &&
+                e.Key != Key.Subtract && (e.Key != Key.OemMinus || (e.Key == Key.OemMinus && Keyboard.Modifiers != ModifierKeys.None)))
+                e.Handled = true;
+        }
+
+        private void txtNumericEditor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (changeByTextChanged)
+            {
+                changeByTextChanged = false;
+                return;
+            }
+
+            if (isDeletePressed)
+            {
+                isDeletePressed = false;
+                if (txtNumericEditor.SelectionStart != txtNumericEditor.Text.Length)
+                {
+                    if (txtNumericEditor.SelectionLength > 0)
+                        txtNumericEditor.SelectedText = "";
+                    else if (txtNumericEditor.SelectionStart < (txtNumericEditor.Text.Length - 1) && txtNumericEditor.Text[txtNumericEditor.SelectionStart] == ',')
+                    {
+                        txtNumericEditor.SelectionLength = 2;
+                        txtNumericEditor.SelectedText = "";
+                    }
+                    else
+                    {
+                        txtNumericEditor.SelectionLength = 1;
+                        txtNumericEditor.SelectedText = "";
+                    }
+                }
+                return;
+            }
+
+            if (isBacksapcePressed)
+            {
+                isBacksapcePressed = false;
+                if (txtNumericEditor.SelectionStart != 0)
+                {
+                    if (txtNumericEditor.SelectionLength > 0)
+                        txtNumericEditor.SelectedText = "";
+                    else if (txtNumericEditor.SelectionStart > 1 && txtNumericEditor.Text[txtNumericEditor.SelectionStart - 1] == ',')
+                    {
+                        txtNumericEditor.SelectionStart -= 2;
+                        txtNumericEditor.SelectionLength = 2;
+                        txtNumericEditor.SelectedText = "";
+                    }
+                    else
+                    {
+                        txtNumericEditor.SelectionStart--;
+                        txtNumericEditor.SelectionLength = 1;
+                        txtNumericEditor.SelectedText = "";
+                    }
+                }
+                return;
+            }
+
+            if (Format[0].ToString().ToLower() == "f")
+                return;
+            if (string.IsNullOrWhiteSpace(txtNumericEditor.Text))
+                return;
+
+            string minus = txtNumericEditor.Text[0] == '-' ? "-" : "";
+
+            string decimalPart = "";
+            int decimalPoint = txtNumericEditor.Text.IndexOf(".");
+            if (Format.Substring(1, Format.Length - 1) != "0" && decimalPoint != (-1))
+                decimalPart = txtNumericEditor.Text.Substring(decimalPoint, txtNumericEditor.Text.Length - decimalPoint);
+
+            int startPoint = 0;
+            if (string.IsNullOrEmpty(minus) == false)
+                startPoint = 1;
+
+            string intPart = txtNumericEditor.Text.Substring(startPoint, txtNumericEditor.Text.Length - decimalPart.Length - minus.Length);
+            intPart = CleanSeparator(intPart);
+            string seperatedIntPart = GetSeparatedNumber(intPart);
+
+            var currentSelectionStart = txtNumericEditor.SelectionStart;
+            var currentText = txtNumericEditor.Text;
+            changeByTextChanged = true;
+            txtNumericEditor.Text = minus + seperatedIntPart + decimalPart;
+            changeByTextChanged = false;
+            txtNumericEditor.SelectionStart = CalculateSelectionStart(currentSelectionStart, intPart.Length, currentText, minus.Length > 0);
+        }
+
+        public int CalculateSelectionStart(int currentSelectionStart, int intPartLength, string currentText, bool minus)
+        {
+            if (currentSelectionStart == 0)
+                return 0;
+
+            int commaCount = 0;
+            for (int i = 0; i < currentSelectionStart; i++)
+            {
+                if (currentText[i] == ',')
+                    commaCount++;
+            }
+            currentSelectionStart -= commaCount;
+
+            int separatorCount = (intPartLength - 1) / 3;
+            int separatorBeforeSelection;
+            if (currentSelectionStart > intPartLength)
+                separatorBeforeSelection = separatorCount;
+            else
+                separatorBeforeSelection = separatorCount - ((intPartLength - currentSelectionStart + Convert.ToInt32(minus)) / 3);
+
+            return currentSelectionStart + separatorBeforeSelection;
+        }
+
+        private string CleanSeparator(string digit)
+        {
+            if (string.IsNullOrWhiteSpace(digit))
+                return "";
+
+            string result = "";
+            for (int i = digit.Length - 1; i >= 0; i--)
+            {
+                if (digit[i] != ',')
+                    result = result.Insert(0, digit[i].ToString());
+            }
+
+            return result;
+        }
+
+        private string GetSeparatedNumber(string digit)
+        {
+            if (string.IsNullOrWhiteSpace(digit))
+                return "";
+
+            string result = digit;
+            for (int i = 1; i <= (digit.Length - 1) / 3; i++)
+            {
+                int separatorPos = digit.Length - (i * 3);
+                result = result.Insert(separatorPos, ",");
+            }
+
+            return result;
         }
 
         #endregion

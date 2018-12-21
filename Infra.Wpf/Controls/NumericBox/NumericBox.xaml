@@ -36,8 +36,8 @@
                 <TextBox x:Name="txtNumericEditor" Margin="0,0,3,0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                          BorderBrush="Transparent" FlowDirection="LeftToRight" MouseWheel="txtNumericEditor_MouseWheel"
                          GotKeyboardFocus="txtNumericEditor_GotKeyboardFocus" PreviewMouseLeftButtonDown="txtNumericEditor_PreviewMouseLeftButtonDown"
-                         KeyDown="txtNumericEditor_KeyDown" PreviewKeyDown="txtNumericEditor_PreviewKeyDown"
-                         Foreground="{Binding Foreground,ElementName=numericEditor}" Background="{Binding Background,ElementName=numericEditor}"/>
+                         KeyDown="txtNumericEditor_KeyDown" PreviewKeyDown="txtNumericEditor_PreviewKeyDown" TextChanged="txtNumericEditor_TextChanged"
+                         Foreground="{Binding Foreground,ElementName=numericEditor}" Background="{Binding Background,ElementName=numericEditor}" Text="{Binding Text,ElementName=numericEditor}"/>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>

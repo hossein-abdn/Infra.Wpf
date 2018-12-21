@@ -27,23 +27,33 @@ namespace TestControls
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Infra.Wpf.Controls.CheckBoxViewModel> MultiSelectVM { get; set; }
-
         public MainWindow()
         {
             var context = new MainWindowVM { View = this };
             DataContext = context;
             InitializeComponent();
-
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var t = ((MainWindowVM)DataContext);//.Model;
+            var t = ((MainWindowVM)DataContext);
+        }
 
-            CultureInfo culture = new CultureInfo("fa-IR");
-            var t1 = culture.NumberFormat;
+
+
+        private string GetSepratedNumber(string digit)
+        {
+            if (string.IsNullOrWhiteSpace(digit))
+                return "";
+
+            string result = digit;
+            for (int i = 1; i <= (digit.Length - 1) / 3; i++)
+            {
+                int sepratorPos = digit.Length - (i * 3);
+                result = result.Insert(sepratorPos, ",");
+            }
+
+            return result;
         }
     }
 }
