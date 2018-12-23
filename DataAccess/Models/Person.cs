@@ -51,10 +51,6 @@ namespace DataAccess.Models
         [Display(Name = "وضعیت")]
         public Enums.RecordStatus RecordStatusId { get { return Get<Enums.RecordStatus>(); } set { Set(value); } } // RecordStatusId
 
-        [NotMapped]
-        [Required]
-        public System.TimeSpan TimeTest { get { return Get<System.TimeSpan>(); } set { Set(value); } } // TimeTest
-
         // Reverse navigation
 
         /// <summary>

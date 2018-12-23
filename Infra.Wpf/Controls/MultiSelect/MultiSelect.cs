@@ -185,6 +185,7 @@ namespace Infra.Wpf.Controls
             };
 
             scroll = (ScrollViewer)Template.FindName("scroll", this);
+            SetValidationStyle();
 
             base.OnApplyTemplate();
         }
@@ -256,7 +257,6 @@ namespace Infra.Wpf.Controls
                 SelectedIndices = new List<int>();
             foreach (var item in Items)
                 OnItemsChanged(Items, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, itemContainers.Count));
-            SetValidationStyle();
         }
 
         private void MultiSelect_KeyDown(object sender, KeyEventArgs e)

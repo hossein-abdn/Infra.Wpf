@@ -62,9 +62,7 @@ namespace Infra.Wpf.Mvvm
         public void GoBack()
         {
             if (NavigationFrame?.CanGoBack ?? false)
-            {
                 NavigationFrame.GoBack();
-            }
         }
     }
 }

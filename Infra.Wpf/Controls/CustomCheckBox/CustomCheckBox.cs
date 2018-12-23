@@ -12,16 +12,12 @@ namespace Infra.Wpf.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomCheckBox), new FrameworkPropertyMetadata(typeof(CustomCheckBox)));
         }
 
-        public CustomCheckBox()
-        {
-            Loaded += CustomCheckBox_Loaded;
-        }
-
-        private void CustomCheckBox_Loaded(object sender, RoutedEventArgs e)
+        public override void OnApplyTemplate()
         {
             SetValidationStyle();
+            base.OnApplyTemplate();
         }
-
+        
         private void SetValidationStyle()
         {
             var style = new Style();

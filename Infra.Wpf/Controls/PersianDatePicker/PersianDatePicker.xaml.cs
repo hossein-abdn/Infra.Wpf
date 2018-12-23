@@ -182,8 +182,12 @@ namespace Infra.Wpf.Controls
 
             if (IsFocused == true)
                 this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+        }
 
+        public override void OnApplyTemplate()
+        {
             SetValidationStyle();
+            base.OnApplyTemplate();
         }
 
         private void SetValidationStyle()

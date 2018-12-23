@@ -30,9 +30,12 @@ namespace Infra.Wpf.Common.Helpers
             var copyInstance = Activator.CreateInstance(sourceType);
 
             foreach (var property in sourceProperties)
-                property.SetValue(copyInstance, property.GetValue(@this));
+            {
+                if (property.CanWrite)
+                    property.SetValue(copyInstance, property.GetValue(@this));
+            }
 
-            return (T) copyInstance;
+            return (T)copyInstance;
         }
 
         public static T DeepCopy<T>(this T item)
@@ -84,12 +87,12 @@ namespace Infra.Wpf.Common.Helpers
 
         public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
-            return (Expression<Func<T, bool>>) DynamicExpression.ParseLambda(typeof(T), typeof(bool), "@0(it) and @1(it)", first, second);
+            return (Expression<Func<T, bool>>)DynamicExpression.ParseLambda(typeof(T), typeof(bool), "@0(it) and @1(it)", first, second);
         }
 
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
-            return (Expression<Func<T, bool>>) DynamicExpression.ParseLambda(typeof(T), typeof(bool), "@0(it) or @1(it)", first, second);
+            return (Expression<Func<T, bool>>)DynamicExpression.ParseLambda(typeof(T), typeof(bool), "@0(it) or @1(it)", first, second);
         }
 
         public static Binding Clone(this Binding original)
@@ -124,11 +127,11 @@ namespace Infra.Wpf.Common.Helpers
 
             var attrib = obj?.GetCustomAttributes(typeof(MaxLengthAttribute), false);
             if (attrib != null && attrib.Count() > 0)
-                return ((MaxLengthAttribute) attrib[0]).Length;
+                return ((MaxLengthAttribute)attrib[0]).Length;
 
             attrib = obj?.GetCustomAttributes(typeof(StringLengthAttribute), false);
             if (attrib != null && attrib.Count() > 0)
-                return ((StringLengthAttribute) attrib[0]).MaximumLength;
+                return ((StringLengthAttribute)attrib[0]).MaximumLength;
 
             return null;
         }
@@ -147,11 +150,11 @@ namespace Infra.Wpf.Common.Helpers
             foreach (var item in LogicalTreeHelper.GetChildren(current))
             {
                 if (item.GetType() == typeof(T))
-                    return (T) item;
+                    return (T)item;
 
                 if (item is DependencyObject)
                 {
-                    var result = FindObject<T>((DependencyObject) item);
+                    var result = FindObject<T>((DependencyObject)item);
                     if (result != null)
                         return result;
                 }

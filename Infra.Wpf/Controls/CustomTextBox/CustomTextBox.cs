@@ -50,8 +50,12 @@ namespace Infra.Wpf.Controls
                     ChangeLanguage("fa-IR");
                     break;
             }
+        }
 
+        public override void OnApplyTemplate()
+        {
             SetValidationStyle();
+            base.OnApplyTemplate();
         }
 
         private void SetValidationStyle()

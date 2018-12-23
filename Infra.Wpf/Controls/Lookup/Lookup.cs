@@ -244,6 +244,7 @@ namespace Infra.Wpf.Controls
             validationBorder = Template.FindName("validationBorder", this) as Border;
             textboxPart = Template.FindName("textbox_PART", this) as TextBox;
             textboxPart.KeyDown += CustomTextBox_KeyDown;
+            SetValidationStyle();
             base.OnApplyTemplate();
         }
 
@@ -273,8 +274,6 @@ namespace Infra.Wpf.Controls
                 SelectedIds = tmpSelectedIds;
                 SelectedItems = tmpSelectedItems;
             }
-
-            SetValidationStyle();
         }
 
         private void SetValidationStyle()
