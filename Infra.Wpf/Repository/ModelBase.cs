@@ -65,6 +65,8 @@ namespace Infra.Wpf.Repository
 
         private bool isConfigDataAnnotation { get; set; }
 
+        private List<string> excludeValidation { get; set; }
+
         #endregion
 
         #region Methods
@@ -80,6 +82,9 @@ namespace Infra.Wpf.Repository
         {
             foreach (var item in modelProperties)
             {
+                if (excludeValidation?.Any(x => x == item.Name) ?? false)
+                    break;
+
                 var isNullable = Nullable.GetUnderlyingType(item.PropertyType) != null;
                 Type type = isNullable == true ? Nullable.GetUnderlyingType(item.PropertyType) : item.PropertyType;
                 var isRequired = item.IsRequired();
@@ -255,7 +260,7 @@ namespace Infra.Wpf.Repository
         {
             object val;
             if (members.TryGetValue(prop, out val))
-                return (T) val;
+                return (T)val;
 
             return default(T);
         }
@@ -417,7 +422,7 @@ namespace Infra.Wpf.Repository
                 action();
             }
 
-            propertyRules.ForEach(x => x.ApplyCondition(ctx => predicate((T) ctx.InstanceToValidate)));
+            propertyRules.ForEach(x => x.ApplyCondition(ctx => predicate((T)ctx.InstanceToValidate)));
         }
 
         public void Unless(Func<T, bool> predicate, Action action)
@@ -431,6 +436,11 @@ namespace Infra.Wpf.Repository
                 throw new ArgumentNullException("Cannot pass null to Include");
             var rule = IncludeRule.Create<T>(rulesToInclude, () => CascadeMode);
             NestedValidators.Add(rule);
+        }
+
+        public void Exclude(string[] propList)
+        {
+            excludeValidation = new List<string>(propList);
         }
 
         #endregion
