@@ -71,7 +71,6 @@ namespace Infra.Wpf.Controls
                         filterValue = targetInfo?.GetValue(FilterItem)?.ToString();
                         targetType = targetInfo?.PropertyType;
                     }
-
                     else
                     {
                         filterValue = FilterItem.ToString();
@@ -139,6 +138,19 @@ namespace Infra.Wpf.Controls
 
         private string GetDisplayName()
         {
+            if (!string.IsNullOrWhiteSpace(FilterField))
+            {
+                var propInfo = ModelType?.GetProperty(FilterField);
+                if (propInfo != null)
+                {
+                    var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
+                    if (attrib != null && attrib.Count() > 0)
+                        return ((DisplayAttribute)attrib[0]).Name;
+                }
+
+                return FilterField;
+            }
+
             BindingExpression bindEx = BindingOperations.GetBindingExpression(this, SelectedItemProperty);
             if (bindEx != null && !string.IsNullOrEmpty(bindEx.ResolvedSourcePropertyName))
             {
@@ -165,19 +177,6 @@ namespace Infra.Wpf.Controls
                     if (!string.IsNullOrEmpty(result))
                         return result;
                 }
-            }
-
-            if (!string.IsNullOrWhiteSpace(FilterField))
-            {
-                var propInfo = ModelType?.GetProperty(FilterField);
-                if (propInfo != null)
-                {
-                    var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
-                    if (attrib != null && attrib.Count() > 0)
-                        return ((DisplayAttribute) attrib[0]).Name;
-                }
-
-                return FilterField;
             }
 
             return string.Empty;

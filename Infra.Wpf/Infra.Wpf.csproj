@@ -225,6 +225,7 @@
     <Compile Include="Business\SelectBusiness.cs" />
     <Compile Include="Business\UpdateBusiness.cs" />
     <Compile Include="Common\Converters\DefaultValueConverter.cs" />
+    <Compile Include="Common\Helpers\ButtonCommand.cs" />
     <Compile Include="Common\Helpers\ConnectionStringHelper.cs" />
     <Compile Include="Controls\Fields\BoolField.cs" />
     <Compile Include="Controls\Fields\Common.cs" />

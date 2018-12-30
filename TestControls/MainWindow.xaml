@@ -31,11 +31,10 @@
                 </Style>
             </GroupBox.Style>
 
-            <ctl:EditViewPanel>
-                <ctl:TextField/>
-                <ctl:TextField/>
-                <ctl:TextField/>
-            </ctl:EditViewPanel>
+            <StackPanel>
+                <ctl:ImageButton Image="C:\Users\Hossein\Documents\Visual Studio 2017\Projects\HomeAccounting\HomeAccounting.UI\Resources\Add-32.png" ImageSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+            
         </GroupBox>
 
         <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Content="click" Click="Button_Click"/>

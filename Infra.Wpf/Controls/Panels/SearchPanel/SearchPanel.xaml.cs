@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Data;
 using System;
+using System.Collections.Generic;
 
 namespace Infra.Wpf.Controls
 {
@@ -20,20 +21,20 @@ namespace Infra.Wpf.Controls
 
         public FieldCollection SearchFields { get; set; }
 
-        public string SearchPhrase
+        public List<KeyValuePair<string, string>> SearchPhraseList
         {
-            get { return (string) GetValue(SearchPhraseProperty); }
-            set { SetValue(SearchPhraseProperty, value); }
+            get { return (List<KeyValuePair<string, string>>)GetValue(SearchPhraseListProperty); }
+            set { SetValue(SearchPhraseListProperty, value); }
         }
 
-        public static readonly DependencyProperty SearchPhraseProperty =
-            DependencyProperty.Register("SearchPhrase", typeof(string), typeof(SearchPanel), new PropertyMetadata(null));
+        public static readonly DependencyProperty SearchPhraseListProperty =
+            DependencyProperty.Register("SearchPhraseList", typeof(List<KeyValuePair<string, string>>), typeof(SearchPanel), new PropertyMetadata(null));
 
         public RelayCommand ClearCommand { get; set; }
 
         public ICommand SearchCommand
         {
-            get { return (ICommand) GetValue(SearchCommandProperty); }
+            get { return (ICommand)GetValue(SearchCommandProperty); }
             set { SetValue(SearchCommandProperty, value); }
         }
 
@@ -42,7 +43,7 @@ namespace Infra.Wpf.Controls
 
         public bool Stretch
         {
-            get { return (bool) GetValue(StretchProperty); }
+            get { return (bool)GetValue(StretchProperty); }
             set { SetValue(StretchProperty, value); }
         }
 
@@ -52,7 +53,7 @@ namespace Infra.Wpf.Controls
 
         public double ColumnMargin
         {
-            get { return (double) GetValue(ColumnMarginProperty); }
+            get { return (double)GetValue(ColumnMarginProperty); }
             set { SetValue(ColumnMarginProperty, value); }
         }
 
@@ -60,7 +61,7 @@ namespace Infra.Wpf.Controls
 
         public double RowMargin
         {
-            get { return (double) GetValue(RowMarginProperty); }
+            get { return (double)GetValue(RowMarginProperty); }
             set { SetValue(RowMarginProperty, value); }
         }
 
@@ -68,7 +69,7 @@ namespace Infra.Wpf.Controls
 
         public bool IsExpanded
         {
-            get { return (bool) GetValue(IsExpandedProperty); }
+            get { return (bool)GetValue(IsExpandedProperty); }
             set { SetValue(IsExpandedProperty, value); }
         }
 
@@ -154,24 +155,20 @@ namespace Infra.Wpf.Controls
                 item.SearchPhraseChanged += GenerateShearchPhrase;
 
                 searchpanel.Children.Add(displayText);
-                searchpanel.Children.Add((Control) item);
+                searchpanel.Children.Add((Control)item);
             }
         }
 
         private void GenerateShearchPhrase()
         {
-            string result = "";
+            var result = new List<KeyValuePair<string, string>>();
             foreach (var item in SearchFields)
             {
                 if (string.IsNullOrWhiteSpace(item.SearchPhrase) == false)
-                {
-                    if (string.IsNullOrWhiteSpace(result) == false)
-                        result = result + " AND ";
-                    result = result + item.SearchPhrase;
-                }
+                    result.Add(new KeyValuePair<string, string>(item.FilterField, item.SearchPhrase));
             }
 
-            SetValue(SearchPhraseProperty, result);
+            SetValue(SearchPhraseListProperty, result);
         }
 
         private void ClearExecute()
@@ -182,12 +179,12 @@ namespace Infra.Wpf.Controls
 
         private static void RowMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var @this = ((SearchPanel) d);
+            var @this = ((SearchPanel)d);
             var margin = @this.Submit.Margin;
-            @this.Submit.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
+            @this.Submit.Margin = new Thickness(margin.Left, margin.Top + (double)e.NewValue, margin.Right, margin.Bottom);
 
             margin = @this.Clear.Margin;
-            @this.Clear.Margin = new Thickness(margin.Left, margin.Top + (double) e.NewValue, margin.Right, margin.Bottom);
+            @this.Clear.Margin = new Thickness(margin.Left, margin.Top + (double)e.NewValue, margin.Right, margin.Bottom);
         }
 
         private void mainpanel_KeyDown(object sender, KeyEventArgs e)
@@ -195,7 +192,7 @@ namespace Infra.Wpf.Controls
             if (e.Key == Key.Enter)
             {
                 if (SearchCommand != null)
-                    SearchCommand.Execute(SearchPhrase);
+                    SearchCommand.Execute(SearchPhraseList);
             }
         }
 

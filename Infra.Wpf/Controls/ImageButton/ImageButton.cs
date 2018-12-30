@@ -29,14 +29,18 @@ namespace Infra.Wpf.Controls
 
         private void ImageButton_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            Image image = (Image)Template.FindName("image", this);
+
             if (Image == null)
+            {
                 MouseOverImage = null;
-            
+                image.Visibility = Visibility.Collapsed;
+            }
             else
             {
-                Image image = (Image)Template.FindName("image", this);
-                image.Margin = new Thickness(0, 0, 7, 0);
+                if (Content != null)
+                    image.Margin = new Thickness(0, 0, 7, 0);
+
                 if (MouseOverImage == null)
                     MouseOverImage = Image;
             }
@@ -44,7 +48,7 @@ namespace Infra.Wpf.Controls
 
         public ImageSource Image
         {
-            get { return (ImageSource) GetValue(ImageProperty); }
+            get { return (ImageSource)GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
         }
 
@@ -53,7 +57,7 @@ namespace Infra.Wpf.Controls
 
         public ImageSource MouseOverImage
         {
-            get { return (ImageSource) GetValue(MouseOverImageProperty); }
+            get { return (ImageSource)GetValue(MouseOverImageProperty); }
             set { SetValue(MouseOverImageProperty, value); }
         }
 
@@ -62,7 +66,7 @@ namespace Infra.Wpf.Controls
 
         public double ImageSize
         {
-            get { return (double) GetValue(ImageSizeProperty); }
+            get { return (double)GetValue(ImageSizeProperty); }
             set { SetValue(ImageSizeProperty, value); }
         }
 
