@@ -43,8 +43,8 @@ namespace DataAccess.Models
         public System.Data.Entity.DbSet<TransactionLabel> TransactionLabels { get; set; } // TransactionLabel
         public System.Data.Entity.DbSet<User> Users { get; set; } // User
         public System.Data.Entity.DbSet<UserRole> UserRoles { get; set; } // UserRole
-        public System.Data.Entity.DbSet<VUserRole> VUserRoles { get; set; } // V_UserRole
-        public System.Data.Entity.DbSet<VUserRolePermission> VUserRolePermissions { get; set; } // V_UserRolePermission
+        public System.Data.Entity.DbSet<V_UserRole> V_UserRoles { get; set; } // V_UserRole
+        public System.Data.Entity.DbSet<V_UserRolePermission> V_UserRolePermissions { get; set; } // V_UserRolePermission
 
         static AccountingContext()
         {
@@ -119,8 +119,8 @@ namespace DataAccess.Models
             modelBuilder.Configurations.Add(new TransactionLabelMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new UserRoleMap());
-            modelBuilder.Configurations.Add(new VUserRoleMap());
-            modelBuilder.Configurations.Add(new VUserRolePermissionMap());
+            modelBuilder.Configurations.Add(new V_UserRoleMap());
+            modelBuilder.Configurations.Add(new V_UserRolePermissionMap());
 
             OnModelCreatingPartial(modelBuilder);
         }
@@ -147,8 +147,8 @@ namespace DataAccess.Models
             modelBuilder.Configurations.Add(new TransactionLabelMap(schema));
             modelBuilder.Configurations.Add(new UserMap(schema));
             modelBuilder.Configurations.Add(new UserRoleMap(schema));
-            modelBuilder.Configurations.Add(new VUserRoleMap(schema));
-            modelBuilder.Configurations.Add(new VUserRolePermissionMap(schema));
+            modelBuilder.Configurations.Add(new V_UserRoleMap(schema));
+            modelBuilder.Configurations.Add(new V_UserRolePermissionMap(schema));
             return modelBuilder;
         }
 
@@ -156,7 +156,7 @@ namespace DataAccess.Models
         partial void OnModelCreatingPartial(System.Data.Entity.DbModelBuilder modelBuilder);
 
         // Stored Procedures
-        public int SpSetDisplayName(string schema, string table, string column, string displayname)
+        public int sp_SetDisplayName(string schema, string table, string column, string displayname)
         {
             var schemaParam = new System.Data.SqlClient.SqlParameter { ParameterName = "@schema", SqlDbType = System.Data.SqlDbType.NVarChar, Direction = System.Data.ParameterDirection.Input, Value = schema, Size = 30 };
             if (schemaParam.Value == null)

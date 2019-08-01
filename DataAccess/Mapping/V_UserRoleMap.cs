@@ -20,14 +20,14 @@ namespace DataAccess.Mapping
 
     // V_UserRole
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class VUserRoleMap : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<VUserRole>
+    public partial class V_UserRoleMap : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<V_UserRole>
     {
-        public VUserRoleMap()
+        public V_UserRoleMap()
             : this("dbo")
         {
         }
 
-        public VUserRoleMap(string schema)
+        public V_UserRoleMap(string schema)
         {
             ToTable("V_UserRole", schema);
             Property(x => x.UserId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);

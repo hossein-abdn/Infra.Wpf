@@ -26,40 +26,52 @@ namespace DataAccess.Models
         ///<summary>
         /// جدول گروه های تراکنش
         ///</summary>
-        [Column(@"TransactionGruopId", Order = 1, TypeName = "int")]
+        [Column(@"TransactionGroupId", Order = 1, TypeName = "int")]
         [Required]
         [Key]
-        public int TransactionGruopId { get { return Get<int>(); } set { Set(value); } } // TransactionGruopId (Primary key)
+        public int TransactionGroupId { get { return Get<int>(); } set { Set(value); } } // TransactionGroupId (Primary key)
 
         [Required]
         [MaxLength(50)]
         [StringLength(50)]
+        [Display(Name = "عنوان")]
         public string Title { get { return Get<string>(); } set { Set(value); } } // Title (length: 50)
 
         [Required]
-        public int TypeId { get { return Get<int>(); } set { Set(value); } } // TypeId
+        [Display(Name = "نوع گروه")]
+        public Enums.TransactionGroupType TypeId { get { return Get<Enums.TransactionGroupType>(); } set { Set(value); } } // TypeId
 
+        [Display(Name = "گروه مادر")]
         public int? ParentId { get { return Get<int?>(); } set { Set(value); } } // ParentId
 
         [Required]
         public int UserId { get { return Get<int>(); } set { Set(value); } } // UserId
 
         [Required]
+        [Display(Name = "تاریخ ایجاد")]
         public System.DateTime CreateDate { get { return Get<System.DateTime>(); } set { Set(value); } } // CreateDate
 
         [Required]
+        [Display(Name = "وضعیت")]
         public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
+
+        [Display(Name = "ترتیب نمایش")]
+        public int? OrderItem { get { return Get<int?>(); } set { Set(value); } } // OrderItem
+
+        [MaxLength(50)]
+        [StringLength(50)]
+        public string ParentPath { get { return Get<string>(); } set { Set(value); } } // ParentPath (length: 50)
 
         // Reverse navigation
 
         /// <summary>
-        /// Child Transactions where [Transaction].[TransactionGroupId] point to this entity (FK_Transaction_TransactionGroup)
-        /// </summary>
-        public virtual System.Collections.Generic.ICollection<Transaction> TransactionGroupId { get; set; } // Transaction.FK_Transaction_TransactionGroup
-        /// <summary>
         /// Child Transactions where [Transaction].[TransactionGroupParentId] point to this entity (FK_Transaction_TransactionGroup_Parent)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Transaction> TransactionGroupParent { get; set; } // Transaction.FK_Transaction_TransactionGroup_Parent
+        /// <summary>
+        /// Child Transactions where [Transaction].[TransactionGroupId] point to this entity (FK_Transaction_TransactionGroup)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<Transaction> Transactions_TransactionGroupId { get; set; } // Transaction.FK_Transaction_TransactionGroup
         /// <summary>
         /// Child TransactionGroups where [TransactionGroup].[ParentId] point to this entity (FK_TransactionGroup_TransactionGroup)
         /// </summary>
@@ -79,7 +91,7 @@ namespace DataAccess.Models
 
         public TransactionGroup()
         {
-            TransactionGroupId = new System.Collections.Generic.List<Transaction>();
+            Transactions_TransactionGroupId = new System.Collections.Generic.List<Transaction>();
             TransactionGroupParent = new System.Collections.Generic.List<Transaction>();
             TransactionGroups = new System.Collections.Generic.List<TransactionGroup>();
             InitializePartial();

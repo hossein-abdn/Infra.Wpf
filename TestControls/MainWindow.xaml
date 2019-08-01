@@ -14,30 +14,33 @@
         Width="400"
         FontFamily="IRANSans">
 
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=textField}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <GroupBox>
+        <GroupBox Grid.Column="1">
             <GroupBox.Style>
-                <Style TargetType="{x:Type GroupBox}">
+                <Style TargetType="GroupBox">
                     <Setter Property="FlowDirection" Value="RightToLeft"/>
-                    <Setter Property="Header" Value="{Binding ViewTitle}"/>
+                    <Setter Property="Header" Value="تست"/>
                     <Setter Property="Margin" Value="10"/>
                     <Setter Property="FontSize" Value="15"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                     <Setter Property="Padding" Value="5"/>
                 </Style>
             </GroupBox.Style>
-
-            <StackPanel>
-                <ctl:ImageButton Image="C:\Users\Hossein\Documents\Visual Studio 2017\Projects\HomeAccounting\HomeAccounting.UI\Resources\Add-32.png" ImageSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </StackPanel>
-            
+            <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ModelType="model:Person" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10">
+                <ctl:EditViewPanel.EditFields>
+                    <ctl:TextField Name="textField" Title="نام"/>
+                    <ctl:NumericField Title="رتبه" MinValue="1"/>
+                    <ctl:ComboField/>
+                </ctl:EditViewPanel.EditFields>
+            </ctl:EditViewPanel>
         </GroupBox>
-
-        <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Content="click" Click="Button_Click"/>
-        <!--<TextBox Name="txt"/>-->
     </Grid>
 </Window>

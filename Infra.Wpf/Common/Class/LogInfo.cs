@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using Infra.Wpf.Controls;
 
-namespace Infra.Wpf.Business
+namespace Infra.Wpf.Common
 {
     public class LogInfo : ILogInfo
     {
@@ -31,5 +30,6 @@ namespace Infra.Wpf.Business
         public DbEntityEntry Entry { get; set; }
 
         public LogType LogType { get; set; }
+        LogType ILogInfo.LogType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

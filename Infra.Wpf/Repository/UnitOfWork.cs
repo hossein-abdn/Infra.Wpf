@@ -1,7 +1,7 @@
 ﻿using Infra.Wpf.Business;
+using Infra.Wpf.Common;
 using Infra.Wpf.Security;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
@@ -18,21 +18,21 @@ namespace Infra.Wpf.Repository
 
         protected DbContext Context { get; set; }
 
-        protected Logger Logger { get; set; }
+        protected ILogger Logger { get; set; }
 
         public UnitOfWork(DbContext context)
         {
             this.Context = context;
         }
 
-        public UnitOfWork(DbContext context, Logger logger) : this(context)
+        public UnitOfWork(DbContext context, ILogger logger) : this(context)
         {
             Logger = logger;
         }
 
-        public Repository<TEntity> GetRepository<TEntity>(bool logOnException = true) where TEntity : class
+        public Repository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
-            return new Repository<TEntity>(Context, Logger, logOnException);
+            return new Repository<TEntity>(Context, Logger);
         }
 
         protected virtual void Dispose(bool disposing)

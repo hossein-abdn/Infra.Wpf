@@ -30,13 +30,15 @@ namespace DataAccess.Mapping
         public TransactionGroupMap(string schema)
         {
             ToTable("TransactionGroup", schema);
-            Property(x => x.TransactionGruopId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(x => x.TransactionGroupId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(x => x.Title).HasColumnName(@"Title").HasColumnType("nvarchar");
             Property(x => x.TypeId).HasColumnName(@"TypeId").HasColumnType("int");
             Property(x => x.ParentId).HasColumnName(@"ParentId").HasColumnType("int").IsOptional();
             Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("int");
             Property(x => x.CreateDate).HasColumnName(@"CreateDate").HasColumnType("datetime");
             Property(x => x.RecordStatusId).HasColumnName(@"RecordStatusId").HasColumnType("int");
+            Property(x => x.OrderItem).HasColumnName(@"OrderItem").HasColumnType("int").IsOptional();
+            Property(x => x.ParentPath).HasColumnName(@"ParentPath").HasColumnType("nvarchar").IsOptional();
 
             // Foreign keys
             HasOptional(a => a.Parent).WithMany(b => b.TransactionGroups).HasForeignKey(c => c.ParentId).WillCascadeOnDelete(false); // FK_TransactionGroup_TransactionGroup

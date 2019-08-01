@@ -49,7 +49,7 @@ namespace DataAccess.Mapping
             HasOptional(a => a.TransactionGroupParent).WithMany(b => b.TransactionGroupParent).HasForeignKey(c => c.TransactionGroupParentId).WillCascadeOnDelete(false); // FK_Transaction_TransactionGroup_Parent
             HasOptional(a => a.TransferTransaction).WithMany(b => b.Transactions).HasForeignKey(c => c.TransferTransactionId).WillCascadeOnDelete(false); // FK_TransferTransaction_Transaction
             HasRequired(a => a.Account).WithMany(b => b.Transactions).HasForeignKey(c => c.AccountId).WillCascadeOnDelete(false); // FK_Transaction_Account
-            HasRequired(a => a.TransactionGroup_TransactionGroupId).WithMany(b => b.TransactionGroupId).HasForeignKey(c => c.TransactionGroupId).WillCascadeOnDelete(false); // FK_Transaction_TransactionGroup
+            HasRequired(a => a.TransactionGroup_TransactionGroupId).WithMany(b => b.Transactions_TransactionGroupId).HasForeignKey(c => c.TransactionGroupId).WillCascadeOnDelete(false); // FK_Transaction_TransactionGroup
             HasRequired(a => a.User).WithMany(b => b.Transactions).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false); // FK_Transaction_User
             InitializePartial();
         }

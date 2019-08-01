@@ -9,25 +9,15 @@ namespace Infra.Wpf.Controls
 {
     public class CustomCheckBoxColumn : DataGridCheckBoxColumn
     {
-        public bool IsSelectable { get; set; }
-
         public override void BindCellContent(FrameworkElement cellContent, DataGridRow row)
         {
-            System.Windows.Controls.CheckBox checkBox = (System.Windows.Controls.CheckBox) cellContent;
+            System.Windows.Controls.CheckBox checkBox = (System.Windows.Controls.CheckBox)cellContent;
+
             if (Binding != null)
             {
-                if (IsSelectable == false)
-                {
-                    Binding newBinding = base.CopyBinding(Binding);
-                    newBinding.Source = row.DataItem;
-                    checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
-                }
-                else
-                {
-                    Binding newBinding = base.CopyBinding(Binding);
-                    newBinding.Source = ((List<CheckBoxViewModel>) (newBinding.Source))?.Where(x => x.Item.Equals(row.DataItem)).FirstOrDefault();
-                    checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
-                }
+                Binding newBinding = base.CopyBinding(Binding);
+                newBinding.Source = row.DataItem;
+                checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
             }
             checkBox.HorizontalAlignment = base.HorizontalAlignment;
             checkBox.VerticalAlignment = base.VerticalAlignment;
@@ -39,14 +29,14 @@ namespace Infra.Wpf.Controls
         {
             if (IsSelectable == true)
             {
-                var checkBox = (System.Windows.Controls.CheckBox) base.GetCellEditingContent(row);
+                var checkBox = (System.Windows.Controls.CheckBox)base.GetCellEditingContent(row);
                 checkBox.HorizontalAlignment = base.HorizontalAlignment;
                 checkBox.VerticalAlignment = base.VerticalAlignment;
                 checkBox.Margin = new System.Windows.Thickness(4, 4, 4, 4);
                 checkBox.FlowDirection = FlowDirection.LeftToRight;
 
                 Binding newBinding = base.CopyBinding(Binding);
-                newBinding.Source = ((List<CheckBoxViewModel>) (newBinding.Source))?.Where(x => x.Item.Equals(row.DataItem)).FirstOrDefault();
+                newBinding.Source = row.DataItem;
                 checkBox.SetBinding(System.Windows.Controls.CheckBox.IsCheckedProperty, newBinding);
 
                 return checkBox;

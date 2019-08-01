@@ -40,8 +40,8 @@ namespace DataAccess.Models
         System.Data.Entity.DbSet<TransactionLabel> TransactionLabels { get; set; } // TransactionLabel
         System.Data.Entity.DbSet<User> Users { get; set; } // User
         System.Data.Entity.DbSet<UserRole> UserRoles { get; set; } // UserRole
-        System.Data.Entity.DbSet<VUserRole> VUserRoles { get; set; } // V_UserRole
-        System.Data.Entity.DbSet<VUserRolePermission> VUserRolePermissions { get; set; } // V_UserRolePermission
+        System.Data.Entity.DbSet<V_UserRole> V_UserRoles { get; set; } // V_UserRole
+        System.Data.Entity.DbSet<V_UserRolePermission> V_UserRolePermissions { get; set; } // V_UserRolePermission
 
         int SaveChanges();
         System.Threading.Tasks.Task<int> SaveChangesAsync();
@@ -57,8 +57,8 @@ namespace DataAccess.Models
         string ToString();
 
         // Stored Procedures
-        int SpSetDisplayName(string schema, string table, string column, string displayname);
-        // SpSetDisplayNameAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
+        int sp_SetDisplayName(string schema, string table, string column, string displayname);
+        // sp_SetDisplayNameAsync cannot be created due to having out parameters, or is relying on the procedure result (int)
 
     }
 

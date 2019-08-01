@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // V_UserRole
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class VUserRole : Infra.Wpf.Repository.ModelBase<VUserRole>
+    public partial class V_UserRole : Infra.Wpf.Repository.ModelBase<V_UserRole>
     {
         [Column(@"UserId", Order = 1, TypeName = "int")]
         [Required]
@@ -47,7 +47,7 @@ namespace DataAccess.Models
         [Key]
         public string RoleTitle { get { return Get<string>(); } set { Set(value); } } // RoleTitle (Primary key) (length: 50)
 
-        public VUserRole()
+        public V_UserRole()
         {
             InitializePartial();
         }

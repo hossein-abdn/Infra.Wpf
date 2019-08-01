@@ -107,7 +107,7 @@ namespace Infra.Wpf.Controls
             CancelCommand = new RelayCommand(CancelExecute);
 
             this.Loaded += mainpanel_Loaded;
-            this.KeyDown += mainpanel_KeyDown;
+            this.PreviewKeyDown += mainpanel_KeyDown;
 
             this.IsTabStop = false;
         }
@@ -184,9 +184,12 @@ namespace Infra.Wpf.Controls
         {
             if (e.Key == Key.Enter)
             {
-                if (SubmitCommand != null)
+                UIElement element = EditFields.LastOrDefault() as UIElement;
+                if (SubmitCommand != null && element != null && (element.IsFocused || element.IsKeyboardFocused || element.IsKeyboardFocusWithin))
                     SubmitCommand.Execute(EditFields);
             }
+            else if (e.Key == Key.Escape)
+                CancelCommand.Execute(null);
         }
 
         #endregion

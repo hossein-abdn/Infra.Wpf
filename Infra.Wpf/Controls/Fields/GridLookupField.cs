@@ -9,9 +9,10 @@ using System;
 
 namespace Infra.Wpf.Controls
 {
-    public class LookupField : Lookup, IField
+    public class GridLookupField : GridLookup, IField
     {
         #region Properties
+
         public string Title { get; set; }
 
         public string FilterField { get; set; }
@@ -30,30 +31,6 @@ namespace Infra.Wpf.Controls
         public Type ModelType { get; set; }
 
         public event SearchPhraseChangedEventHandler SearchPhraseChanged;
-
-        #endregion
-
-        #region Methods
-
-        public LookupField()
-        {
-            Loaded += LookupField_Loaded;
-            SelectionChanged += LookupField_SelectionChanged;
-            Focusable = true;
-        }
-
-        private void LookupField_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SearchPhraseChanged?.Invoke();
-        }
-
-        private void LookupField_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            DisplayName = GetDisplayName();
-
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
-        }
 
         public string SearchPhrase
         {
@@ -79,6 +56,30 @@ namespace Infra.Wpf.Controls
 
                 return null;
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public GridLookupField()
+        {
+            Loaded += LookupField_Loaded;
+            SelectionChanged += LookupField_SelectionChanged;
+            Focusable = true;
+        }
+
+        private void LookupField_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SearchPhraseChanged?.Invoke();
+        }
+
+        private void LookupField_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            DisplayName = GetDisplayName();
+
+            if (IsFocused == true)
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         private string GetDisplayName()
@@ -138,6 +139,11 @@ namespace Infra.Wpf.Controls
             }
 
             return string.Empty;
+        }
+
+        public void Clear()
+        {
+            ClearLookup();
         }
 
         #endregion

@@ -1,10 +1,7 @@
-﻿using Infra.Wpf.Security;
+﻿using Infra.Wpf.Common;
+using Infra.Wpf.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Infra.Wpf.Business
 {
@@ -12,7 +9,7 @@ namespace Infra.Wpf.Business
     {
         #region Properties
 
-        protected Logger Logger { get; set; }
+        protected ILogger Logger { get; set; }
 
         private bool logOnException { get; set; }
 
@@ -32,7 +29,7 @@ namespace Infra.Wpf.Business
 
         #region Methods
 
-        public BusinessBase(Logger logger = null, bool logOnException = true)
+        public BusinessBase(ILogger logger = null, bool logOnException = true)
         {
             Result = new BusinessResult();
             this.Logger = logger;
@@ -41,17 +38,17 @@ namespace Infra.Wpf.Business
             OnBeforeExecute = () => true;
         }
 
-        public BusinessBase(Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(logger, logOnException)
+        public BusinessBase(Func<bool> onExecute, ILogger logger = null, bool logOnException = true) : this(logger, logOnException)
         {
             OnExecute = onExecute;
         }
 
-        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(onExecute, logger, logOnException)
+        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, ILogger logger = null, bool logOnException = true) : this(onExecute, logger, logOnException)
         {
             OnBeforeExecute = onBeforeExecute;
         }
 
-        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, Logger logger = null, bool logOnException = true) : this(onBeforExecute, onExecute, logger, logOnException)
+        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, ILogger logger = null, bool logOnException = true) : this(onBeforExecute, onExecute, logger, logOnException)
         {
             OnAfterExecute = onAfterExecute;
         }
@@ -112,22 +109,22 @@ namespace Infra.Wpf.Business
     {
         public BusinessResult<T> Result { get; set; }
 
-        public BusinessBase(Logger logger = null, bool logOnException = true) : base(logger, logOnException)
+        public BusinessBase(ILogger logger = null, bool logOnException = true) : base(logger, logOnException)
         {
             Result = new BusinessResult<T>();
         }
 
-        public BusinessBase(Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(logger, logOnException)
+        public BusinessBase(Func<bool> onExecute, ILogger logger = null, bool logOnException = true) : this(logger, logOnException)
         {
             OnExecute = onExecute;
         }
 
-        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, Logger logger = null, bool logOnException = true) : this(onExecute, logger, logOnException)
+        public BusinessBase(Func<bool> onBeforeExecute, Func<bool> onExecute, ILogger logger = null, bool logOnException = true) : this(onExecute, logger, logOnException)
         {
             OnBeforeExecute = onBeforeExecute;
         }
 
-        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, Logger logger = null, bool logOnException = true) : this(onBeforExecute, onExecute, logger, logOnException)
+        public BusinessBase(Func<bool> onBeforExecute, Func<bool> onExecute, Func<bool> onAfterExecute, ILogger logger = null, bool logOnException = true) : this(onBeforExecute, onExecute, logger, logOnException)
         {
             OnAfterExecute = onAfterExecute;
         }

@@ -47,8 +47,6 @@ namespace Infra.Wpf.Controls
             set { SetValue(StretchProperty, value); }
         }
 
-        public string Test { get; set; }
-
         public static readonly DependencyProperty StretchProperty = FieldGridWrapPanel.StretchProperty.AddOwner(typeof(SearchPanel));
 
         public double ColumnMargin
@@ -73,9 +71,9 @@ namespace Infra.Wpf.Controls
             set { SetValue(IsExpandedProperty, value); }
         }
 
-        public Type ModelType { get; set; }
-
         public static readonly DependencyProperty IsExpandedProperty = Expander.IsExpandedProperty.AddOwner(typeof(SearchPanel));
+
+        public Type ModelType { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

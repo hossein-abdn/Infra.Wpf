@@ -1,347 +1,451 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Infra.Wpf.Business;
 using System.Data.Entity;
+using System.Linq;
 using System.Linq.Expressions;
+using Infra.Wpf.Business;
+using Infra.Wpf.Common;
+using Infra.Wpf.Security;
+using Infra.Wpf.Common.Helpers;
+using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 
 namespace Infra.Wpf.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected DbContext Context { get; private set; }
+        private DbContext context { get; set; }
 
-        protected AddBusiness<TEntity> AddBusiness { get; set; }
+        private ILogger logger { get; set; }
 
-        protected AnyBusiness<TEntity> AnyBusiness { get; set; }
+        private DbSet<TEntity> set { get; set; }
 
-        protected FindByIdAsyncBusiness<TEntity> FindByIdAsyncBusiness { get; set; }
+        public ILogInfo LogInfo { get; set; }
 
-        protected FindByIdBusiness<TEntity> FindByIdBusiness { get; set; }
-
-        protected GetAllAsyncBusiness<TEntity> GetAllAsyncBusiness { get; set; }
-
-        protected GetAllBusiness<TEntity> GetAllBusiness { get; set; }
-
-        protected GetCountAsyncBusiness<TEntity> GetCountAsyncBusiness { get; set; }
-
-        protected GetCountBusiness<TEntity> GetCountBusiness { get; set; }
-
-        protected GetFirstBusiness<TEntity> GetFirstBusiness { get; set; }
-
-        protected RemoveBusiness<TEntity> RemoveBusiness { get; set; }
-
-        protected UpdateBusiness<TEntity> UpdateBusiness { get; set; }
-
-        protected GetDateTimeBusiness GetDateTimeBusiness { get; set; }
-
-        protected Logger Logger { get; set; }
-
-        private bool logOnException { get; set; }
-
-        private DbSet<TEntity> _set;
-
-        protected DbSet<TEntity> Set
+        public Repository(DbContext context, ILogger logger = null)
         {
-            get { return _set ?? (_set = Context.Set<TEntity>()); }
+            this.context = context;
+            this.logger = logger;
         }
 
-        public Repository(DbContext context, Logger logger = null, bool logOnException = true)
+        public virtual bool Add(TEntity entity)
         {
-            Context = context;
-            this.Logger = logger;
-            this.logOnException = logOnException;
+            set.Add(entity);
 
-            AddBusiness = new AddBusiness<TEntity>(logger, logOnException);
-            AnyBusiness = new AnyBusiness<TEntity>(logger);
-            FindByIdAsyncBusiness = new FindByIdAsyncBusiness<TEntity>(logger);
-            FindByIdBusiness = new FindByIdBusiness<TEntity>(logger);
-            GetAllAsyncBusiness = new GetAllAsyncBusiness<TEntity>(logger);
-            GetAllBusiness = new GetAllBusiness<TEntity>(logger);
-            GetCountAsyncBusiness = new GetCountAsyncBusiness<TEntity>(logger);
-            GetCountBusiness = new GetCountBusiness<TEntity>(logger);
-            GetFirstBusiness = new GetFirstBusiness<TEntity>(logger);
-            RemoveBusiness = new RemoveBusiness<TEntity>(logger, logOnException);
-            UpdateBusiness = new UpdateBusiness<TEntity>(logger, logOnException);
-            GetDateTimeBusiness = new GetDateTimeBusiness(logger);
+            LogInfo = new LogInfo()
+            {
+                CallSite = typeof(TEntity).Name + ".Add",
+                LogType = LogType.Add,
+                UserId = (Thread.CurrentPrincipal.Identity as Identity).Id,
+                Entry = context?.Entry(entity)
+            };
+
+            return true;
         }
 
-        public virtual BusinessResult<bool> Add(TEntity entity)
+        public virtual bool Any()
         {
-            AddBusiness.Config(Context, Set, entity);
-            AddBusiness.Execute();
-
-            return AddBusiness.Result;
+            return Any(null);
         }
 
-        public virtual BusinessResult<bool> Any()
+        public virtual bool Any(string predicate, object[] values = null)
         {
-            AnyBusiness.Config(Set);
-            AnyBusiness.Execute();
-
-            return AnyBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return Any(dynamicQuery);
         }
 
-        public virtual BusinessResult<bool> Any(Expression<Func<TEntity, bool>> predicate)
+        public virtual bool Any(Expression<Func<TEntity, bool>> predicate)
         {
-            AnyBusiness.Config(Set, predicate);
-            AnyBusiness.Execute();
-
-            return AnyBusiness.Result;
+            if (predicate == null)
+                return set.Any();
+            else
+                return set.Any(predicate);
         }
 
-        public virtual BusinessResult<bool> Any(string predicate, object[] values = null)
+        public virtual async Task<bool> AnyAsync()
         {
-            AnyBusiness.Config(Set, predicate, values);
-            AnyBusiness.Execute();
-
-            return AnyBusiness.Result;
+            return await AnyAsync(null);
         }
 
-        public virtual BusinessResult<TEntity> FindById(object id)
+        public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken)
         {
-            FindByIdBusiness.Config(Set, id);
-            FindByIdBusiness.Execute();
-
-            return FindByIdBusiness.Result;
+            return await AnyAsync(cancellationToken, null);
         }
 
-        public virtual BusinessResult<Task<TEntity>> FindByIdAsync(object id)
+        public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken, string predicate, object[] values = null)
         {
-            FindByIdAsyncBusiness.Config(Set, id);
-            FindByIdAsyncBusiness.Execute();
-
-            return FindByIdAsyncBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await AnyAsync(cancellationToken, dynamicQuery);
         }
 
-        public virtual BusinessResult<Task<TEntity>> FindByIdAsync(CancellationToken cancellationToken, object id)
+        public virtual async Task<bool> AnyAsync(string predicate, object[] values = null)
         {
-            FindByIdAsyncBusiness.Config(Set, id, cancellationToken);
-            FindByIdAsyncBusiness.Execute();
-
-            return FindByIdAsyncBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await AnyAsync(dynamicQuery);
         }
 
-        public virtual BusinessResult<List<TEntity>> GetAll(string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate)
         {
-            GetAllBusiness.Config(Set, orderBy, take, skip, include);
-            GetAllBusiness.Execute();
-
-            return GetAllBusiness.Result;
+            if (predicate == null)
+                return await set.AnyAsync(cancellationToken);
+            else
+                return await set.AnyAsync(predicate, cancellationToken);
         }
 
-        public virtual BusinessResult<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            GetAllBusiness.Config(Set, predicate, orderBy, take, skip, include);
-            GetAllBusiness.Execute();
-
-            return GetAllBusiness.Result;
+            if (predicate == null)
+                return await set.AnyAsync();
+            else
+                return await set.AnyAsync(predicate);
         }
 
-        public virtual BusinessResult<List<TEntity>> GetAll(string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual bool Contains(TEntity item)
         {
-            GetAllBusiness.Config(Set, predicate, values, orderBy, take, skip, include);
-            GetAllBusiness.Execute();
-
-            return GetAllBusiness.Result;
+            return set.Contains(item);
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual async Task<bool> ContainsAsync(TEntity item)
         {
-            GetAllAsyncBusiness.Config(Set, orderBy, take, skip, include);
-            GetAllAsyncBusiness.Execute();
-
-            return GetAllAsyncBusiness.Result;
+            return await set.ContainsAsync(item);
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual async Task<bool> ContainsAsync(CancellationToken cancellationToken, TEntity item)
         {
-            GetAllAsyncBusiness.Config(Set, predicate, orderBy, take, skip, include);
-            GetAllAsyncBusiness.Execute();
-
-            return GetAllAsyncBusiness.Result;
+            return await set.ContainsAsync(item, cancellationToken);
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual TEntity FindById(params object[] ids)
         {
-            GetAllAsyncBusiness.Config(Set, predicate, values, orderBy, take, skip, include);
-            GetAllAsyncBusiness.Execute();
-
-            return GetAllAsyncBusiness.Result;
+            return set.Find(ids);
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual async Task<TEntity> FindByIdAsync(params object[] ids)
         {
-            GetAllAsyncBusiness.Config(Set, cancellationToken, orderBy, take, skip, include);
-            GetAllAsyncBusiness.Execute();
-
-            return GetAllAsyncBusiness.Result;
+            return await set.FindAsync(ids);
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        public virtual async Task<TEntity> FindByIdAsync(CancellationToken cancellationToken, params object[] ids)
         {
-            GetAllAsyncBusiness.Config(Set, predicate, cancellationToken, orderBy, take, skip, include);
-            GetAllAsyncBusiness.Execute();
-
-            return GetAllAsyncBusiness.Result;
+            return await set.FindAsync(cancellationToken, ids);
         }
 
-        public virtual BusinessResult<Task<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken, string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null)
+        private IQueryable<TEntity> GenerateQuery(Expression<Func<TEntity, bool>> predicate, string orderBy, int? take, int? skip, string include, bool distinct)
         {
-            GetAllAsyncBusiness.Config(Set, predicate, values, cancellationToken, orderBy, take, skip, include);
-            GetAllAsyncBusiness.Execute();
+            IQueryable<TEntity> query = set;
 
-            return GetAllAsyncBusiness.Result;
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            if (distinct)
+                query = query.Distinct();
+
+            if (include != null)
+            {
+                var includeList = include.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in includeList)
+                    query = query.Include(item);
+            }
+
+            if (!string.IsNullOrEmpty(orderBy))
+                query = query.OrderBy(orderBy);
+
+            if (skip.HasValue)
+                query = query.Skip(skip.Value);
+
+            if (take.HasValue)
+                query = query.Take(take.Value);
+            return query;
         }
 
-        public virtual BusinessResult<int> GetCount()
+        public virtual List<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountBusiness.Config(Set);
-            GetCountBusiness.Execute();
-
-            return GetCountBusiness.Result;
+            IQueryable<TEntity> query = GenerateQuery(predicate, orderBy, take, skip, include, distinct);
+            return query.ToList();
         }
 
-        public virtual BusinessResult<int> GetCount(string predicate, object[] values = null)
+        public virtual List<TEntity> GetAll(string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountBusiness.Config(Set, predicate, values);
-            GetCountBusiness.Execute();
-
-            return GetCountBusiness.Result;
+            Expression<Func<TEntity, bool>> predicate = null;
+            return GetAll(predicate, orderBy, take, skip, include, distinct);
         }
 
-        public virtual BusinessResult<int> GetCount(Expression<Func<TEntity, bool>> predicate)
+        public virtual List<TEntity> GetAll(string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountBusiness.Config(Set, predicate);
-            GetCountBusiness.Execute();
-
-            return GetCountBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return GetAll(dynamicQuery, orderBy, take, skip, include, distinct);
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync()
+        public virtual async Task<List<TEntity>> GetAllAsync(string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountAsyncBusiness.Config(Set);
-            GetCountAsyncBusiness.Execute();
-
-            return GetCountAsyncBusiness.Result;
+            Expression<Func<TEntity, bool>> predicate = null;
+            return await GetAllAsync(predicate, orderBy, take, skip, include, distinct);
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync(string predicate, object[] values = null)
+        public virtual async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountAsyncBusiness.Config(Set, predicate, values);
-            GetCountAsyncBusiness.Execute();
-
-            return GetCountAsyncBusiness.Result;
+            IQueryable<TEntity> query = GenerateQuery(predicate, orderBy, take, skip, include, distinct);
+            return await query.ToListAsync();
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<List<TEntity>> GetAllAsync(string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountAsyncBusiness.Config(Set, predicate);
-            GetCountAsyncBusiness.Execute();
-
-            return GetCountAsyncBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await GetAllAsync(dynamicQuery, orderBy, take, skip, include, distinct);
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync(CancellationToken cancellationToken)
+        public virtual async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountAsyncBusiness.Config(Set, cancellationToken);
-            GetCountAsyncBusiness.Execute();
-
-            return GetCountAsyncBusiness.Result;
+            Expression<Func<TEntity, bool>> predicate = null;
+            return await GetAllAsync(cancellationToken, predicate, orderBy, take, skip, include, distinct);
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync(CancellationToken cancellationToken, string predicate, object[] values = null)
+        public virtual async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountAsyncBusiness.Config(Set, predicate, values, cancellationToken);
-            GetCountAsyncBusiness.Execute();
-
-            return GetCountAsyncBusiness.Result;
+            IQueryable<TEntity> query = GenerateQuery(predicate, orderBy, take, skip, include, distinct);
+            return await query.ToListAsync(cancellationToken);
         }
 
-        public virtual BusinessResult<Task<int>> GetCountAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken, string predicate, object[] values = null, string orderBy = null, int? take = null, int? skip = null, string include = null, bool distinct = false)
         {
-            GetCountAsyncBusiness.Config(Set, predicate, cancellationToken);
-            GetCountAsyncBusiness.Execute();
-
-            return GetCountAsyncBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await GetAllAsync(cancellationToken, dynamicQuery, orderBy, take, skip, include, distinct);
         }
 
-        public virtual BusinessResult<TEntity> GetFirst(string orderBy = null, string include = null)
+        public virtual int GetCount()
         {
-            GetFirstBusiness.Config(Set, orderBy, include);
-            GetFirstBusiness.Execute();
-
-            return GetFirstBusiness.Result;
+            return set.Count();
         }
 
-        public virtual BusinessResult<TEntity> GetFirst(Expression<Func<TEntity, bool>> predicate, string orderBy = null, string include = null)
+        public virtual int GetCount(string predicate, object[] values = null)
         {
-            GetFirstBusiness.Config(Set, predicate, orderBy, include);
-            GetFirstBusiness.Execute();
-
-            return GetFirstBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return GetCount(dynamicQuery);
         }
 
-        public virtual BusinessResult<TEntity> GetFirst(string predicate, object[] values = null, string orderBy = null, string include = null)
+        public virtual int GetCount(Expression<Func<TEntity, bool>> predicate)
         {
-            GetFirstBusiness.Config(Set, predicate, values, orderBy, include);
-            GetFirstBusiness.Execute();
-
-            return GetFirstBusiness.Result;
+            return set.Count(predicate);
         }
 
-        public virtual BusinessResult<bool> Remove(object id)
+        public virtual async Task<int> GetCountAsync()
         {
-            RemoveBusiness.Config(Context, Set, id);
-            RemoveBusiness.Execute();
-
-            return RemoveBusiness.Result;
+            return await set.CountAsync();
         }
 
-        public virtual BusinessResult<bool> Remove(TEntity entity)
+        public virtual async Task<int> GetCountAsync(string predicate, object[] values = null)
         {
-            RemoveBusiness.Config(Context, Set, entity);
-            RemoveBusiness.Execute();
-
-            return RemoveBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await GetCountAsync(dynamicQuery);
         }
 
-        public virtual BusinessResult<bool> Update(TEntity entity)
+        public virtual async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            UpdateBusiness.Config(Context, Set, entity);
-            UpdateBusiness.Execute();
-
-            return UpdateBusiness.Result;
+            return await set.CountAsync(predicate);
         }
 
-        public BusinessResult<DateTime> GetDateTime()
+        public virtual async Task<int> GetCountAsync(CancellationToken cancellationToken)
         {
-            GetDateTimeBusiness.Config(Context);
-            GetDateTimeBusiness.Execute();
 
-            return GetDateTimeBusiness.Result;
+            return await set.CountAsync(cancellationToken);
         }
 
-        public BusinessResult<List<TResult>> Select<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        public virtual async Task<int> GetCountAsync(CancellationToken cancellationToken, string predicate, object[] values = null)
         {
-            var SelectBusiness = new SelectBusiness<TEntity, TResult>(Logger);
-            
-            SelectBusiness.Config(Set, predicate, selector, orderBy, take, skip, include, distinct);
-            SelectBusiness.Execute();
-
-            return SelectBusiness.Result;
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await GetCountAsync(cancellationToken, dynamicQuery);
         }
 
-        public BusinessResult<Task<List<TResult>>> SelectAsync<TResult>(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        public virtual async Task<int> GetCountAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate)
         {
-            var SelectAsyncBusiness = new SelectAsyncBusiness<TEntity, TResult>(Logger);
-            SelectAsyncBusiness.Config(Set, cancellationToken, selector, orderBy, take, skip, include, distinct);
-            SelectAsyncBusiness.Execute();
+            return await set.CountAsync(predicate, cancellationToken);
+        }
 
-            return SelectAsyncBusiness.Result;
+        public virtual TEntity GetFirst(string orderBy = null, string include = null)
+        {
+            return GetFirst(null, orderBy, include);
+        }
+
+        public virtual TEntity GetFirst(Expression<Func<TEntity, bool>> predicate, string orderBy = null, string include = null)
+        {
+            var query = GenerateQuery(predicate, orderBy, null, null, include, false);
+            return query.FirstOrDefault();
+        }
+
+        public virtual TEntity GetFirst(string predicate, object[] values = null, string orderBy = null, string include = null)
+        {
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return GetFirst(dynamicQuery, orderBy, include);
+        }
+
+        public virtual async Task<TEntity> GetFirstAsync(string orderBy = null, string include = null)
+        {
+            return await GetFirstAsync(null, orderBy, include);
+        }
+
+        public virtual Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> predicate, string orderBy = null, string include = null)
+        {
+            var query = GenerateQuery(predicate, orderBy, null, null, include, false);
+            return query.FirstOrDefaultAsync();
+        }
+
+        public virtual async Task<TEntity> GetFirstAsync(string predicate, object[] values = null, string orderBy = null, string include = null)
+        {
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await GetFirstAsync(dynamicQuery, orderBy, include);
+        }
+
+        public virtual async Task<TEntity> GetFirstAsync(CancellationToken cancellationToken, string orderBy = null, string include = null)
+        {
+            return await GetFirstAsync(cancellationToken, null, orderBy, include);
+        }
+
+        public virtual Task<TEntity> GetFirstAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, string orderBy = null, string include = null)
+        {
+            var query = GenerateQuery(predicate, orderBy, null, null, include, false);
+            return query.FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public virtual async Task<TEntity> GetFirstAsync(CancellationToken cancellationToken, string predicate, object[] values = null, string orderBy = null, string include = null)
+        {
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await GetFirstAsync(cancellationToken, dynamicQuery, orderBy, include);
+        }
+
+        public virtual bool Remove(object id)
+        {
+            var entity = FindById(id);
+            return Remove(entity);
+        }
+
+        public virtual bool Remove(TEntity entity)
+        {
+            set.Remove(entity);
+
+            LogInfo = new LogInfo()
+            {
+                CallSite = typeof(TEntity).Name + ".Remove",
+                LogType = LogType.Delete,
+                UserId = (Thread.CurrentPrincipal.Identity as Identity).Id,
+                Entry = context.Entry(entity)
+            };
+
+            return true;
+        }
+
+        public virtual bool Update(TEntity entity)
+        {
+            PropertyInfo prop = null;
+            foreach (var item in typeof(TEntity).GetProperties())
+            {
+                if (item.GetCustomAttribute<KeyAttribute>() != null)
+                {
+                    prop = item;
+                    break;
+                }
+            }
+            var orginalModel = GetFirst(DynamicLinq.ConvertToExpression<TEntity>(prop.Name + "=" + prop.GetValue(entity), null));
+            var entry = context.Entry(orginalModel);
+
+            entry.CurrentValues.SetValues(entity);
+            entry.State = EntityState.Modified;
+
+            LogInfo = new LogInfo()
+            {
+                CallSite = typeof(TEntity).Name + ".Update",
+                LogType = LogType.Update,
+                UserId = (Thread.CurrentPrincipal.Identity as Identity).Id,
+                Entry = entry
+            };
+
+            return true;
+        }
+
+        public DateTime GetDateTime()
+        {
+            return context.Database.SqlQuery<DateTime>("select getdate();").First();
+        }
+
+        public List<TResult> Select<TResult>(Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            return Select(null, selector, orderBy, take, skip, include, distinct);
+        }
+
+        public List<TResult> Select<TResult>(string predicate, Expression<Func<TEntity, TResult>> selector, object[] values = null, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return Select(dynamicQuery, selector, orderBy, take, skip, include, distinct);
+        }
+
+        public List<TResult> Select<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            IQueryable<TResult> query = SelectGenerateQuery(predicate, selector, orderBy, take, skip, include, distinct);
+            return query.ToList();
+        }
+
+        public async Task<List<TResult>> SelectAsync<TResult>(Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            return await SelectAsync(null, selector, orderBy, take, skip, include, distinct);
+        }
+
+        public async Task<List<TResult>> SelectAsync<TResult>(string predicate, Expression<Func<TEntity, TResult>> selector, object[] values = null, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await SelectAsync(dynamicQuery, selector, orderBy, take, skip, include, distinct);
+        }
+
+        public async Task<List<TResult>> SelectAsync<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            IQueryable<TResult> query = SelectGenerateQuery(predicate, selector, orderBy, take, skip, include, distinct);
+            return await query.ToListAsync();
+        }
+
+        public async Task<List<TResult>> SelectAsync<TResult>(CancellationToken cancellationToken, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            return await SelectAsync(cancellationToken, null, selector, orderBy, take, skip, include, distinct);
+        }
+
+        public async Task<List<TResult>> SelectAsync<TResult>(CancellationToken cancellationToken, string predicate, Expression<Func<TEntity, TResult>> selector, object[] values = null, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            var dynamicQuery = DynamicLinq.ConvertToExpression<TEntity>(predicate, values);
+            return await SelectAsync(cancellationToken, dynamicQuery, selector, orderBy, take, skip, include, distinct);
+        }
+
+        public async Task<List<TResult>> SelectAsync<TResult>(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)
+        {
+            IQueryable<TResult> query = SelectGenerateQuery(predicate, selector, orderBy, take, skip, include, distinct);
+            return await query.ToListAsync(cancellationToken);
+        }
+
+        private IQueryable<TResult> SelectGenerateQuery<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector, string orderBy, int? take, int? skip, string include, bool distinct)
+        {
+            IQueryable<TEntity> query = set;
+            IQueryable<TResult> result = null;
+            if (predicate != null)
+                result = query.Where(predicate).Select(selector);
+
+            if (distinct)
+                result = result.Distinct();
+
+            if (include != null)
+            {
+                var includeList = include.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in includeList)
+                    result = result.Include(item);
+            }
+
+            if (!string.IsNullOrEmpty(orderBy))
+                result = result.OrderBy(orderBy);
+
+            if (skip.HasValue)
+                result = result.Skip(skip.Value);
+
+            if (take.HasValue)
+                result = result.Take(take.Value);
+
+            return result;
         }
     }
 }

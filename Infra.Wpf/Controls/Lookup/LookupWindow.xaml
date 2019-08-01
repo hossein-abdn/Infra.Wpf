@@ -8,7 +8,7 @@
         FontFamily="IRANSans"
         Title="پنجره جستجو" Height="550" Width="650"
         Loaded="Window_Loaded">
-    <Grid>
+    <Grid x:Name="maingrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -18,7 +18,19 @@
 
         <TextBlock Name="title" FontSize="15" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <local:SearchPanel x:Name="searchpanel" Grid.Row="1" IsExpanded="True" Margin="5" KeyDown="searchpanel_KeyDown"/>
-        <local:CustomGrid x:Name="datagrid" Grid.Row="2" ItemsSource="{Binding}" Margin="5"/>
+        <local:CustomGrid x:Name="datagrid" Grid.Row="2" Visibility="Collapsed" Margin="5"/>
+        <TreeView x:Name="treeview" Grid.Row="2" Visibility="Collapsed" Margin="5">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#F1F1F1"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
         <StackPanel Name="stackpanel" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
             <Button Name="confirm" Padding="3" Margin="0,0,5,0" Click="confirm_Click" IsDefault="True">
                 <StackPanel Orientation="Horizontal">

@@ -49,7 +49,7 @@ namespace Infra.Wpf.Mvvm
         {
             object val;
             if (members.TryGetValue(prop, out val))
-                return (T) val;
+                return (T)val;
 
             return default(T);
         }
@@ -112,7 +112,7 @@ namespace Infra.Wpf.Mvvm
                 {
                     var bindEx = GetBindingExpression(item as UIElement, propName);
                     if (bindEx != null)
-                        return (UIElement) item;
+                        return (UIElement)item;
                 }
 
                 if (item is DependencyObject)
@@ -149,8 +149,21 @@ namespace Infra.Wpf.Mvvm
                 prop = NumericField.ValueProperty;
             else if (element is MultiSelect)
                 prop = MultiSelect.SelectedItemsProperty;
-            else if (element is Lookup)
-                prop = Lookup.SelectedItemsProperty;
+            else if (element is GridLookup)
+            {
+                if ((element as GridLookup).SelectionMode == LookupSelectionMode.Single)
+                    prop = GridLookup.SelectedItemProperty;
+                else
+                    prop = GridLookup.SelectedItemsProperty;
+
+            }
+            else if (element is TreeLookup)
+            {
+                if ((element as TreeLookup).SelectionMode == LookupSelectionMode.Single)
+                    prop = TreeLookup.SelectedItemProperty;
+                else
+                    prop = TreeLookup.SelectedItemsProperty;
+            }
             else if (element is DateField)
                 prop = DateField.SelectedDateProperty;
             else if (element is CheckBox)

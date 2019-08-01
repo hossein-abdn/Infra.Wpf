@@ -1,13 +1,22 @@
 ﻿using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Infra.Wpf.Controls
 {
     public partial class LookupWindow : Window, INotifyPropertyChanged
     {
+        public enum LookupModeEnum
+        {
+            Grid,
+            Tree
+        }
+
+        public LookupModeEnum LookupMode { get; set; }
+
         private LookupSelectionMode _SelectionMode;
         public LookupSelectionMode SelectionMode
         {
@@ -28,6 +37,18 @@ namespace Infra.Wpf.Controls
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Binding bind = new Binding(".");
+            if (LookupMode == LookupModeEnum.Grid)
+            {
+                datagrid.Visibility = Visibility.Visible;
+                datagrid.SetBinding(CustomGrid.ItemsSourceProperty, bind);
+            }
+            else
+            {
+                treeview.Visibility = Visibility.Visible;
+                treeview.SetBinding(TreeView.ItemsSourceProperty, bind);
+            }
+
             if (SelectionMode == LookupSelectionMode.Single)
                 stackpanel.Visibility = Visibility.Collapsed;
             if (searchpanel.SearchCommand == null || searchpanel.SearchFields.Count == 0)

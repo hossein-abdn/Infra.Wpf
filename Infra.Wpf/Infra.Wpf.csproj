@@ -203,30 +203,18 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\AddBusiness.cs" />
-    <Compile Include="Business\AnyBusiness.cs" />
     <Compile Include="Business\BusinessBase.cs" />
     <Compile Include="Business\BusinessMessage.cs" />
     <Compile Include="Business\BusinessResult.cs" />
-    <Compile Include="Business\FindByIdAsyncBusiness.cs" />
-    <Compile Include="Business\FindByIdBusiness.cs" />
-    <Compile Include="Business\GetAllAsyncBusiness.cs" />
-    <Compile Include="Business\GetAllBusiness.cs" />
-    <Compile Include="Business\GetCountAsyncBusiness.cs" />
-    <Compile Include="Business\GetCountBusiness.cs" />
-    <Compile Include="Business\GetDateTimeBusiness.cs" />
-    <Compile Include="Business\GetFirstBusiness.cs" />
-    <Compile Include="Business\ILogInfo.cs" />
-    <Compile Include="Business\Logger.cs" />
-    <Compile Include="Business\LogInfo.cs" />
-    <Compile Include="Business\LogTypeEnum.cs" />
-    <Compile Include="Business\RemoveBusiness.cs" />
-    <Compile Include="Business\SelectAsyncBusiness.cs" />
-    <Compile Include="Business\SelectBusiness.cs" />
-    <Compile Include="Business\UpdateBusiness.cs" />
+    <Compile Include="Common\Interface\ILogger.cs" />
+    <Compile Include="Common\Interface\ILogInfo.cs" />
+    <Compile Include="Common\Class\Logger.cs" />
+    <Compile Include="Common\Class\LogInfo.cs" />
+    <Compile Include="Common\Enum\LogTypeEnum.cs" />
     <Compile Include="Common\Converters\DefaultValueConverter.cs" />
     <Compile Include="Common\Helpers\ButtonCommand.cs" />
     <Compile Include="Common\Helpers\ConnectionStringHelper.cs" />
+    <Compile Include="Common\Interface\ISelectable.cs" />
     <Compile Include="Controls\Fields\BoolField.cs" />
     <Compile Include="Controls\Fields\Common.cs" />
     <Compile Include="Common\Class\RectItem.cs" />
@@ -240,7 +228,6 @@
     <Compile Include="Controls\CustomComboBox\CustomComboBox.cs" />
     <Compile Include="Controls\CustomComboBox\EnumDisplayAttribute.cs" />
     <Compile Include="Controls\CustomGrid\ButtonColumnViewModel.cs" />
-    <Compile Include="Controls\CustomGrid\CheckBoxViewModel.cs" />
     <Compile Include="Controls\CustomGrid\CustomBottomRow.cs" />
     <Compile Include="Controls\CustomGrid\CustomButtonColumn.cs" />
     <Compile Include="Controls\CustomGrid\CustomCheckBoxColumn.cs" />
@@ -277,7 +264,13 @@
     <Compile Include="Controls\Fields\TimeField.xaml.cs">
       <DependentUpon>TimeField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Fields\TreeLookupField.cs" />
+    <Compile Include="Controls\Lookup\ChangeSourceEnum.cs" />
+    <Compile Include="Controls\Lookup\HierarchicalData.cs" />
+    <Compile Include="Controls\Lookup\GridLookup.cs" />
+    <Compile Include="Controls\Lookup\HierarchicalDataCollection.cs" />
     <Compile Include="Controls\Lookup\Lookup.cs" />
+    <Compile Include="Controls\Lookup\TreeLookup.cs" />
     <Compile Include="Controls\Panels\EditViewPanel\EditViewPanel.cs" />
     <Compile Include="Controls\Panels\GridWrapPanel\GridWrapColumn.cs" />
     <Compile Include="Controls\Panels\GridWrapPanel\GridWrapRow.cs" />
@@ -308,7 +301,7 @@
       <DependentUpon>DateField.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Fields\IField.cs" />
-    <Compile Include="Controls\Fields\LookupField.cs" />
+    <Compile Include="Controls\Fields\GridLookupField.cs" />
     <Compile Include="Controls\Fields\MultiSelectField.cs" />
     <Compile Include="Controls\Fields\NumericOperatorEnum.cs" />
     <Compile Include="Controls\Fields\NumericField.xaml.cs">

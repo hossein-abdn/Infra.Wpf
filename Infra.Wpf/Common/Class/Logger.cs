@@ -4,9 +4,9 @@ using NLog.Targets;
 using System;
 using System.Collections.Generic;
 
-namespace Infra.Wpf.Business
+namespace Infra.Wpf.Common
 {
-    public class Logger
+    public class Logger : ILogger
     {
         public List<ILogInfo> LogList { get; set; }
 

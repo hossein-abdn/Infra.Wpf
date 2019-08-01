@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
     // V_UserRolePermission
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.33.0.0")]
-    public partial class VUserRolePermission : Infra.Wpf.Repository.ModelBase<VUserRolePermission>
+    public partial class V_UserRolePermission : Infra.Wpf.Repository.ModelBase<V_UserRolePermission>
     {
         [Column(@"PermissionTitle", Order = 1, TypeName = "nvarchar")]
         [Required]
@@ -67,7 +67,7 @@ namespace DataAccess.Models
         [Key]
         public int PermmisionId { get { return Get<int>(); } set { Set(value); } } // PermmisionId (Primary key)
 
-        public VUserRolePermission()
+        public V_UserRolePermission()
         {
             InitializePartial();
         }

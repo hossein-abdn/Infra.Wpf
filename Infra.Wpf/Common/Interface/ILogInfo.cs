@@ -1,12 +1,7 @@
-﻿using Infra.Wpf.Controls;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Infra.Wpf.Business
+namespace Infra.Wpf.Common
 {
     public interface ILogInfo
     {

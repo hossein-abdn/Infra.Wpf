@@ -56,4 +56,15 @@ namespace TestControls
             return result;
         }
     }
+
+    public class Test
+    {
+        public int Title { get; set; }
+        public Test Test1 { get; set; }
+    }
+
+    public class Test1
+    {
+        public int Name { get; set; }
+    }
 }

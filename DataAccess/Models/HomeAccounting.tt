@@ -9,8 +9,8 @@
     ConnectionStringName = "AccountingContext";   // Searches for this connection string in config files listed below in the ConfigFilenameSearchOrder setting
     // ConnectionStringName is the only required setting.
     // As an alternative to ConnectionStringName above, which must match your app/web.config connection string name, you can override them below
-    //ConnectionString = "Data Source=(local);Initial Catalog=Northwind;Integrated Security=True;Application Name=EntityFramework Reverse POCO Generator";
-    //ProviderName = "System.Data.SqlClient";
+    ConnectionString = "Data Source=.;Initial Catalog=Accounting;Persist Security Info=True;User ID=sa;Password=123;MultipleActiveResultSets=True";
+    ProviderName = "System.Data.SqlClient";
 
     // Namespace = ""; // Override the default namespace here
     DbContextName = "AccountingContext"; // Note: If generating separate files, please give the db context a different name from this tt filename.
@@ -23,11 +23,10 @@
     GenerateSeparateFiles = true;
     MakeClassesInternal = false;
     MakeClassesPartial = true;
-    //Edit By Hossein
     UseNotifyProperty = true;
     MakeDbContextInterfacePartial = false;
     UseMappingTables = true; // If true, mapping will be used and no mapping tables will be generated. If false, all tables will be generated.
-    UsePascalCase = true;    // This will rename the generated C# tables & properties to use PascalCase. If false table & property names will be left alone.
+    UsePascalCase = false;    // This will rename the generated C# tables & properties to use PascalCase. If false table & property names will be left alone.
     UseDataAnnotations = true; // If true, will add data annotations to the poco classes.
     UseDataAnnotationsSchema = false; // UseDataAnnotations must also be true. If true, will add data annotations schema to the poco classes.
     UsePropertyInitializers = false; // Removes POCO constructor and instead uses C# 6 property initialisers to set defaults
@@ -43,7 +42,7 @@
     //CollectionInterfaceType = "System.Collections.Generic.List"; // Determines the declaration type of collections for the Navigation Properties. ICollection is used if not set.
     CollectionType = "System.Collections.Generic.List";  // Determines the type of collection for the Navigation Properties. "ObservableCollection" for example. Add "System.Collections.ObjectModel" to AdditionalNamespaces if setting the CollectionType = "ObservableCollection".
     NullableShortHand = true; //true => T?, false => Nullable<T>
-    AddIDbContextFactory = true; // Will add a default IDbContextFactory<DbContextName> implementation for easy dependency injection
+    AddIDbContextFactory = false; // Will add a default IDbContextFactory<DbContextName> implementation for easy dependency injection
     AddUnitTestingDbContext = false; // Will add a FakeDbContext and FakeDbSet for easy unit testing
     IncludeQueryTraceOn9481Flag = false; // If SqlServer 2014 appears frozen / take a long time when this file is saved, try setting this to true (you will also need elevated privileges).
     IncludeCodeGeneratedAttribute = true; // If true, will include the GeneratedCode attribute, false to remove it.
@@ -231,7 +230,8 @@
     // Use the following list to replace column byte types with Enums.
     // As long as the type can be mapped to your new type, all is well.
     EnumsDefinitions.Add(new EnumDefinition { Schema = "dbo", Table = "Person", Column = "RecordStatusId", EnumType = "Enums.RecordStatus" });
-    //EnumsDefinitions.Add(new EnumDefinition { Schema = "dbo", Table = "OrderHeader", Column = "OrderStatus", EnumType = "OrderStatusType" }); // This will replace OrderHeader.OrderStatus type to be an OrderStatusType enum
+	EnumsDefinitions.Add(new EnumDefinition { Schema = "dbo", Table = "Label", Column = "RecordStatusId", EnumType = "Enums.RecordStatus"});
+	EnumsDefinitions.Add(new EnumDefinition { Schema = "dbo", Table = "TransactionGroup", Column = "TypeId", EnumType = "Enums.TransactionGroupType"});
 
     // Use the following function if you need to apply additional modifications to a column
     // eg. normalise names etc.
@@ -352,7 +352,6 @@
         return r.ToString();
         */
         
-        //Edit By Hossein
         if(UseNotifyProperty)
             return " : Infra.Wpf.Repository.ModelBase<" + t.NameHumanCaseWithSuffix + ">";
 

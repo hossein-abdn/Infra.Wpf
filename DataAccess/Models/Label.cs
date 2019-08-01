@@ -46,7 +46,7 @@ namespace DataAccess.Models
 
         [Required]
         [Display(Name = "وضعیت")]
-        public int RecordStatusId { get { return Get<int>(); } set { Set(value); } } // RecordStatusId
+        public Enums.RecordStatus RecordStatusId { get { return Get<Enums.RecordStatus>(); } set { Set(value); } } // RecordStatusId
 
         // Reverse navigation
 

@@ -1008,8 +1008,8 @@
                                         </Style>
                                     </Button.Style>
                                 </Button>
-                                <Popup x:Name="popup" HorizontalAlignment="Right" Width="{Binding ActualWidth,RelativeSource={RelativeSource TemplatedParent}}" Height="100" VerticalOffset="5" Placement="Bottom" PopupAnimation="Slide" 
-                                       AllowsTransparency="True" IsOpen="{Binding IsDropDown,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" StaysOpen="False" Grid.ColumnSpan="4">
+                                <Popup x:Name="popup" HorizontalAlignment="Right" Width="{Binding ActualWidth,RelativeSource={RelativeSource TemplatedParent}}" Height="100" VerticalOffset="2" HorizontalOffset="-1" Placement="Bottom" 
+                                       PopupAnimation="Slide" AllowsTransparency="True" IsOpen="{Binding IsDropDown,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" StaysOpen="False" Grid.ColumnSpan="4">
                                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Background="White">
                                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                                             <TextBlock Text="{Binding Details,RelativeSource={RelativeSource TemplatedParent}}" Margin="5,0"/>
