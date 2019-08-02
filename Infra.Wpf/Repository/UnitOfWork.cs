@@ -103,14 +103,72 @@ namespace Infra.Wpf.Repository
             }
         }
 
-        public Task<int> SaveChangeAsync()
+        public async Task<BusinessResult<int>> SaveChangeAsync()
         {
-            return Context.SaveChangesAsync();
+            var result = new BusinessResult<int>();
+
+            try
+            {
+                if (Logger != null)
+                {
+                    foreach (var item in Logger.LogList.Where(x => x.LogType == LogType.Delete || x.LogType == LogType.Update))
+                        GenerateLogMessage(item);
+                }
+
+                result.Data = await Context.SaveChangesAsync();
+                result.Message = new BusinessMessage("انجام عملیات", "عملیات با موفقیت انجام شد.", Controls.MessageType.Information);
+
+                if (Logger != null)
+                {
+                    foreach (var item in Logger.LogList.Where(x => x.LogType == LogType.Add))
+                        GenerateLogMessage(item);
+                    Logger.LogPendingList();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Exception = ex;
+                Logger?.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity).Id);
+                Logger?.LogList?.Clear();
+                result.Message = new BusinessMessage("خطا", "در سامانه خطایی رخ داده است.");
+                return result;
+            }
         }
 
-        public Task<int> SaveChangeAsync(CancellationToken cancellationToken)
+        public async Task<BusinessResult<int>> SaveChangeAsync(CancellationToken cancellationToken)
         {
-            return Context.SaveChangesAsync(cancellationToken);
+            var result = new BusinessResult<int>();
+
+            try
+            {
+                if (Logger != null)
+                {
+                    foreach (var item in Logger.LogList.Where(x => x.LogType == LogType.Delete || x.LogType == LogType.Update))
+                        GenerateLogMessage(item);
+                }
+
+                result.Data = await Context.SaveChangesAsync(cancellationToken);
+                result.Message = new BusinessMessage("انجام عملیات", "عملیات با موفقیت انجام شد.", Controls.MessageType.Information);
+
+                if (Logger != null)
+                {
+                    foreach (var item in Logger.LogList.Where(x => x.LogType == LogType.Add))
+                        GenerateLogMessage(item);
+                    Logger.LogPendingList();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Exception = ex;
+                Logger?.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity).Id);
+                Logger?.LogList?.Clear();
+                result.Message = new BusinessMessage("خطا", "در سامانه خطایی رخ داده است.");
+                return result;
+            }
         }
 
         private void GenerateLogMessage(ILogInfo logInfo)

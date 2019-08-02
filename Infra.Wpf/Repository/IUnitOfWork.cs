@@ -12,9 +12,9 @@ namespace Infra.Wpf.Repository
     {
         BusinessResult<int> SaveChange();
 
-        Task<int> SaveChangeAsync();
+        Task<BusinessResult<int>> SaveChangeAsync();
 
-        Task<int> SaveChangeAsync(CancellationToken cancellationToken);
+        Task<BusinessResult<int>> SaveChangeAsync(CancellationToken cancellationToken);
 
         void RejectChange();
     }
