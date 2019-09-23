@@ -16,17 +16,22 @@ namespace Infra.Wpf.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private DbContext context { get; set; }
+        protected DbContext Context { get; set; }
 
         private ILogger logger { get; set; }
 
-        private DbSet<TEntity> set { get; set; }
+        private DbSet<TEntity> _set;
+
+        private DbSet<TEntity> set
+        {
+            get { return _set ?? (_set = Context.Set<TEntity>()); }
+        }
 
         public ILogInfo LogInfo { get; set; }
 
         public Repository(DbContext context, ILogger logger = null)
         {
-            this.context = context;
+            this.Context = context;
             this.logger = logger;
         }
 
@@ -39,7 +44,7 @@ namespace Infra.Wpf.Repository
                 CallSite = typeof(TEntity).Name + ".Add",
                 LogType = LogType.Add,
                 UserId = (Thread.CurrentPrincipal.Identity as Identity).Id,
-                Entry = context?.Entry(entity)
+                Entry = Context?.Entry(entity)
             };
 
             return true;
@@ -329,7 +334,7 @@ namespace Infra.Wpf.Repository
                 CallSite = typeof(TEntity).Name + ".Remove",
                 LogType = LogType.Delete,
                 UserId = (Thread.CurrentPrincipal.Identity as Identity).Id,
-                Entry = context.Entry(entity)
+                Entry = Context.Entry(entity)
             };
 
             return true;
@@ -347,7 +352,7 @@ namespace Infra.Wpf.Repository
                 }
             }
             var orginalModel = GetFirst(DynamicLinq.ConvertToExpression<TEntity>(prop.Name + "=" + prop.GetValue(entity), null));
-            var entry = context.Entry(orginalModel);
+            var entry = Context.Entry(orginalModel);
 
             entry.CurrentValues.SetValues(entity);
             entry.State = EntityState.Modified;
@@ -365,7 +370,7 @@ namespace Infra.Wpf.Repository
 
         public DateTime GetDateTime()
         {
-            return context.Database.SqlQuery<DateTime>("select getdate();").First();
+            return Context.Database.SqlQuery<DateTime>("select getdate();").First();
         }
 
         public List<TResult> Select<TResult>(Expression<Func<TEntity, TResult>> selector, string orderBy = null, int? take = default(int?), int? skip = default(int?), string include = null, bool distinct = false)

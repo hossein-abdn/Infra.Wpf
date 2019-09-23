@@ -19,6 +19,8 @@ using System.Windows.Shapes;
 using Infra.Wpf.Common.Helpers;
 using System.Windows.Controls.Primitives;
 using System.Globalization;
+using System.Threading;
+using System.Diagnostics;
 
 namespace TestControls
 {
@@ -34,37 +36,25 @@ namespace TestControls
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var t = ((MainWindowVM)DataContext);
+            Task.Run(focuse);
+
+
         }
 
-
-
-        private string GetSepratedNumber(string digit)
+        private void focuse()
         {
-            if (string.IsNullOrWhiteSpace(digit))
-                return "";
+            Task.Delay(100);
+            Dispatcher.Invoke(() => Keyboard.Focus(textField));
+        }
 
-            string result = digit;
-            for (int i = 1; i <= (digit.Length - 1) / 3; i++)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
             {
-                int sepratorPos = digit.Length - (i * 3);
-                result = result.Insert(sepratorPos, ",");
+                Debug.WriteLine(FocusManager.GetFocusedElement(this).ToString());
             }
-
-            return result;
         }
-    }
-
-    public class Test
-    {
-        public int Title { get; set; }
-        public Test Test1 { get; set; }
-    }
-
-    public class Test1
-    {
-        public int Name { get; set; }
     }
 }

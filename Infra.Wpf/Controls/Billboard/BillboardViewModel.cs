@@ -14,6 +14,7 @@ namespace Infra.Wpf.Controls
         public BillboardViewModel()
         {
             CreateCommands();
+            Dispatcher = Application.Current.Dispatcher;
         }
 
         #region [ Commands ]
@@ -71,8 +72,8 @@ namespace Infra.Wpf.Controls
         }
 
         int iThreadCount = 0;
+
         object Token = new object();
-        protected Dispatcher Dispatcher { get { return Application.Current.Dispatcher; } }
 
         private void ShowMessageThread(object Parameter)
         {

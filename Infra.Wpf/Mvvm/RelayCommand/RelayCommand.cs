@@ -7,7 +7,6 @@ namespace Infra.Wpf.Mvvm
     {
         readonly Action<T> _execute = null;
         readonly Predicate<T> _canExecute = null;
-        private Action searchExecute;
 
         public RelayCommand(Action<T> execute) : this(execute, null)
         {
@@ -20,11 +19,6 @@ namespace Infra.Wpf.Mvvm
 
             _execute = execute;
             _canExecute = canExecute;
-        }
-
-        public RelayCommand(Action searchExecute)
-        {
-            this.searchExecute = searchExecute;
         }
 
         public bool CanExecute(object parameter)

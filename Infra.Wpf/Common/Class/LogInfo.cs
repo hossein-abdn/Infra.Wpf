@@ -30,6 +30,5 @@ namespace Infra.Wpf.Common
         public DbEntityEntry Entry { get; set; }
 
         public LogType LogType { get; set; }
-        LogType ILogInfo.LogType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

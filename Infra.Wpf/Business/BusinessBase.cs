@@ -20,17 +20,17 @@ namespace Infra.Wpf.Business
 
         public bool ThrowException { get; set; }
 
-        public Func<bool> OnBeforeExecute { get; set; }
+        protected Func<bool> OnBeforeExecute { get; set; }
 
-        public Func<bool> OnExecute { get; set; }
+        protected Func<bool> OnExecute { get; set; }
 
-        public Func<bool> OnAfterExecute { get; set; }
+        protected Func<bool> OnAfterExecute { get; set; }
 
-        public Func<Task<bool>> OnBeforeExecuteAsync { get; set; }
+        protected Func<Task<bool>> OnBeforeExecuteAsync { get; set; }
 
-        public Func<Task<bool>> OnExecuteAsync { get; set; }
+        protected Func<Task<bool>> OnExecuteAsync { get; set; }
 
-        public Func<Task<bool>> OnAfterExecuteAsync { get; set; }
+        protected Func<Task<bool>> OnAfterExecuteAsync { get; set; }
 
         #endregion
 
@@ -46,16 +46,21 @@ namespace Infra.Wpf.Business
             OnBeforeExecuteAsync = () => Task.Run(() => true);
         }
 
+        public virtual void Execute()
+        {
+            Execute(OnExecute);
+        }
+
         public virtual void Execute(Func<bool> onExecute)
         {
-            OnExecute = onExecute;
+            this.OnExecute = onExecute;
 
             if (Result == null)
                 Result = new BusinessResult();
 
             try
             {
-                if (OnExecute == null)
+                if (this.OnExecute == null)
                     throw new ArgumentNullException("OnExecute");
 
                 if (OnBeforeExecute != null)
@@ -65,9 +70,9 @@ namespace Infra.Wpf.Business
                         return;
                 }
 
-                if (OnExecute != null)
+                if (this.OnExecute != null)
                 {
-                    Result.IsOnExecute = OnExecute();
+                    Result.IsOnExecute = this.OnExecute();
                     if (Logger != null && logOnException == false && LogInfo != null)
                     {
                         Logger.LogList.Add(LogInfo);
@@ -85,7 +90,7 @@ namespace Infra.Wpf.Business
             {
                 if (Logger != null)
                 {
-                    Logger.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity).Id);
+                    Logger.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity)?.Id ?? 0);
                     LogInfo = null;
                 }
 
@@ -99,14 +104,19 @@ namespace Infra.Wpf.Business
 
         public virtual void Execute(Func<bool> onBeforeExecute, Func<bool> onExecute, Func<bool> onAfterExecute)
         {
-            OnBeforeExecute = onBeforeExecute;
-            OnAfterExecute = onAfterExecute;
+            this.OnBeforeExecute = onBeforeExecute;
+            this.OnAfterExecute = onAfterExecute;
             Execute(onExecute);
+        }
+
+        public virtual async Task ExecuteAsync()
+        {
+            await ExecuteAsync(OnExecuteAsync);
         }
 
         public virtual async Task ExecuteAsync(Func<Task<bool>> onExecuteAsync)
         {
-            OnExecuteAsync = onExecuteAsync;
+            this.OnExecuteAsync = onExecuteAsync;
 
             if (Result == null)
                 Result = new BusinessResult();
@@ -125,7 +135,7 @@ namespace Infra.Wpf.Business
 
                 if (OnExecute != null)
                 {
-                    Result.IsOnExecute = await OnExecuteAsync();
+                    Result.IsOnExecute = await this.OnExecuteAsync();
                     if (Logger != null && logOnException == false && LogInfo != null)
                     {
                         Logger.LogList.Add(LogInfo);
@@ -143,7 +153,7 @@ namespace Infra.Wpf.Business
             {
                 if (Logger != null)
                 {
-                    Logger.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity).Id);
+                    Logger.Log(ex, this.GetType().FullName, (Thread.CurrentPrincipal.Identity as Identity)?.Id ?? 0);
                     LogInfo = null;
                 }
 
@@ -157,8 +167,8 @@ namespace Infra.Wpf.Business
 
         public virtual async Task ExecuteAsync(Func<Task<bool>> onBeforeExecuteAsync, Func<Task<bool>> onExecuteAsync, Func<Task<bool>> onAfterExecuteAsync)
         {
-            OnBeforeExecuteAsync = onBeforeExecuteAsync;
-            OnAfterExecuteAsync = onAfterExecuteAsync;
+            this.OnBeforeExecuteAsync = onBeforeExecuteAsync;
+            this.OnAfterExecuteAsync = onAfterExecuteAsync;
             await ExecuteAsync(onExecuteAsync);
         }
 
@@ -167,11 +177,16 @@ namespace Infra.Wpf.Business
 
     public class BusinessBase<T> : BusinessBase
     {
-        public BusinessResult<T> Result { get; set; }
+        public new BusinessResult<T> Result { get; set; }
 
         public BusinessBase(ILogger logger = null, bool logOnException = true) : base(logger, logOnException)
         {
             Result = new BusinessResult<T>();
+        }
+
+        public override void Execute()
+        {
+            Execute(OnExecute);
         }
 
         public override void Execute(Func<bool> onExecute)
@@ -193,9 +208,14 @@ namespace Infra.Wpf.Business
 
         public override void Execute(Func<bool> onBeforeExecute, Func<bool> onExecute, Func<bool> onAfterExecute)
         {
-            OnBeforeExecute = onBeforeExecute;
-            OnAfterExecute = onAfterExecute;
+            this.OnBeforeExecute = onBeforeExecute;
+            this.OnAfterExecute = onAfterExecute;
             Execute(onExecute);
+        }
+
+        public override async Task ExecuteAsync()
+        {
+            await ExecuteAsync(OnExecuteAsync);
         }
 
         public override async Task ExecuteAsync(Func<Task<bool>> onExecuteAsync)
@@ -217,8 +237,8 @@ namespace Infra.Wpf.Business
 
         public override async Task ExecuteAsync(Func<Task<bool>> onBeforeExecuteAsync, Func<Task<bool>> onExecuteAsync, Func<Task<bool>> onAfterExecuteAsync)
         {
-            OnBeforeExecuteAsync = onBeforeExecuteAsync;
-            OnAfterExecuteAsync = onAfterExecuteAsync;
+            base.OnBeforeExecuteAsync = onBeforeExecuteAsync;
+            base.OnAfterExecuteAsync = onAfterExecuteAsync;
             await ExecuteAsync(onExecuteAsync);
         }
     }

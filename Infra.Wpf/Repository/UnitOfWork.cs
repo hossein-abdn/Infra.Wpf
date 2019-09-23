@@ -18,7 +18,7 @@ namespace Infra.Wpf.Repository
 
         protected DbContext Context { get; set; }
 
-        protected ILogger Logger { get; set; }
+        public ILogger Logger { get; set; }
 
         public UnitOfWork(DbContext context)
         {
