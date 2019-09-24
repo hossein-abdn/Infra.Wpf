@@ -125,30 +125,32 @@ namespace Infra.Wpf.Controls
                 {
                     case NumericOperator.Equals:
                         return $@"{FilterField}=={filterText}";
-                        break;
                     case NumericOperator.NotEquals:
                         return $@"{FilterField}!={filterText}";
-                        break;
                     case NumericOperator.GreaterThan:
                         return $@"{FilterField}>{filterText}";
-                        break;
                     case NumericOperator.GreaterThanEqual:
                         return $@"{FilterField}>={filterText}";
-                        break;
                     case NumericOperator.LessThan:
                         return $@"{FilterField}<{filterText}";
-                        break;
                     case NumericOperator.LessThanEqual:
                         return $@"{FilterField}<={filterText}";
-                        break;
                     default:
                         return "";
-                        break;
                 }
             }
         }
 
         public Type ModelType { get; set; }
+
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(NumericField), new PropertyMetadata(false, OnIsGetFocusChanged));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -164,8 +166,13 @@ namespace Infra.Wpf.Controls
             isSetDefaultOperator = true;
             DisplayName = GetDisplayName();
 
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
         }
 
         public override void OnApplyTemplate()
@@ -229,6 +236,12 @@ namespace Infra.Wpf.Controls
         public void OnPropertyChanged([CallerMemberName]string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((NumericField)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         public void Clear()

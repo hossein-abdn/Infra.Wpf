@@ -146,9 +146,17 @@ namespace Infra.Wpf.Controls
             }
         }
 
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(PersianDatePicker), new PropertyMetadata(false, OnIsGetFocusChanged));
+
         public static readonly RoutedEvent SelectedDateChangedEvent =
-            EventManager.RegisterRoutedEvent("SelectedDateChanged", RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler), typeof(PersianDatePicker));
+            EventManager.RegisterRoutedEvent("SelectedDateChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PersianDatePicker));
 
         public event RoutedEventHandler SelectedDateChanged
         {
@@ -180,8 +188,13 @@ namespace Infra.Wpf.Controls
         {
             this.CoerceValue(PersianDatePicker.PersianSelectedDateProperty);
 
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
         }
 
         public override void OnApplyTemplate()
@@ -239,6 +252,12 @@ namespace Infra.Wpf.Controls
             };
 
             BindingOperations.SetBinding(validationBorder, Border.VisibilityProperty, borderBind);
+        }
+
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((PersianDatePicker)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         static object CoercePersianSelectedDate(DependencyObject d, object o)

@@ -154,6 +154,15 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty FormatProperty =
             DependencyProperty.Register("Format", typeof(string), typeof(NumericBox), new PropertyMetadata("F0", null, FormatCoerce));
 
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(NumericBox), new PropertyMetadata(false, OnIsGetFocusChanged));
+
         public event EventHandler<NumericBoxValueChangedEventArgs> OnValueChanged;
 
         private bool changeByTextChanged { get; set; }
@@ -203,8 +212,13 @@ namespace Infra.Wpf.Controls
         {
             this.CoerceValue(NumericBox.ValueProperty);
 
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
         }
 
         public override void OnApplyTemplate()
@@ -330,6 +344,12 @@ namespace Infra.Wpf.Controls
         {
             var nb = d as NumericBox;
             nb.OnValueChanged?.Invoke(nb, new NumericBoxValueChangedEventArgs((double?)e.OldValue, (double?)e.NewValue));
+        }
+
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((NumericBox)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         private void btnIncrease_Click(object sender, RoutedEventArgs e)

@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using Infra.Wpf.Common.Helpers;
-using System.Windows.Media;
 
 namespace Infra.Wpf.Controls
 {
@@ -114,30 +113,32 @@ namespace Infra.Wpf.Controls
                 {
                     case NumericOperator.Equals:
                         return $@"{FilterField}>=DateTime({y},{m},{d}) AND {FilterField}<=DateTime({y},{m},{d},23,59,59)";
-                        break;
                     case NumericOperator.NotEquals:
                         return $@"{FilterField}<DateTime({y},{m},{d}) OR {FilterField}>DateTime({y},{m},{d},23,59,59)";
-                        break;
                     case NumericOperator.GreaterThan:
                         return $@"{FilterField}>DateTime({y},{m},{d},23,59,59)";
-                        break;
                     case NumericOperator.GreaterThanEqual:
                         return $@"{FilterField}>=DateTime({y},{m},{d})";
-                        break;
                     case NumericOperator.LessThan:
                         return $@"{FilterField}<DateTime({y},{m},{d})";
-                        break;
                     case NumericOperator.LessThanEqual:
                         return $@"{FilterField}<=DateTime({y},{m},{d},23,59,59)";
-                        break;
                     default:
                         return "";
-                        break;
                 }
             }
         }
 
         public Type ModelType { get; set; }
+
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(DateField), new PropertyMetadata(false, OnIsGetFocusChanged));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -162,8 +163,13 @@ namespace Infra.Wpf.Controls
 
             DisplayName = GetDisplayName();
 
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
         }
 
         public override void OnApplyTemplate()
@@ -226,6 +232,12 @@ namespace Infra.Wpf.Controls
         public void OnPropertyChanged([CallerMemberName]string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((DateField)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         public void Clear()

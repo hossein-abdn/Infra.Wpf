@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using Infra.Wpf.Common.Helpers;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Infra.Wpf.Controls
 {
@@ -94,6 +96,15 @@ namespace Infra.Wpf.Controls
 
         public Type ModelType { get; set; }
 
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(ComboField), new PropertyMetadata(false, OnIsGetFocusChanged));
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event SearchPhraseChangedEventHandler SearchPhraseChanged;
@@ -122,8 +133,13 @@ namespace Infra.Wpf.Controls
         {
             DisplayName = GetDisplayName();
 
-            if (IsFocused == true)
-                MoveFocus(new System.Windows.Input.TraversalRequest(System.Windows.Input.FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
         }
 
         public void Clear()
@@ -134,6 +150,12 @@ namespace Infra.Wpf.Controls
         public void OnPropertyChanged([CallerMemberName]string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((ComboField)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         private string GetDisplayName()

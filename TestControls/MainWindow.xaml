@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:TestControls"
         xmlns:model ="clr-namespace:DataAccess.Models;assembly=DataAccess"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -24,10 +25,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <!--<GroupBox Grid.Column="1" Focusable="True">
+        <GroupBox Grid.Column="1" >
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
                     <Setter Property="FlowDirection" Value="RightToLeft"/>
@@ -38,30 +37,15 @@
                     <Setter Property="Padding" Value="5"/>
                 </Style>
             </GroupBox.Style>
-            <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ModelType="model:Label" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10" Focusable="True">
+            <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ModelType="model:Label" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10">
                 <ctl:EditViewPanel.EditFields>
-                    <ctl:TextField Name="textField" Title="نام" Text="{Binding Model.Title,UpdateSourceTrigger=PropertyChanged}"/>
+                    <ctl:TextField Name="textField" Title="نام" Text="{Binding Model.Title,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Behaviors>
+                            <ctl:FocusBehavior/>
+                        </i:Interaction.Behaviors>
+                    </ctl:TextField>
                 </ctl:EditViewPanel.EditFields>
             </ctl:EditViewPanel>
-        </GroupBox>-->
-        <TextBox x:Name="text" Grid.Column="1" Grid.Row="0"/>
-        <ctl:TextField x:Name="txtfil" Grid.Column="1" Grid.Row="1"/>
-        <GroupBox Grid.Column="1" Grid.Row="2">
-            <GroupBox.Style>
-                <Style TargetType="GroupBox">
-                    <Setter Property="FlowDirection" Value="RightToLeft"/>
-                    <Setter Property="Header" Value="تست"/>
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="FontSize" Value="15"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="Padding" Value="5"/>
-                </Style>
-            </GroupBox.Style>
-            <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ModelType="model:Label" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10" Focusable="True">
-                <ctl:TextField/>
-                <ctl:TextField Name="textField" Title="نام" Text="{Binding Model.Title,UpdateSourceTrigger=PropertyChanged}" OperatorVisible="True"/>
-            </ctl:EditViewPanel>
         </GroupBox>
-        
     </Grid>
 </Window>

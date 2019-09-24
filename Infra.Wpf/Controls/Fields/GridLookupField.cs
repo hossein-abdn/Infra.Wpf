@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Infra.Wpf.Common.Helpers;
 using System;
+using System.Windows;
 
 namespace Infra.Wpf.Controls
 {
@@ -29,6 +30,16 @@ namespace Infra.Wpf.Controls
         }
 
         public Type ModelType { get; set; }
+
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(GridLookupField), new PropertyMetadata(false, OnIsGetFocusChanged));
+
 
         public event SearchPhraseChangedEventHandler SearchPhraseChanged;
 
@@ -78,8 +89,19 @@ namespace Infra.Wpf.Controls
         {
             DisplayName = GetDisplayName();
 
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
+        }
+
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((GridLookupField)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         private string GetDisplayName()

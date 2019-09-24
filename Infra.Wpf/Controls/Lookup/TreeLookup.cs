@@ -178,6 +178,16 @@ namespace Infra.Wpf.Controls
         public static readonly DependencyProperty SelectedIdsProperty = DependencyProperty.Register("SelectedIds", typeof(IEnumerable<int>), typeof(TreeLookup),
             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedIdsChanged, OnSelectedIdsCoerce));
 
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(TreeLookup), new PropertyMetadata(false, OnIsGetFocusChanged));
+
+
         private ChangeSourceEnum ChangeSource { get; set; }
 
         private LookupWindow treeLookupWindow = null;
@@ -216,8 +226,13 @@ namespace Infra.Wpf.Controls
             Type itemsSourceType = typeof(List<>).MakeGenericType(ResultType);
             FlatItemsSource = (IList)Activator.CreateInstance(itemsSourceType);
 
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
 
             if (SelectionMode == LookupSelectionMode.Single)
             {
@@ -614,6 +629,12 @@ namespace Infra.Wpf.Controls
                 if (@this.ResultType.IsAssignableFrom(memberType))
                     @this.FlatItemsSource.Add(member.GetValue(item));
             }
+        }
+
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((TreeLookup)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
         }
 
         private void LoadData()

@@ -57,6 +57,7 @@ using System.Windows.Markup;
 
 [assembly: XmlnsPrefix("http://Infra.Wpf", "ctl")]
 [assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Common.Helpers", AssemblyName = "Infra.Wpf")]
+[assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Common.Behaviors", AssemblyName = "Infra.Wpf")]
 [assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Controls", AssemblyName = "Infra.Wpf")]
 [assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Converters", AssemblyName = "Infra.Wpf")]
 [assembly: XmlnsDefinition("http://Infra.Wpf", "Infra.Wpf.Mvvm", AssemblyName = "Infra.Wpf")]

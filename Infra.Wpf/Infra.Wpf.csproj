@@ -206,6 +206,7 @@
     <Compile Include="Business\BusinessBase.cs" />
     <Compile Include="Business\BusinessMessage.cs" />
     <Compile Include="Business\BusinessResult.cs" />
+    <Compile Include="Common\Behaviors\FocusBehavior.cs" />
     <Compile Include="Common\Interface\ILogger.cs" />
     <Compile Include="Common\Interface\ILogInfo.cs" />
     <Compile Include="Common\Class\Logger.cs" />

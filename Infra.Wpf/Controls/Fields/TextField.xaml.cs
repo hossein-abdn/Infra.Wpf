@@ -59,7 +59,7 @@ namespace Infra.Wpf.Controls
 
         public string Text
         {
-            get { return (string) GetValue(TextProperty); }
+            get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
@@ -79,19 +79,14 @@ namespace Infra.Wpf.Controls
                         return $@"{FilterField}.Equals(""{Text.Trim()}"")";
                     case StringOperator.NotEquals:
                         return $@"!{FilterField}.Equals(""{Text.Trim()}"")";
-                        break;
                     case StringOperator.Contains:
                         return $@"{FilterField}.Contains(""{Text.Trim()}"")";
-                        break;
                     case StringOperator.StartsWith:
                         return $@"{FilterField}.StartsWith(""{Text.Trim()}"")";
-                        break;
                     case StringOperator.EndsWith:
                         return $@"{FilterField}.EndsWith(""{Text.Trim()}"")";
-                        break;
                     default:
                         return "";
-                        break;
                 }
             }
         }
@@ -100,12 +95,21 @@ namespace Infra.Wpf.Controls
 
         public CustomTextBoxFormat SearchFieldFormat
         {
-            get { return (CustomTextBoxFormat) GetValue(SearchFieldFormatProperty); }
+            get { return (CustomTextBoxFormat)GetValue(SearchFieldFormatProperty); }
             set { SetValue(SearchFieldFormatProperty, value); }
         }
 
         public static readonly DependencyProperty SearchFieldFormatProperty = CustomTextBox.TextBoxFormatProperty.AddOwner(typeof(TextField),
             new FrameworkPropertyMetadata(CustomTextBoxFormat.String, FrameworkPropertyMetadataOptions.Inherits));
+
+        public bool IsGetFocus
+        {
+            get { return (bool)GetValue(IsGetFocusProperty); }
+            set { SetValue(IsGetFocusProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsGetFocusProperty =
+            DependencyProperty.Register("IsGetFocus", typeof(bool), typeof(TextField), new PropertyMetadata(false, OnIsGetFocusChanged));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -121,8 +125,13 @@ namespace Infra.Wpf.Controls
             isSetDefaultOperator = true;
             DisplayName = GetDisplayName();
 
-            if (IsFocused == true)
-                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            Binding binding = new Binding("IsFocused")
+            {
+                Source = this,
+                Mode = BindingMode.OneWay
+            };
+
+            SetBinding(IsGetFocusProperty, binding);
         }
 
         public override void OnApplyTemplate()
@@ -187,6 +196,12 @@ namespace Infra.Wpf.Controls
             (d as TextField).SearchPhraseChanged?.Invoke();
         }
 
+        private static void OnIsGetFocusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == true)
+                ((TextField)d).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+        }
+
         public void OnPropertyChanged([CallerMemberName]string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
@@ -212,7 +227,7 @@ namespace Infra.Wpf.Controls
                     var result = string.Empty;
 
                     if (attrib != null && attrib.Count() > 0)
-                        result = ((DisplayAttribute) attrib[0]).Name;
+                        result = ((DisplayAttribute)attrib[0]).Name;
                     else
                         result = bindEx.ResolvedSourcePropertyName;
 
@@ -236,7 +251,7 @@ namespace Infra.Wpf.Controls
                 {
                     var attrib = propInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
                     if (attrib != null && attrib.Count() > 0)
-                        return ((DisplayAttribute) attrib[0]).Name;
+                        return ((DisplayAttribute)attrib[0]).Name;
                 }
 
                 return FilterField;
