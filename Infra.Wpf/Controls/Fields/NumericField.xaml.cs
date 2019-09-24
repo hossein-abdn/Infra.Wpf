@@ -173,6 +173,16 @@ namespace Infra.Wpf.Controls
             };
 
             SetBinding(IsGetFocusProperty, binding);
+
+            BindingExpression bindingExpression = this.GetBindingExpression(ValueProperty);
+
+            Binding valueBinding = new Binding("Value")
+            {
+                Source = this,
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = bindingExpression?.ParentBinding?.UpdateSourceTrigger ?? UpdateSourceTrigger.Default
+            };
+            numericbox.SetBinding(NumericBox.ValueProperty, valueBinding);
         }
 
         public override void OnApplyTemplate()

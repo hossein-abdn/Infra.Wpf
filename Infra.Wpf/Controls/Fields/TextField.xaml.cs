@@ -132,6 +132,16 @@ namespace Infra.Wpf.Controls
             };
 
             SetBinding(IsGetFocusProperty, binding);
+
+            BindingExpression bindingExpression = this.GetBindingExpression(TextProperty);
+
+            Binding textBinding = new Binding("Text")
+            {
+                Source = this,
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = bindingExpression?.ParentBinding?.UpdateSourceTrigger ?? UpdateSourceTrigger.Default
+            };
+            textbox.SetBinding(CustomTextBox.TextProperty, textBinding);
         }
 
         public override void OnApplyTemplate()

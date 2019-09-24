@@ -37,7 +37,7 @@
                          BorderBrush="Transparent" FlowDirection="LeftToRight" MouseWheel="txtNumericEditor_MouseWheel"
                          GotKeyboardFocus="txtNumericEditor_GotKeyboardFocus" PreviewMouseLeftButtonDown="txtNumericEditor_PreviewMouseLeftButtonDown"
                          KeyDown="txtNumericEditor_KeyDown" PreviewKeyDown="txtNumericEditor_PreviewKeyDown" TextChanged="txtNumericEditor_TextChanged"
-                         Foreground="{Binding Foreground,ElementName=numericEditor}" Background="{Binding Background,ElementName=numericEditor}" Text="{Binding Text,ElementName=numericEditor}"/>
+                         Foreground="{Binding Foreground,ElementName=numericEditor}" Background="{Binding Background,ElementName=numericEditor}"/>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>

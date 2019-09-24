@@ -219,6 +219,16 @@ namespace Infra.Wpf.Controls
             };
 
             SetBinding(IsGetFocusProperty, binding);
+
+            BindingExpression bindingExpression = this.GetBindingExpression(TextProperty);
+
+            Binding textBinding = new Binding("Text")
+            {
+                Source = this,
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = bindingExpression?.ParentBinding?.UpdateSourceTrigger ?? UpdateSourceTrigger.Default
+            };
+            txtNumericEditor.SetBinding(TextBox.TextProperty, textBinding);
         }
 
         public override void OnApplyTemplate()
