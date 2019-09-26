@@ -24,9 +24,9 @@ namespace TestControls
 
         public RelayCommand SubmitCommand { get; set; }
 
-        public Label Model
+        public Person Model
         {
-            get { return Get<Label>(); }
+            get { return Get<Person>(); }
             set { Set(value); }
         }
 
@@ -41,8 +41,7 @@ namespace TestControls
             transactionGroupRepository = new TransactionGroupRepository(context, null, false);
 
             ViewTitle = "افزودن شخص";
-            Model = new Label();
-            Model.Title = "";
+            Model = new Person();
         }
 
         private void SubmitExecute()

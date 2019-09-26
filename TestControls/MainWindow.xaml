@@ -39,11 +39,11 @@
             </GroupBox.Style>
             <ctl:EditViewPanel FontSize="12" FontWeight="Normal" ModelType="model:Label" SubmitCommand="{Binding SubmitCommand}" ColumnMargin="20" RowMargin="10">
                 <ctl:EditViewPanel.EditFields>
-                    <ctl:TextField Name="textField" Title="نام" Text="{Binding Model.Title,UpdateSourceTrigger=PropertyChanged}">
+                    <ctl:NumericField Name="textField" Title="نام" Value="{Binding Model.OrderItem,UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Behaviors>
                             <ctl:FocusBehavior/>
                         </i:Interaction.Behaviors>
-                    </ctl:TextField>
+                    </ctl:NumericField>
                 </ctl:EditViewPanel.EditFields>
             </ctl:EditViewPanel>
         </GroupBox>

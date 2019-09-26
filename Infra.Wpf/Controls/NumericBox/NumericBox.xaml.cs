@@ -220,7 +220,7 @@ namespace Infra.Wpf.Controls
 
             SetBinding(IsGetFocusProperty, binding);
 
-            BindingExpression bindingExpression = this.GetBindingExpression(TextProperty);
+            BindingExpression bindingExpression = this.GetBindingExpression(ValueProperty);
 
             Binding textBinding = new Binding("Text")
             {
@@ -229,6 +229,8 @@ namespace Infra.Wpf.Controls
                 UpdateSourceTrigger = bindingExpression?.ParentBinding?.UpdateSourceTrigger ?? UpdateSourceTrigger.Default
             };
             txtNumericEditor.SetBinding(TextBox.TextProperty, textBinding);
+
+            
         }
 
         public override void OnApplyTemplate()

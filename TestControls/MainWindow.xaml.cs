@@ -38,45 +38,19 @@ namespace TestControls
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //Task.Run(focuse);
-
-            Debug.WriteLine(textField.IsFocused);
-            Debug.WriteLine(textField.IsKeyboardFocused);
-            Debug.WriteLine(textField.IsKeyboardFocusWithin);
-            Debug.WriteLine(FocusManager.GetFocusedElement(this)?.ToString());
 
         }
 
-        private void focuse()
-        {
-            Thread.Sleep(10);
-            Dispatcher.Invoke(() =>
-            {
-                Keyboard.Focus(textField);
-                Debug.WriteLine(textField.IsFocused);
-                Debug.WriteLine(textField.IsKeyboardFocused);
-                Debug.WriteLine(textField.IsKeyboardFocusWithin);
-                Debug.WriteLine(FocusManager.GetFocusedElement(this)?.ToString());
-            });
-        }
+        
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Tab)
-            {
-                Debug.WriteLine(FocusManager.GetFocusedElement(this)?.ToString());
-                Debug.WriteLine(textField.IsFocused);
-                Debug.WriteLine(textField.IsKeyboardFocused);
-                Debug.WriteLine(textField.IsKeyboardFocusWithin);
-            }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Keyboard.Focus(textField);
-            Debug.WriteLine(textField.IsFocused);
-            Debug.WriteLine(textField.IsKeyboardFocused);
-            Debug.WriteLine(textField.IsKeyboardFocusWithin);
+
         }
     }
 }
